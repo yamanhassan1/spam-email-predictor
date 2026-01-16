@@ -4,6 +4,14 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 
+# Set page config (must be first Streamlit command)
+st.set_page_config(
+    page_title="Email Spam Detector",
+    page_icon="🛡️",
+    layout="centered",
+    initial_sidebar_state="collapsed"
+)
+
 nltk.download("stopwords")
 nltk.download("punkt")
 nltk.download("punkt_tab")
