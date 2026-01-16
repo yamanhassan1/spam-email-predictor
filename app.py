@@ -1,16 +1,23 @@
-import nltk
-nltk.download('punkt')
-nltk.download('stopwords')
 import streamlit as st
 import pickle
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
+import os
+import nltk
+nltk.download('punkt')
+nltk.download('stopwords')
 
-# Only download if not already present
+# Make Streamlit deployment download stopwords at runtime
+nltk_data_path = os.path.join(os.path.expanduser("~"), "nltk_data")
+os.makedirs(nltk_data_path, exist_ok=True)
+
+nltk.data.path.append(nltk_data_path)
+
 try:
-    nltk.data.find('corpora/stopwords')
+    nltk.data.find("corpora/stopwords")
 except LookupError:
-    nltk.download('stopwords')
+    nltk.download("stopwords", download_dir=nltk_data_path)
+
 
 
 ps = PorterStemmer()
