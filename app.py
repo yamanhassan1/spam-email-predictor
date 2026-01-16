@@ -6,6 +6,13 @@ import pickle
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 
+# Only download if not already present
+try:
+    nltk.data.find('corpora/stopwords')
+except LookupError:
+    nltk.download('stopwords')
+
+
 ps = PorterStemmer()
 stop_words = set(stopwords.words('english'))
 
