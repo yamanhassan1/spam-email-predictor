@@ -1,31 +1,19 @@
 import streamlit as st
 import pickle
-import subprocess
-import sys
+import nltk
+from nltk.corpus import stopwords
+from nltk.stem.porter import PorterStemmer
+
+# Download stopwords if missing (allowed at runtime)
 import os
-
-# Force install nltk if missing
-try:
-    import nltk
-except ModuleNotFoundError:
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "nltk"])
-    import nltk
-
-# Ensure nltk_data directory exists and is included
 nltk_data_path = os.path.join(os.path.expanduser("~"), "nltk_data")
 os.makedirs(nltk_data_path, exist_ok=True)
 nltk.data.path.append(nltk_data_path)
 
-# Download stopwords if not already
 try:
     nltk.data.find("corpora/stopwords")
 except LookupError:
     nltk.download("stopwords", download_dir=nltk_data_path)
-
-# Now safe to import your modules
-from nltk.corpus import stopwords
-from nltk.stem.porter import PorterStemmer
-
 
 ps = PorterStemmer()
 stop_words = set(stopwords.words('english'))
