@@ -4,8 +4,20 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 
+try:
+    nltk.data.find("corpora/stopwords")
+except LookupError:
+    nltk.download("stopwords")
+    nltk.download("punkt")
+
 ps = PorterStemmer()
-stop_words = set(stopwords.words('english'))
+
+try:
+    stop_words = set(stopwords.words('english'))
+except LookupError:
+    import nltk
+    nltk.download('stopwords')
+    stop_words = set(stopwords.words('english'))
 
 def transformed_text(text):
     text = text.lower()
