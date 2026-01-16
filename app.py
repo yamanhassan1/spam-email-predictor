@@ -1,9 +1,12 @@
-import string
 import nltk
 import streamlit as st
 import pickle
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
+
+
+nltk.download('punkt')
+nltk.download('stopwords')
 
 ps = PorterStemmer()
 stop_words = set(stopwords.words('english'))
