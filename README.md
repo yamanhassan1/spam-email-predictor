@@ -2,6 +2,10 @@
 
 A machine learning-based web application that classifies emails and SMS messages as spam or ham (not spam) using Natural Language Processing (NLP) and Naive Bayes classification.
 
+## 🌐 Live Demo
+
+**Try the app online**: [https://spam-email-predictor-app.streamlit.app/](https://spam-email-predictor-app.streamlit.app/)
+
 ## 🚀 Features
 
 - **Real-time Spam Detection**: Classify messages instantly using a pre-trained machine learning model

@@ -31,9 +31,20 @@ def transformed_text(text):
 tfidf = pickle.load(open("Models/vectorizer.pkl", "rb"))
 model = pickle.load(open("Models/model.pkl", "rb"))
 
-st.title("Email / SMS Spam Classifier")
+# Logo and Header
+col1, col2, col3 = st.columns([1, 2, 1])
+with col2:
+    st.markdown("""
+    <div style='text-align: center; padding: 20px 0;'>
+        <h1 style='font-size: 48px; margin-bottom: 10px;'>📧🛡️</h1>
+        <h1 style='font-size: 36px; margin: 0; color: #1f77b4;'>Email / SMS Spam Classifier</h1>
+        <p style='color: #666; margin-top: 5px;'>Protect your inbox from unwanted messages</p>
+    </div>
+    """, unsafe_allow_html=True)
 
-input_sms = st.text_area("Enter your message")
+st.markdown("---")
+
+input_sms = st.text_area("Enter your message", height=150, placeholder="Paste your email or SMS message here...")
 
 if st.button("Predict"):
     # PREPROCESS
@@ -44,6 +55,6 @@ if st.button("Predict"):
     result = model.predict(vector_input)[0]
     # DISPLAY
     if result == 1:
-        st.header("Spam")
+        st.error("⚠️ **SPAM** - This message is classified as spam!")
     else:
-        st.header("Not Spam")
+        st.success("✅ **NOT SPAM** - This message is safe!")
