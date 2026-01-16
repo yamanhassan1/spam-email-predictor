@@ -4,7 +4,7 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 
-# Set page config (must be first Streamlit command)
+# Set page icon
 st.set_page_config(
     page_title="Email Spam Detector",
     page_icon="🛡️",
@@ -35,7 +35,7 @@ def transformed_text(text):
 
     return " ".join(words)
 
-# LOAD TRAINED OBJECTS
+# Load trained data
 tfidf = pickle.load(open("Models/vectorizer.pkl", "rb"))
 model = pickle.load(open("Models/model.pkl", "rb"))
 
@@ -55,13 +55,13 @@ st.markdown("---")
 input_sms = st.text_area("Enter your message", height=150, placeholder="Paste your email or SMS message here...")
 
 if st.button("Predict"):
-    # PREPROCESS
+    # Preprocess
     transformed_sms = transformed_text(input_sms)
-    # VECTORIZE
+    # Vectorize
     vector_input = tfidf.transform([transformed_sms])
-    # PREDICT
+    # Predict
     result = model.predict(vector_input)[0]
-    # DISPLAY
+    # Display
     if result == 1:
         st.error("⚠️ **SPAM** - This message is classified as spam!")
     else:
