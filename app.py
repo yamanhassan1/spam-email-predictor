@@ -19,8 +19,8 @@ def transformed_text(text):
     return " ".join(words)
 
 # LOAD TRAINED OBJECTS
-tfidf = pickle.load(open("../Models/vectorizer.pkl", "rb"))
-model = pickle.load(open("../Models/model.pkl", "rb"))
+tfidf = pickle.load(open("Models/vectorizer.pkl", "rb"))
+model = pickle.load(open("Models/model.pkl", "rb"))
 
 st.title("Email / SMS Spam Classifier")
 
