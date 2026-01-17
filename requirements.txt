@@ -2,3 +2,4 @@ streamlit==1.30.0
 nltk==3.9.1
 pandas>=2.2.0
 scikit-learn
+Pillow>=10.0.0
