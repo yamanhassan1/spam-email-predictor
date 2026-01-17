@@ -17,7 +17,6 @@ _PREMIUM_LAYOUT = dict(
     ),
     margin=dict(l=40, r=40, t=60, b=40),
     autosize=True,
-    transition={'duration': 800, 'easing': 'cubic-bezier(0.4, 0, 0.2, 1)'},
     hoverlabel=dict(
         bgcolor="rgba(15, 20, 51, 0.95)",
         font_size=13,
