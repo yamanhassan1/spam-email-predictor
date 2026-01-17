@@ -7,10 +7,29 @@ from PIL import Image
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 
-# Set page icon and config
+# Read logo and convert to base64 for favicon (app icon)
+logo_base64 = ""
+page_icon = "🛡️"  # Default emoji icon
+logo_path = Path("image/logo.png")
+
+if logo_path.exists():
+    try:
+        with open(logo_path, "rb") as f:
+            logo_data = f.read()
+            logo_base64 = base64.b64encode(logo_data).decode()
+        # Try to use PIL Image for page_icon
+        try:
+            page_icon = Image.open(logo_path)
+        except Exception:
+            page_icon = "🛡️"  # Fallback to emoji if PIL fails
+    except Exception:
+        logo_base64 = ""
+        page_icon = "🛡️"
+
+# Set page config (must be first Streamlit command, called only once)
 st.set_page_config(
     page_title="Email Spam Detector",
-    page_icon="🛡️",
+    page_icon=page_icon,
     layout="centered",
     initial_sidebar_state="collapsed",
     menu_items={
@@ -19,21 +38,6 @@ st.set_page_config(
         'About': None
     }
 )
-
-# Read logo and convert to base64 for favicon and display
-logo_base64 = ""
-logo_image = None
-logo_path = Path("image/logo.png")
-if logo_path.exists():
-    try:
-        with open(logo_path, "rb") as f:
-            logo_data = f.read()
-            logo_base64 = base64.b64encode(logo_data).decode()
-        # Also load as PIL Image for st.image()
-        logo_image = Image.open(logo_path)
-    except Exception as e:
-        logo_base64 = ""
-        logo_image = None
 
 # Hide Streamlit default menu and footer, and set custom favicon
 hide_streamlit_style = f"""
@@ -77,21 +81,11 @@ def transformed_text(text):
 tfidf = pickle.load(open("Models/vectorizer.pkl", "rb"))
 model = pickle.load(open("Models/model.pkl", "rb"))
 
-# Logo and Header - Home Page
+# Header - Home Page
 col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
-    # Display logo image using base64 (most reliable method)
-    if logo_base64:
-        st.markdown(f'<div style="text-align: center; padding: 10px 0;"><img src="data:image/png;base64,{logo_base64}" width="200" style="display: block; margin: 0 auto;"></div>', unsafe_allow_html=True)
-    elif logo_image:
-        # Fallback to PIL Image if base64 not available
-        try:
-            st.image(logo_image, width=200, use_container_width=False)
-        except Exception:
-            pass
-    
     st.markdown("""
-    <div style='text-align: center; padding: 10px 0 20px 0;'>
+    <div style='text-align: center; padding: 20px 0;'>
         <h1 style='font-size: 36px; margin: 10px 0; color: #1f77b4; font-weight: bold;'>Email / SMS Spam Classifier</h1>
         <p style='color: #666; margin-top: 5px; font-size: 16px;'>Protect your inbox from unwanted messages</p>
     </div>
