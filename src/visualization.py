@@ -12,6 +12,8 @@ _DEFAULT_LAYOUT = dict(
     plot_bgcolor="rgba(0,0,0,0)",
     font=dict(color="white", family="Inter, system-ui, -apple-system, 'Segoe UI', Roboto"),
     margin=dict(l=20, r=20, t=40, b=20),
+    autosize=True,
+    transition={'duration': 520, 'easing': 'cubic-in-out'},
 )
 
 
@@ -82,7 +84,8 @@ def probability_bar(ham_prob: float, spam_prob: float, height: int = 360, show_a
                 marker_color=colors,
                 text=[f"{v:.1f}%" for v in values],
                 textposition='auto',
-                hovertemplate="%{x}<br><b>%{y:.1f}%</b><extra></extra>"
+                hovertemplate="%{x}<br><b>%{y:.1f}%</b><extra></extra>",
+                marker_line_width=0
             )
         ]
     )
@@ -92,7 +95,7 @@ def probability_bar(ham_prob: float, spam_prob: float, height: int = 360, show_a
         # annotate the dominant class
         dominant = labels[0] if values[0] >= values[1] else labels[1]
         dom_val = max(values)
-        fig.add_annotation(x=dominant, y=dom_val + 6, text=f"Predicted: <b>{dominant.split()[0]}</b>", showarrow=False, font=dict(size=12, color="white"))
+        fig.add_annotation(x=dominant, y=min(dom_val + 7, 100), text=f"Predicted: <b>{dominant.split()[0]}</b>", showarrow=False, font=dict(size=12, color="white"))
     return fig
 
 
@@ -118,7 +121,8 @@ def top_words_bar(words: Sequence[str], freqs: Sequence[int], spam_wordset: Opti
                 marker_color=colors,
                 text=list(freqs),
                 textposition='auto',
-                hovertemplate="%{y}: %{x}<extra></extra>"
+                hovertemplate="%{y}: %{x}<extra></extra>",
+                marker_line_width=0
             )
         ]
     )
@@ -227,17 +231,17 @@ def annotated_message_html(raw_text: str, spam_words: Optional[set] = None, ham_
         lower = tok.lower()
         # Only highlight word tokens (letters/digits)
         if lower in spam_words:
-            return f'<span style="background: rgba(255,90,90,0.15); color: #ffdfe0; padding: 2px 6px; border-radius:6px; margin:1px;">{html.escape(tok)}</span>'
+            return f'<span style="background: rgba(255,90,90,0.18); color: #ffdfe0; padding: 2px 6px; border-radius:6px; margin:1px;">{html.escape(tok)}</span>'
         if lower in ham_words:
             return f'<span style="background: rgba(75,199,139,0.12); color: #eafff0; padding: 2px 6px; border-radius:6px; margin:1px;">{html.escape(tok)}</span>'
         return html.escape(tok)
 
     # Split into tokens but keep punctuation
     import re
-    tokens = re.findall(r"\\w+|[^\\w\\s]+|\\s+", raw_text)
-    highlighted = "".join(_wrap_token(t) if t.strip() and re.match(r"\\w+", t) else html.escape(t) for t in tokens)
-    # Wrap in a container that's responsive
-    html_out = f'<div style="line-height:1.6; font-size:0.98rem; color: #eaf0ff;">{highlighted}</div>'
+    tokens = re.findall(r"\w+|[^\w\s]+|\s+", raw_text)
+    highlighted = "".join(_wrap_token(t) if t.strip() and re.match(r"\w+", t) else html.escape(t) for t in tokens)
+    # Wrap in a container that's responsive and animate entry
+    html_out = f'<div class="animate-entry" style="line-height:1.6; font-size:0.98rem; color: #eaf0ff;">{highlighted}</div>'
     return html_out
 
 
