@@ -9,14 +9,14 @@ def setup_page(
     title: str = "Email Spam Detector",
     logo_path: Optional[Path] = Path("image/logo.png"),
     initial_sidebar_state: str = "collapsed",
-    theme: str = "dark",
+    animations: bool = True,
     compact: bool = False,
 ):
     """
-    Configure the Streamlit page and inject the app CSS.
+    Configure the Streamlit page and inject polished CSS with advanced animations.
 
-    Kept backward compatible with previous usage (no args). Added
-    theme/compact options for more advanced control.
+    - animations: enable/disable animated effects (honored via CSS classes and prefers-reduced-motion).
+    - compact: reduce paddings/typography for tight layouts (mobile/embedded).
     """
     logo_base64 = ""
     page_icon = "🛡️"
@@ -41,138 +41,293 @@ def setup_page(
         menu_items={'Get Help': None, 'Report a bug': None, 'About': None}
     )
 
-    st.markdown(get_css(logo_base64, theme=theme, compact=compact), unsafe_allow_html=True)
+    st.markdown(get_css(logo_base64, animations=animations, compact=compact), unsafe_allow_html=True)
 
 
-def get_css(logo_base64: str, theme: str = "dark", compact: bool = False) -> str:
+def get_css(logo_base64: str, animations: bool = True, compact: bool = False) -> str:
     """
-    Return a more advanced, professional CSS string.
-
-    - theme: 'dark' (default) or 'light' (available for future use)
-    - compact: if True, reduce paddings and font sizes for compact displays.
+    Return a modern, professional CSS theme with optional animations and responsive adjustments.
+    It uses CSS variables to make theme tweaks easy.
     """
-    # Basic theme variables (dark focused)
+    # when animations disabled, keep minimal keyframes but still provide polished look
+    anim_toggle = "on" if animations else "off"
     css = f"""
     <style>
     :root {{
-        --accent-1: #5b7cff;
-        --accent-2: #7bd389;
+        --bg-top: #061021;
+        --bg-bottom: #07111a;
+        --card-bg: rgba(255,255,255,0.03);
+        --card-surface: rgba(255,255,255,0.02);
+        --accent-primary: #5b7cff;
+        --accent-success: #7bd389;
+        --accent-danger: #ff6b6b;
         --muted: #9aa4b2;
         --glass-border: rgba(255,255,255,0.06);
-        --card-radius: 14px;
+        --radius: 14px;
         --max-width: 1100px;
     }}
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-    * {{ font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; box-sizing: border-box; }}
-    html, body, .stApp {{ background: linear-gradient(180deg, #071029 0%, #081427 100%); }}
-    .main .block-container {{ max-width: var(--max-width); padding-top: { '1rem' if compact else '2.25rem' }; padding-bottom: { '1rem' if compact else '2.25rem' }; }}
+
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+
+    html, body, .stApp {{
+        background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+        color: #eaf0ff;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }}
+
+    .main .block-container {{
+        max-width: var(--max-width);
+        padding-top: { '1rem' if compact else '2rem' };
+        padding-bottom: { '1rem' if compact else '2rem' };
+        padding-left: clamp(0.75rem, 3vw, 1.25rem);
+        padding-right: clamp(0.75rem, 3vw, 1.25rem);
+    }}
+
+    /* Hide default Streamlit chrome for a cleaner canvas */
     #MainMenu, footer, header {{ visibility: hidden; height: 0; }}
 
-    /* Header */
-    .main-header {{
-        background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-        border: 1px solid var(--glass-border);
-        padding: { '0.9rem 1rem' if compact else '2rem 1.5rem' };
-        border-radius: 16px;
-        margin-bottom: 1.2rem;
-        color: #eaf0ff;
-        text-align: center;
-        box-shadow: 0 6px 30px rgba(2,6,23,0.6);
+    /* === Animations & Motion preferences === */
+    @media (prefers-reduced-motion: reduce) {{
+        .animate, .float, .stButton > button::after {{ animation: none !important; transition: none !important; }}
     }}
-    .main-header h1 {{ font-size: { '1.25rem' if compact else '2.2rem' }; margin: 0 0 0.25rem 0; font-weight: 700; }}
-    .main-header p {{ margin: 0; color: var(--muted); font-weight: 400; font-size: { '0.8rem' if compact else '1rem' }; }}
 
-    /* Input card */
-    .input-card {{
-        background: rgba(255,255,255,0.03);
-        border: 1px solid var(--glass-border);
-        border-radius: var(--card-radius);
-        padding: { '0.8rem' if compact else '1.5rem' };
-        margin-bottom: 1rem;
+    /* subtle animated background gradient */
+    @keyframes gradientShift {{
+        0% {{ background-position: 0% 50%; }}
+        50% {{ background-position: 100% 50%; }}
+        100% {{ background-position: 0% 50%; }}
     }}
-    .input-card h3 {{ margin: 0 0 0.35rem 0; color: #e6eefc; font-weight: 600; font-size: { '0.95rem' if compact else '1.1rem' }; }}
-    .input-card p {{ margin: 0; color: var(--muted); font-size: { '0.8rem' if compact else '0.95rem' }; }}
 
-    /* Buttons - smoother hover & focus */
+    .stApp {{
+        background-image: linear-gradient(120deg, rgba(91,124,255,0.04), rgba(123,211,137,0.03), rgba(255,111,111,0.02));
+        background-size: 400% 400%;
+        animation: {"gradientShift 18s ease infinite" if animations else "none"};
+    }}
+
+    /* entrance and fade animations used by content */
+    @keyframes fadeInUp {{
+        0% {{ opacity: 0; transform: translateY(10px) scale(0.995); }}
+        100% {{ opacity: 1; transform: translateY(0) scale(1); }}
+    }}
+    .animate {{ animation: {"fadeInUp 520ms cubic-bezier(.2,.9,.2,1) both" if animations else "none"}; }}
+
+    /* floating icon animation for gentle motion */
+    @keyframes floatY {{
+        0% {{ transform: translateY(0px); }}
+        50% {{ transform: translateY(-6px); }}
+        100% {{ transform: translateY(0px); }}
+    }}
+    .float {{ animation: {"floatY 4.5s ease-in-out infinite" if animations else "none"}; }}
+
+    /* button ripple / glow on hover */
     .stButton > button {{
-        background: linear-gradient(90deg, var(--accent-1), #9aa8ff);
+        position: relative;
+        background: linear-gradient(90deg, var(--accent-primary), #9aa8ff);
         color: white;
         border: none;
-        padding: { '0.6rem 0.9rem' if compact else '0.95rem 1rem' };
+        padding: 0.9rem 1rem;
         border-radius: 12px;
         font-weight: 700;
-        letter-spacing: 0.6px;
-        box-shadow: 0 6px 18px rgba(48,66,129,0.24);
+        letter-spacing: 0.5px;
+        box-shadow: 0 8px 30px rgba(11,22,60,0.35);
+        transition: transform 220ms cubic-bezier(.2,.9,.2,1), box-shadow 220ms;
+        overflow: hidden;
     }}
-    .stButton > button:hover {{ transform: translateY(-2px); box-shadow: 0 10px 30px rgba(48,66,129,0.32); }}
-    .stButton > button:focus {{ outline: 2px solid rgba(91,124,255,0.18); }}
+    .stButton > button:hover {{
+        transform: translateY(-4px) scale(1.01);
+        box-shadow: 0 18px 50px rgba(11,22,60,0.45);
+    }}
+    /* soft glow when focused for accessibility */
+    .stButton > button:focus {{
+        outline: 3px solid rgba(91,124,255,0.14);
+        outline-offset: 2px;
+    }}
+    /* small ripple effect using pseudo element */
+    .stButton > button::after {{
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 0;
+        height: 0;
+        background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 60%);
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        transition: width 520ms ease, height 520ms ease, opacity 520ms;
+        opacity: 0;
+        pointer-events: none;
+        {"animation: none;" if not animations else ""}
+    }}
+    .stButton > button:active::after {{
+        width: 300px;
+        height: 300px;
+        opacity: 1;
+        transition: none;
+    }}
 
-    /* Cards */
-    .info-card, .result-card {{
-        background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    /* Card styles */
+    .card {{
+        background: linear-gradient(180deg, var(--card-bg), var(--card-surface));
         border: 1px solid var(--glass-border);
-        border-radius: 12px;
-        padding: { '0.8rem' if compact else '1.25rem' };
+        border-radius: var(--radius);
+        padding: 1.15rem;
+        box-shadow: 0 12px 30px rgba(3,8,20,0.55);
         color: #eaf0ff;
-        box-shadow: 0 8px 28px rgba(2,6,23,0.5);
     }}
-    .info-title {{ color: var(--accent-1); font-weight: 700; margin-bottom: 0.4rem; }}
+    .card.meta {{
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+    }}
+    .card .icon {{
+        font-size: 1.6rem;
+        width: 48px;
+        height: 48px;
+        border-radius: 10px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+        border: 1px solid rgba(255,255,255,0.02);
+    }}
+
+    /* Result card specific */
+    .result-card {{
+        padding: 1.1rem;
+        border-radius: 14px;
+        position: relative;
+        overflow: hidden;
+        transition: transform 260ms ease, box-shadow 260ms ease;
+    }}
+    .result-card:hover {{
+        transform: translateY(-6px) scale(1.01);
+        box-shadow: 0 22px 60px rgba(3,8,20,0.6);
+    }}
+    .result-spam {{
+        border-left: 4px solid var(--accent-danger);
+    }}
+    .result-safe {{
+        border-left: 4px solid var(--accent-success);
+    }}
+    .result-icon {{
+        font-size: clamp(1.8rem, 4vw, 2.8rem);
+        display: block;
+    }}
+    .result-title {{
+        font-weight: 800;
+        font-size: clamp(1rem, 2.6vw, 1.4rem);
+        margin-top: 0.45rem;
+    }}
+    .result-sub {{
+        color: var(--muted);
+        margin-top: 0.45rem;
+    }}
+
+    /* Animated accent bar (subtle) */
+    .accent-bar {{
+        height: 6px;
+        width: 100%;
+        border-radius: 8px;
+        background: linear-gradient(90deg, rgba(91,124,255,0.95), rgba(123,211,137,0.9));
+        box-shadow: 0 6px 18px rgba(91,124,255,0.08);
+        margin-bottom: 0.9rem;
+        {"animation: gradientShift 6s linear infinite;" if animations else ""}
+    }}
+
+    /* small info card */
+    .info-card {{
+        border-radius: 12px;
+        padding: 0.9rem;
+        background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+        border: 1px solid rgba(255,255,255,0.02);
+    }}
+    .info-title {{ color: var(--accent-primary); font-weight: 700; }}
     .info-desc {{ color: var(--muted); font-size: 0.95rem; }}
 
-    /* Result styles - subtle left accent to communicate severity */
-    .result-spam {{ border-left: 4px solid #ff6b6b; }}
-    .result-safe {{ border-left: 4px solid var(--accent-2); }}
+    /* annotated message style */
+    .annotated {{
+        background: rgba(255,255,255,0.01);
+        border-radius: 10px;
+        padding: 0.9rem;
+        line-height: 1.7;
+        color: #eaf0ff;
+    }}
+    .annotated .spam {{
+        background: rgba(255,90,90,0.12);
+        color: #ffdfe0;
+        padding: 2px 8px;
+        border-radius: 999px;
+        margin: 0 2px;
+        display: inline-block;
+    }}
+    .annotated .ham {{
+        background: rgba(75,199,139,0.12);
+        color: #eafff0;
+        padding: 2px 8px;
+        border-radius: 999px;
+        margin: 0 2px;
+        display: inline-block;
+    }}
 
-    .result-icon {{ font-size: 2.6rem; display:block; margin-bottom:0.5rem; }}
-    .result-text {{ font-size: { '1rem' if compact else '1.6rem' }; font-weight: 800; margin: 0.4rem 0; }}
-    .result-message {{ color: var(--muted); font-size: 0.95rem; }}
+    /* Responsive & accessibility tweaks */
+    @media (max-width: 900px) {{
+        .main .block-container {{ padding-left: 1rem; padding-right: 1rem; }}
+    }}
+    @media (max-width: 640px) {{
+        .result-title {{ font-size: 1.05rem; }}
+        .card {{ padding: 0.8rem; }}
+        .stButton > button {{ padding: 0.8rem; }}
+    }}
 
-    .confidence-score {{ background: rgba(255,255,255,0.03); padding: 0.5rem; border-radius: 10px; display: inline-block; color: #fff; font-weight:600; }}
-
-    /* Small helpers */
-    .small-muted {{ color: var(--muted); font-size: 0.9rem; }}
-
-    /* Plotly blending */
-    .js-plotly-plot .plot-container .svg-container {{ background: transparent !important; }}
-
-    /* accessible focus states for interactive elements */
+    /* focus visibility */
     button:focus, a:focus {{ outline: 3px solid rgba(91,124,255,0.12); outline-offset: 2px; }}
 
     </style>
     """
     if logo_base64:
         css += f'<link rel="icon" type="image/png" href="data:image/png;base64,{logo_base64}">'
-
     return css
 
 
 def render_header(title: str = "🛡️ Email / SMS Spam Classifier", subtitle: str = "Protect your inbox from unwanted messages with AI-powered detection"):
     """
-    Render a compact header. Backwards-compatible with previous render_header().
+    Render a compact header using the current CSS. Animation class applied.
     """
     st.markdown(f"""
-        <div class="main-header">
-            <h1>{title}</h1>
-            <p>{subtitle}</p>
+        <div class="card animate" style="text-align:center; margin-bottom:1rem;">
+            <div class="accent-bar" aria-hidden="true"></div>
+            <div style="display:flex; align-items:center; gap:1rem; justify-content:center; flex-direction:column;">
+                <div style="font-weight:800; font-size:1.5rem; line-height:1.1;">{title}</div>
+                <div style="color:var(--muted); margin-top:0.25rem;">{subtitle}</div>
+            </div>
         </div>
     """, unsafe_allow_html=True)
 
 
 def render_result_card(is_spam: bool, confidence_pct: float, short_message: Optional[str] = None) -> str:
     """
-    Return an HTML fragment for a result card. Useful if app wants to render
-    results consistently via a helper instead of inline HTML.
+    Return an HTML fragment for a stylized result card.
+    Keeps the same content/semantics as previous implementations but with richer styling + subtle animation.
     """
     tone_class = "result-spam" if is_spam else "result-safe"
     icon = "🚨" if is_spam else "✅"
+    title = "SPAM DETECTED" if is_spam else "SAFE MESSAGE"
     short_message = short_message or ("This message has been classified as spam. Please be cautious." if is_spam
                                      else "This message appears to be legitimate and safe.")
     html = f"""
-    <div class="result-card {tone_class}">
-        <div class="result-icon">{icon}</div>
-        <div class="result-text">{'SPAM DETECTED' if is_spam else 'SAFE MESSAGE'}</div>
-        <div class="result-message">{short_message}</div>
-        <div class="confidence-score"><strong>Confidence Level: {confidence_pct:.1f}%</strong></div>
+    <div class="result-card card {tone_class} animate" role="status" aria-live="polite">
+        <div style="display:flex; gap:1rem; align-items:center;">
+            <div class="icon result-icon float" style="width:64px; height:64px; border-radius:12px; font-size:2rem; display:flex; align-items:center; justify-content:center;">{icon}</div>
+            <div style="flex:1;">
+                <div class="result-title">{title}</div>
+                <div class="result-sub">{short_message}</div>
+            </div>
+            <div style="text-align:right;">
+                <div style="font-weight:800; font-size:1.05rem; color:#fff;">{confidence_pct:.1f}%</div>
+                <div style="color:var(--muted); font-size:0.85rem;">confidence</div>
+            </div>
+        </div>
     </div>
     """
     return html
@@ -182,17 +337,20 @@ def render_info_cards(cards: Iterable[Dict[str, str]]):
     """
     Render a row of small info cards. Each card is a dict with keys:
     - icon (str), title (str), desc (str)
-    Example:
-        [{'icon': '🔍', 'title': 'Text Analysis', 'desc': '...'}, ...]
+    Cards receive a gentle entrance animation and floating icon.
     """
-    # This function writes directly to Streamlit
-    cols = st.columns(len(list(cards)))
-    for c, col in zip(cards, cols):
+    cards_list = list(cards)
+    if not cards_list:
+        return
+    cols = st.columns(len(cards_list))
+    for idx, (c, col) in enumerate(zip(cards_list, cols)):
         with col:
             st.markdown(f"""
-            <div class="info-card" style="text-align: center;">
-                <div style="font-size: 1.6rem;">{c.get('icon','')}</div>
-                <div class="info-title">{c.get('title','')}</div>
-                <div class="info-desc">{c.get('desc','')}</div>
+            <div class="info-card card animate" style="text-align:center;">
+                <div style="display:flex; align-items:center; gap:0.6rem; justify-content:center; flex-direction:column;">
+                    <div class="icon float" style="font-size:1.4rem;">{c.get('icon','')}</div>
+                    <div class="info-title" style="margin-top:0.25rem;">{c.get('title','')}</div>
+                    <div class="info-desc" style="margin-top:0.4rem;">{c.get('desc','')}</div>
+                </div>
             </div>
             """, unsafe_allow_html=True)
