@@ -13,10 +13,7 @@ def setup_page(
     compact: bool = False,
 ):
     """
-    Configure the Streamlit page and inject polished CSS with advanced animations.
-
-    - animations: enable/disable animated effects (honored via CSS classes and prefers-reduced-motion).
-    - compact: reduce paddings/typography for tight layouts (mobile/embedded).
+    Configure the Streamlit page with premium design and advanced animations.
     """
     logo_base64 = ""
     page_icon = "🛡️"
@@ -46,246 +43,498 @@ def setup_page(
 
 def get_css(logo_base64: str, animations: bool = True, compact: bool = False) -> str:
     """
-    Return an updated CSS theme with stronger, attractive animated gradients and refined card shapes.
-    The animations argument toggles animated rules; prefers-reduced-motion is honored.
+    Premium CSS with glassmorphism, advanced gradients, and sophisticated animations.
     """
     anim_enabled = animations
     css = f"""
     <style>
     :root {{
-        --bg-top: #041021;
-        --bg-bottom: #061226;
-        --card-bg: rgba(255,255,255,0.02);
-        --card-surface: rgba(255,255,255,0.01);
-        --accent-primary-1: #4f7bff;
-        --accent-primary-2: #7bd3ff;
-        --accent-success: #6be19b;
-        --accent-danger: #ff7b7b;
-        --muted: #9aa4b2;
-        --glass-border: rgba(255,255,255,0.04);
-        --radius: 18px;
-        --max-width: 1120px;
+        --bg-dark: #0a0e27;
+        --bg-mid: #0f1433;
+        --bg-light: #161b42;
+        --glass-bg: rgba(255, 255, 255, 0.03);
+        --glass-border: rgba(255, 255, 255, 0.08);
+        --glass-highlight: rgba(255, 255, 255, 0.12);
+        
+        --primary-blue: #3b82f6;
+        --primary-cyan: #06b6d4;
+        --primary-purple: #8b5cf6;
+        --success-green: #10b981;
+        --success-emerald: #34d399;
+        --danger-red: #ef4444;
+        --danger-rose: #fb7185;
+        
+        --text-primary: #f8fafc;
+        --text-secondary: #cbd5e1;
+        --text-muted: #94a3b8;
+        
+        --radius-sm: 12px;
+        --radius-md: 16px;
+        --radius-lg: 20px;
+        --radius-xl: 24px;
+        
+        --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+        --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.2);
+        --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.3);
+        --shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.4);
+        
+        --max-width: 1200px;
     }}
 
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+    * {{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }}
 
     html, body, .stApp {{
-        background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
-        color: #eaf0ff;
+        background: radial-gradient(ellipse at top, var(--bg-mid), var(--bg-dark)),
+                    radial-gradient(ellipse at bottom, var(--bg-light), var(--bg-dark));
+        background-attachment: fixed;
+        color: var(--text-primary);
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+        overflow-x: hidden;
+    }}
+
+    /* Animated background particles */
+    .stApp::before {{
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: 
+            radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+            radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+            radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+        pointer-events: none;
+        z-index: 0;
+        {"animation: particleFloat 20s ease-in-out infinite;" if anim_enabled else ""}
+    }}
+
+    @keyframes particleFloat {{
+        0%, 100% {{ transform: translate(0, 0) scale(1); }}
+        33% {{ transform: translate(30px, -30px) scale(1.1); }}
+        66% {{ transform: translate(-20px, 20px) scale(0.9); }}
     }}
 
     .main .block-container {{
         max-width: var(--max-width);
-        padding-top: { '1rem' if compact else '2rem' };
-        padding-bottom: { '1rem' if compact else '2rem' };
-        padding-left: clamp(0.75rem, 3vw, 1.25rem);
-        padding-right: clamp(0.75rem, 3vw, 1.25rem);
+        padding-top: {'2rem' if compact else '3rem'};
+        padding-bottom: {'2rem' if compact else '3rem'};
+        padding-left: clamp(1rem, 4vw, 2rem);
+        padding-right: clamp(1rem, 4vw, 2rem);
+        position: relative;
+        z-index: 1;
     }}
 
-    /* hide default streamlit chrome for cleaner canvas */
-    #MainMenu, footer, header {{ visibility: hidden; height: 0; }}
+    #MainMenu, footer, header {{
+        visibility: hidden;
+        height: 0;
+    }}
 
-    /* Respect reduced motion preference */
     @media (prefers-reduced-motion: reduce) {{
-        .glow, .soft-gradient, .float, .animate, .tilt-hover, .shimmer {{ animation: none !important; transition: none !important; transform: none !important; }}
+        * {{
+            animation: none !important;
+            transition: none !important;
+        }}
     }}
 
-    /* Animated gradient backgrounds for cards - subtle and professional */
-    @keyframes gradientFlowPrimary {{
+    /* Advanced gradient animations */
+    @keyframes gradientShift {{
         0% {{ background-position: 0% 50%; }}
         50% {{ background-position: 100% 50%; }}
         100% {{ background-position: 0% 50%; }}
     }}
-    @keyframes gradientFlowAccent {{
-        0% {{ background-position: 0% 50%; }}
-        50% {{ background-position: 75% 50%; }}
-        100% {{ background-position: 0% 50%; }}
+
+    @keyframes glowPulse {{
+        0%, 100% {{ opacity: 0.5; filter: blur(20px); }}
+        50% {{ opacity: 0.8; filter: blur(25px); }}
     }}
 
-    /* entrance animation */
-    @keyframes entrance {{
-        0% {{ opacity: 0; transform: translateY(8px) scale(0.995); }}
-        100% {{ opacity: 1; transform: translateY(0) scale(1); }}
+    @keyframes slideInUp {{
+        from {{
+            opacity: 0;
+            transform: translateY(30px);
+        }}
+        to {{
+            opacity: 1;
+            transform: translateY(0);
+        }}
     }}
 
-    .animate {{ animation: {"entrance 420ms cubic-bezier(.2,.9,.2,1) both" if anim_enabled else "none"}; }}
-    .float {{ animation: {"translateY 4.8s ease-in-out infinite" if anim_enabled else "none"}; }}
+    @keyframes shimmerSlide {{
+        0% {{ transform: translateX(-100%); }}
+        100% {{ transform: translateX(100%); }}
+    }}
 
-    /* Card base */
+    @keyframes float {{
+        0%, 100% {{ transform: translateY(0px); }}
+        50% {{ transform: translateY(-10px); }}
+    }}
+
+    /* Glass card base */
     .card {{
-        border-radius: var(--radius);
-        padding: 1.15rem;
-        color: #eaf0ff;
-        background: linear-gradient(180deg, var(--card-bg), var(--card-surface));
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
         border: 1px solid var(--glass-border);
-        box-shadow: 0 18px 48px rgba(2,8,20,0.56), inset 0 1px 0 rgba(255,255,255,0.02);
-        transition: transform 300ms cubic-bezier(.2,.9,.2,1), box-shadow 300ms ease;
-        overflow: visible;
-    }}
-
-    /* tilt hover for pointer devices, disabled on small screens in responsive rules */
-    .tilt-hover {{ will-change: transform; transform-style: preserve-3d; perspective: 800px; }}
-    .tilt-hover:hover {{ transform: translateY(-6px) rotateX(2.2deg) rotateY(-0.8deg) scale(1.006); box-shadow: 0 32px 80px rgba(2,8,20,0.68); }}
-
-    /* layered shadow (beveled) */
-    .card::after {{
-        content: "";
-        position: absolute;
-        left: 10px;
-        right: 10px;
-        bottom: -12px;
-        height: 12px;
-        border-radius: 12px;
-        background: linear-gradient(90deg, rgba(0,0,0,0.20), rgba(0,0,0,0.06));
-        filter: blur(6px);
-        z-index: -1;
-        opacity: 0.95;
-    }}
-
-    /* soft gradient border using background-clip technique */
-    .card.gradient-border {{
+        border-radius: var(--radius-lg);
+        padding: 1.5rem;
+        box-shadow: var(--shadow-lg),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
         position: relative;
-        padding: calc(1.15rem - 1px);
-    }}
-    .card.gradient-border::before {{
-        content: "";
-        position: absolute;
-        inset: 0;
-        border-radius: calc(var(--radius) + 2px);
-        padding: 2px;
-        background: linear-gradient(90deg, var(--accent-primary-1), var(--accent-primary-2), var(--accent-success));
-        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-        -webkit-mask-composite: xor;
-        mask-composite: exclude;
-        z-index: -2;
-        opacity: 0.95;
-        {"animation: gradientFlowPrimary 8s ease infinite;" if anim_enabled else ""}
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }}
 
-    /* result card: apply attractive soft-gradient background and glossy top */
-    .result-card {{
-        border-radius: 16px;
-        position: relative;
-        overflow: visible;
-        padding: 1.15rem;
-        background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    }}
-    .result-card.soft-gradient {{
-        background: linear-gradient(90deg, rgba(91,124,255,0.06), rgba(123,211,137,0.04));
-        {"background-size: 300% 300%;" if anim_enabled else ""}
-        {"animation: gradientFlowAccent 10s ease infinite;" if anim_enabled else ""}
-        border: 1px solid rgba(255,255,255,0.02);
-    }}
-    .result-card .gloss::before {{
+    /* Glossy overlay */
+    .card::before {{
         content: "";
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
-        height: 34%;
-        background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01));
-        border-top-left-radius: 16px;
-        border-top-right-radius: 16px;
+        height: 40%;
+        background: linear-gradient(180deg, 
+            rgba(255, 255, 255, 0.1) 0%, 
+            rgba(255, 255, 255, 0.05) 50%,
+            transparent 100%);
         pointer-events: none;
-        mix-blend-mode: overlay;
-        z-index: 0;
+        z-index: 1;
     }}
-    .result-spam {{ border-left: 5px solid var(--accent-danger); }}
-    .result-safe {{ border-left: 5px solid var(--accent-success); }}
 
-    /* icon badge with gradient glow */
-    .result-icon-badge {{
-        width: 68px;
-        height: 68px;
-        border-radius: 14px;
-        display:inline-flex;
-        align-items:center;
-        justify-content:center;
-        background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-        box-shadow: inset 0 1px 0 rgba(255,255,255,0.02), 0 12px 34px rgba(2,8,20,0.45);
-        margin-right: 14px;
-        flex-shrink: 0;
-        position: relative;
-    }}
-    .result-icon-badge::after {{
+    /* Shimmer effect on hover */
+    .card::after {{
         content: "";
         position: absolute;
-        inset: -6px;
-        border-radius: 16px;
-        background: radial-gradient(circle at 20% 20%, rgba(91,124,255,0.12), transparent 18%),
-                    radial-gradient(circle at 80% 80%, rgba(123,211,137,0.08), transparent 18%);
-        z-index: -1;
-        filter: blur(8px);
-        opacity: 0.95;
-        {"animation: gradientFlowPrimary 10s linear infinite;" if anim_enabled else ""}
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+            45deg,
+            transparent 30%,
+            rgba(255, 255, 255, 0.1) 50%,
+            transparent 70%
+        );
+        transform: translateX(-100%);
+        transition: transform 0.6s;
+        pointer-events: none;
+        z-index: 2;
     }}
 
-    /* info-card: pill-like with animated accent strip */
-    .info-card {{
-        border-radius: 14px;
-        padding: 0.95rem;
-        background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.008));
-        border: 1px solid rgba(255,255,255,0.02);
-        box-shadow: 0 10px 28px rgba(3,8,20,0.45);
-        position: relative;
+    .card:hover::after {{
+        {"transform: translateX(100%);" if anim_enabled else ""}
     }}
+
+    .card:hover {{
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-xl),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        border-color: var(--glass-highlight);
+    }}
+
+    .animate {{
+        {"animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;" if anim_enabled else ""}
+    }}
+
+    .animate:nth-child(2) {{ animation-delay: 0.1s; }}
+    .animate:nth-child(3) {{ animation-delay: 0.2s; }}
+    .animate:nth-child(4) {{ animation-delay: 0.3s; }}
+
+    /* Premium gradient border */
+    .gradient-border {{
+        position: relative;
+        border: none;
+    }}
+
+    .gradient-border::before {{
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: var(--radius-lg);
+        padding: 2px;
+        background: linear-gradient(135deg, 
+            var(--primary-blue),
+            var(--primary-cyan),
+            var(--primary-purple),
+            var(--primary-blue)
+        );
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        {"background-size: 300% 300%;" if anim_enabled else ""}
+        {"animation: gradientShift 6s ease infinite;" if anim_enabled else ""}
+    }}
+
+    /* Result card with advanced styling */
+    .result-card {{
+        border-radius: var(--radius-xl);
+        padding: 2rem;
+        position: relative;
+        overflow: visible;
+        background: linear-gradient(135deg, 
+            rgba(59, 130, 246, 0.05),
+            rgba(139, 92, 246, 0.03)
+        );
+        backdrop-filter: blur(24px);
+        border: 1px solid var(--glass-border);
+        box-shadow: var(--shadow-xl),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }}
+
+    .result-card.soft-gradient {{
+        {"background-size: 400% 400%;" if anim_enabled else ""}
+        {"animation: gradientShift 12s ease infinite;" if anim_enabled else ""}
+    }}
+
+    /* Glow effect behind result card */
+    .result-card::after {{
+        content: "";
+        position: absolute;
+        inset: -20px;
+        border-radius: var(--radius-xl);
+        background: inherit;
+        filter: blur(30px);
+        opacity: 0;
+        z-index: -1;
+        transition: opacity 0.4s;
+    }}
+
+    .result-card:hover::after {{
+        {"opacity: 0.6;" if anim_enabled else ""}
+    }}
+
+    .result-spam {{
+        border-left: 4px solid var(--danger-red);
+        background: linear-gradient(135deg, 
+            rgba(239, 68, 68, 0.08),
+            rgba(251, 113, 133, 0.04)
+        );
+    }}
+
+    .result-spam::after {{
+        background: radial-gradient(circle at 50% 50%, 
+            rgba(239, 68, 68, 0.3),
+            transparent 70%
+        );
+    }}
+
+    .result-safe {{
+        border-left: 4px solid var(--success-green);
+        background: linear-gradient(135deg, 
+            rgba(16, 185, 129, 0.08),
+            rgba(52, 211, 153, 0.04)
+        );
+    }}
+
+    .result-safe::after {{
+        background: radial-gradient(circle at 50% 50%, 
+            rgba(16, 185, 129, 0.3),
+            transparent 70%
+        );
+    }}
+
+    /* Premium icon badge */
+    .result-icon-badge {{
+        width: 80px;
+        height: 80px;
+        border-radius: var(--radius-md);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.1),
+            rgba(255, 255, 255, 0.05)
+        );
+        backdrop-filter: blur(10px);
+        box-shadow: var(--shadow-md),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        font-size: 2.5rem;
+        position: relative;
+        flex-shrink: 0;
+        {"animation: float 3s ease-in-out infinite;" if anim_enabled else ""}
+    }}
+
+    .result-icon-badge::before {{
+        content: "";
+        position: absolute;
+        inset: -2px;
+        border-radius: var(--radius-md);
+        background: linear-gradient(135deg,
+            var(--primary-blue),
+            var(--primary-purple)
+        );
+        z-index: -1;
+        opacity: 0.5;
+        filter: blur(12px);
+        {"animation: glowPulse 2s ease-in-out infinite;" if anim_enabled else ""}
+    }}
+
+    /* Info card with accent */
+    .info-card {{
+        border-radius: var(--radius-md);
+        padding: 1.5rem;
+        background: var(--glass-bg);
+        backdrop-filter: blur(16px);
+        border: 1px solid var(--glass-border);
+        box-shadow: var(--shadow-md);
+        position: relative;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow: hidden;
+    }}
+
+    .info-card:hover {{
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lg);
+        border-color: var(--glass-highlight);
+    }}
+
     .info-card .accent-strip {{
         position: absolute;
         left: 0;
         top: 0;
         bottom: 0;
-        width: 6px;
-        border-top-left-radius: 14px;
-        border-bottom-left-radius: 14px;
-        background: linear-gradient(180deg, var(--accent-primary-1), var(--accent-primary-2));
-        {"animation: gradientFlowPrimary 7s linear infinite;" if anim_enabled else ""}
+        width: 4px;
+        background: linear-gradient(180deg,
+            var(--primary-blue),
+            var(--primary-cyan),
+            var(--primary-purple)
+        );
+        {"background-size: 100% 300%;" if anim_enabled else ""}
+        {"animation: gradientShift 8s ease infinite;" if anim_enabled else ""}
     }}
 
-    /* small shimmer for headings (very subtle) */
-    @keyframes shimmer {{
-        0% {{ background-position: -200% 0; }}
-        100% {{ background-position: 200% 0; }}
+    /* Accent bar for header */
+    .accent-bar {{
+        height: 6px;
+        width: 100%;
+        border-radius: 999px;
+        background: linear-gradient(90deg,
+            var(--primary-blue),
+            var(--primary-cyan),
+            var(--primary-purple),
+            var(--primary-blue)
+        );
+        {"background-size: 300% 100%;" if anim_enabled else ""}
+        {"animation: gradientShift 8s linear infinite;" if anim_enabled else ""}
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
     }}
+
+    /* Shimmer text effect */
     .shimmer {{
-        background: linear-gradient(90deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 100%);
-        background-size: 200% 100%;
-        {"animation: shimmer 2400ms linear infinite" if anim_enabled else ""}
+        background: linear-gradient(90deg,
+            var(--text-primary) 0%,
+            var(--primary-cyan) 50%,
+            var(--text-primary) 100%
+        );
+        {"background-size: 200% auto;" if anim_enabled else ""}
+        {"animation: gradientShift 3s linear infinite;" if anim_enabled else ""}
         -webkit-background-clip: text;
-        color: transparent;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
     }}
 
-    /* annotated chips (rounded with gradient hints) */
+    /* Chip badges */
     .annotated .spam {{
-        background: linear-gradient(90deg, rgba(255,90,90,0.16), rgba(255,70,70,0.06));
-        color: #ffdfe0;
-        padding: 6px 12px;
+        background: linear-gradient(135deg,
+            rgba(239, 68, 68, 0.2),
+            rgba(251, 113, 133, 0.1)
+        );
+        color: #fecdd3;
+        padding: 8px 16px;
         border-radius: 999px;
         margin: 0 6px;
         display: inline-block;
-        box-shadow: 0 8px 30px rgba(255,80,80,0.06);
+        font-weight: 600;
+        font-size: 0.9rem;
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+        transition: all 0.3s;
     }}
+
+    .annotated .spam:hover {{
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(239, 68, 68, 0.3);
+    }}
+
     .annotated .ham {{
-        background: linear-gradient(90deg, rgba(75,199,139,0.14), rgba(60,180,115,0.04));
-        color: #eafff0;
-        padding: 6px 12px;
+        background: linear-gradient(135deg,
+            rgba(16, 185, 129, 0.2),
+            rgba(52, 211, 153, 0.1)
+        );
+        color: #d1fae5;
+        padding: 8px 16px;
         border-radius: 999px;
         margin: 0 6px;
         display: inline-block;
-        box-shadow: 0 8px 30px rgba(60,180,115,0.04);
+        font-weight: 600;
+        font-size: 0.9rem;
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        transition: all 0.3s;
     }}
 
-    /* Focus outlines for accessibility */
-    button:focus, a:focus {{ outline: 3px solid rgba(91,124,255,0.12); outline-offset: 2px; }}
-
-    /* Responsive reductions for hover/tilt on small screens */
-    @media (max-width: 900px) {{
-        .tilt-hover:hover {{ transform: translateY(-4px) rotateX(0) rotateY(0) scale(1.004); box-shadow: 0 20px 48px rgba(3,8,20,0.58); }}
+    .annotated .ham:hover {{
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
     }}
-    @media (max-width: 640px) {{
-        .result-icon-badge {{ width: 56px; height: 56px; border-radius: 12px; }}
-        .card {{ padding: 0.9rem; border-radius: 12px; }}
+
+    /* Focus states for accessibility */
+    button:focus, 
+    a:focus,
+    input:focus,
+    textarea:focus {{
+        outline: 2px solid var(--primary-blue);
+        outline-offset: 2px;
+    }}
+
+    /* Typography enhancements */
+    h1, h2, h3, h4, h5, h6 {{
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.2;
+    }}
+
+    p {{
+        line-height: 1.6;
+    }}
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {{
+        .result-icon-badge {{
+            width: 64px;
+            height: 64px;
+            font-size: 2rem;
+        }}
+        
+        .card {{
+            padding: 1.25rem;
+            border-radius: var(--radius-md);
+        }}
+        
+        .result-card {{
+            padding: 1.5rem;
+        }}
+    }}
+
+    @media (max-width: 480px) {{
+        .result-icon-badge {{
+            width: 56px;
+            height: 56px;
+            font-size: 1.75rem;
+        }}
+        
+        .card {{
+            padding: 1rem;
+        }}
     }}
     </style>
     """
@@ -294,42 +543,65 @@ def get_css(logo_base64: str, animations: bool = True, compact: bool = False) ->
     return css
 
 
-def render_header(title: str = "🛡️ Email / SMS Spam Classifier", subtitle: str = "Protect your inbox from unwanted messages with AI-powered detection"):
+def render_header(
+    title: str = "🛡️ Email / SMS Spam Classifier",
+    subtitle: str = "Protect your inbox from unwanted messages with AI-powered detection"
+):
     """
-    Render the header using the improved card appearance and animations.
+    Render premium header with gradient accents and animations.
     """
     st.markdown(f"""
-        <div class="card tilt-hover animate" style="text-align:center; margin-bottom:1rem;">
-            <div class="accent-bar" style="height:8px; width:100%; border-radius:10px; margin-bottom:12px; background: linear-gradient(90deg, var(--accent-primary-1), var(--accent-primary-2));"></div>
-            <div style="display:flex; align-items:center; gap:1rem; justify-content:center; flex-direction:column;">
-                <div style="font-weight:800; font-size:1.35rem; line-height:1.05;" class="shimmer">{title}</div>
-                <div style="color:var(--muted); margin-top:0.25rem;">{subtitle}</div>
+        <div class="card gradient-border animate" style="text-align: center; margin-bottom: 2rem;">
+            <div class="accent-bar"></div>
+            <div style="display: flex; align-items: center; gap: 1rem; justify-content: center; flex-direction: column;">
+                <h1 style="font-weight: 900; font-size: clamp(1.5rem, 4vw, 2.25rem); margin: 0;" class="shimmer">
+                    {title}
+                </h1>
+                <p style="color: var(--text-muted); font-size: clamp(0.9rem, 2vw, 1.1rem); margin: 0.5rem 0 0 0; max-width: 600px;">
+                    {subtitle}
+                </p>
             </div>
         </div>
     """, unsafe_allow_html=True)
 
 
-def render_result_card(is_spam: bool, confidence_pct: float, short_message: Optional[str] = None) -> str:
+def render_result_card(
+    is_spam: bool,
+    confidence_pct: float,
+    short_message: Optional[str] = None
+) -> str:
     """
-    Return an HTML fragment for a stylized result card using animated gradients and refined shapes.
+    Generate premium result card with advanced styling and animations.
     """
     tone_class = "result-spam" if is_spam else "result-safe"
     icon = "🚨" if is_spam else "✅"
     title = "SPAM DETECTED" if is_spam else "SAFE MESSAGE"
-    short_message = short_message or ("This message has been classified as spam. Please be cautious." if is_spam
-                                     else "This message appears to be legitimate and safe.")
+    short_message = short_message or (
+        "This message has been classified as spam. Exercise caution before proceeding." if is_spam
+        else "This message appears to be legitimate and safe to read."
+    )
+    
     html = f"""
-    <div class="result-card soft-gradient card tilt-hover {tone_class} animate">
-        <div class="gloss"></div>
-        <div class="content" style="display:flex; gap:1rem; align-items:center;">
-            <div class="result-icon-badge" aria-hidden="true">{icon}</div>
-            <div style="flex:1;">
-                <div style="font-weight:800; font-size:1.05rem;">{title}</div>
-                <div style="color:var(--muted); margin-top:0.35rem;">{short_message}</div>
+    <div class="result-card soft-gradient card {tone_class} animate" style="margin: 2rem 0;">
+        <div style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;">
+            <div class="result-icon-badge" aria-label="Status icon">
+                {icon}
             </div>
-            <div style="text-align:right;">
-                <div style="font-weight:900; font-size:1.05rem; color:#fff;">{confidence_pct:.1f}%</div>
-                <div style="color:var(--muted); font-size:0.85rem;">confidence</div>
+            <div style="flex: 1; min-width: 200px;">
+                <h2 style="font-weight: 800; font-size: 1.5rem; margin: 0 0 0.5rem 0; letter-spacing: -0.02em;">
+                    {title}
+                </h2>
+                <p style="color: var(--text-secondary); margin: 0; line-height: 1.6;">
+                    {short_message}
+                </p>
+            </div>
+            <div style="text-align: right; padding: 1rem; background: rgba(0, 0, 0, 0.2); border-radius: var(--radius-md); backdrop-filter: blur(10px);">
+                <div style="font-weight: 900; font-size: 2rem; color: var(--text-primary); line-height: 1;">
+                    {confidence_pct:.1f}%
+                </div>
+                <div style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                    Confidence
+                </div>
             </div>
         </div>
     </div>
@@ -339,22 +611,28 @@ def render_result_card(is_spam: bool, confidence_pct: float, short_message: Opti
 
 def render_info_cards(cards: Iterable[Dict[str, str]]):
     """
-    Render a row of animated gradient info cards. Each card has:
-    - icon (str), title (str), desc (str)
+    Render premium info cards with gradient accents and hover effects.
     """
     cards_list = list(cards)
     if not cards_list:
         return
+    
     cols = st.columns(len(cards_list))
-    for idx, (c, col) in enumerate(zip(cards_list, cols)):
+    for idx, (card_data, col) in enumerate(zip(cards_list, cols)):
         with col:
             st.markdown(f"""
-            <div class="info-card card tilt-hover animate" style="text-align:center; position:relative;">
+            <div class="info-card card animate" style="text-align: center; height: 100%;">
                 <div class="accent-strip" aria-hidden="true"></div>
-                <div style="display:flex; align-items:center; gap:0.6rem; justify-content:center; flex-direction:column;">
-                    <div class="icon" style="font-size:1.2rem;">{c.get('icon','')}</div>
-                    <div style="font-weight:700; margin-top:0.25rem;">{c.get('title','')}</div>
-                    <div style="color:var(--muted); margin-top:0.35rem; font-size:0.95rem;">{c.get('desc','')}</div>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem; padding: 0.5rem;">
+                    <div style="font-size: 2.5rem; line-height: 1;">
+                        {card_data.get('icon', '')}
+                    </div>
+                    <h3 style="font-weight: 700; font-size: 1.1rem; margin: 0; color: var(--text-primary);">
+                        {card_data.get('title', '')}
+                    </h3>
+                    <p style="color: var(--text-muted); margin: 0; font-size: 0.95rem; line-height: 1.5;">
+                        {card_data.get('desc', '')}
+                    </p>
                 </div>
             </div>
             """, unsafe_allow_html=True)
