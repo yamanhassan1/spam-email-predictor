@@ -3,3 +3,5 @@ nltk==3.9.1
 pandas>=2.2.0
 scikit-learn
 Pillow>=10.0.0
+matplotlib>=3.7.0
+plotly>=5.17.0

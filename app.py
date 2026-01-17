@@ -2,10 +2,15 @@ import streamlit as st
 import pickle
 import nltk
 import base64
+import matplotlib.pyplot as plt
+import plotly.graph_objects as go
+import plotly.express as px
+from collections import Counter
 from pathlib import Path
 from PIL import Image
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
+import numpy as np
 
 # Read logo and convert to base64 for favicon (app icon)
 logo_base64 = ""
@@ -511,6 +516,19 @@ if predict_button:
             # Get prediction probability for confidence score
             prediction_proba = model.predict_proba(vector_input)[0]
             confidence = max(prediction_proba) * 100
+            spam_prob = prediction_proba[1] * 100
+            ham_prob = prediction_proba[0] * 100
+            
+            # Calculate message statistics
+            word_count = len(input_sms.split())
+            char_count = len(input_sms)
+            char_count_no_spaces = len(input_sms.replace(" ", ""))
+            sentence_count = len(nltk.sent_tokenize(input_sms))
+            
+            # Word frequency analysis
+            words = transformed_sms.split()
+            word_freq = Counter(words)
+            top_words = dict(word_freq.most_common(10)) if words else {}
             
             # Display result with custom styling
             if result == 1:
@@ -535,6 +553,184 @@ if predict_button:
                         </div>
                     </div>
                 """, unsafe_allow_html=True)
+            
+            # Statistics and Visualizations Section
+            st.markdown("<br>", unsafe_allow_html=True)
+            st.markdown("### 📊 Message Analysis & Statistics")
+            
+            # Message Statistics Cards
+            col1, col2, col3, col4 = st.columns(4)
+            with col1:
+                st.markdown(f"""
+                    <div class="info-card" style="padding: 1.5rem;">
+                        <div style="font-size: 2rem; color: #667eea; font-weight: 700;">{word_count}</div>
+                        <div style="color: #666; margin-top: 0.5rem;">Words</div>
+                    </div>
+                """, unsafe_allow_html=True)
+            with col2:
+                st.markdown(f"""
+                    <div class="info-card" style="padding: 1.5rem;">
+                        <div style="font-size: 2rem; color: #667eea; font-weight: 700;">{char_count}</div>
+                        <div style="color: #666; margin-top: 0.5rem;">Characters</div>
+                    </div>
+                """, unsafe_allow_html=True)
+            with col3:
+                st.markdown(f"""
+                    <div class="info-card" style="padding: 1.5rem;">
+                        <div style="font-size: 2rem; color: #667eea; font-weight: 700;">{sentence_count}</div>
+                        <div style="color: #666; margin-top: 0.5rem;">Sentences</div>
+                    </div>
+                """, unsafe_allow_html=True)
+            with col4:
+                st.markdown(f"""
+                    <div class="info-card" style="padding: 1.5rem;">
+                        <div style="font-size: 2rem; color: #667eea; font-weight: 700;">{len(words)}</div>
+                        <div style="color: #666; margin-top: 0.5rem;">Unique Words</div>
+                    </div>
+                """, unsafe_allow_html=True)
+            
+            # Graphs Section
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                # Confidence Score Gauge Chart
+                st.markdown("#### 🎯 Prediction Confidence")
+                fig_gauge = go.Figure(go.Indicator(
+                    mode = "gauge+number+delta",
+                    value = confidence,
+                    domain = {'x': [0, 1], 'y': [0, 1]},
+                    title = {'text': "Confidence (%)"},
+                    delta = {'reference': 50},
+                    gauge = {
+                        'axis': {'range': [None, 100]},
+                        'bar': {'color': "#f5576c" if result == 1 else "#4facfe"},
+                        'steps': [
+                            {'range': [0, 50], 'color': "lightgray"},
+                            {'range': [50, 100], 'color': "gray"}
+                        ],
+                        'threshold': {
+                            'line': {'color': "red", 'width': 4},
+                            'thickness': 0.75,
+                            'value': 90
+                        }
+                    }
+                ))
+                fig_gauge.update_layout(
+                    height=300,
+                    paper_bgcolor='rgba(0,0,0,0)',
+                    plot_bgcolor='rgba(0,0,0,0)',
+                    font=dict(color="white")
+                )
+                st.plotly_chart(fig_gauge, use_container_width=True)
+            
+            with col2:
+                # Spam vs Ham Probability Chart
+                st.markdown("#### 📈 Classification Probabilities")
+                fig_prob = go.Figure(data=[
+                    go.Bar(
+                        x=['Safe (Ham)', 'Spam'],
+                        y=[ham_prob, spam_prob],
+                        marker_color=['#4facfe', '#f5576c'],
+                        text=[f'{ham_prob:.1f}%', f'{spam_prob:.1f}%'],
+                        textposition='auto',
+                    )
+                ])
+                fig_prob.update_layout(
+                    height=300,
+                    yaxis_title="Probability (%)",
+                    paper_bgcolor='rgba(0,0,0,0)',
+                    plot_bgcolor='rgba(0,0,0,0)',
+                    font=dict(color="white"),
+                    xaxis=dict(color="white"),
+                    yaxis=dict(color="white")
+                )
+                st.plotly_chart(fig_prob, use_container_width=True)
+            
+            # Top Words Visualization
+            if top_words:
+                st.markdown("#### 🔤 Top Words in Message")
+                words_list = list(top_words.keys())
+                freq_list = list(top_words.values())
+                
+                fig_words = go.Figure(data=[
+                    go.Bar(
+                        x=freq_list,
+                        y=words_list,
+                        orientation='h',
+                        marker_color='#667eea',
+                        text=freq_list,
+                        textposition='auto',
+                    )
+                ])
+                fig_words.update_layout(
+                    height=400,
+                    xaxis_title="Frequency",
+                    yaxis_title="Words",
+                    paper_bgcolor='rgba(0,0,0,0)',
+                    plot_bgcolor='rgba(0,0,0,0)',
+                    font=dict(color="white"),
+                    xaxis=dict(color="white"),
+                    yaxis=dict(color="white")
+                )
+                st.plotly_chart(fig_words, use_container_width=True)
+            
+            # Message Characteristics Pie Chart
+            st.markdown("#### 📊 Message Characteristics")
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                # Character distribution
+                labels = ['Characters (no spaces)', 'Spaces']
+                values = [char_count_no_spaces, char_count - char_count_no_spaces]
+                colors = ['#667eea', '#764ba2']
+                
+                fig_chars = go.Figure(data=[go.Pie(
+                    labels=labels,
+                    values=values,
+                    hole=0.4,
+                    marker_colors=colors
+                )])
+                fig_chars.update_layout(
+                    height=300,
+                    paper_bgcolor='rgba(0,0,0,0)',
+                    plot_bgcolor='rgba(0,0,0,0)',
+                    font=dict(color="white"),
+                    showlegend=True
+                )
+                st.plotly_chart(fig_chars, use_container_width=True)
+            
+            with col2:
+                # Word length distribution
+                word_lengths = [len(word) for word in words if word]
+                if word_lengths:
+                    length_counts = Counter(word_lengths)
+                    lengths = sorted(length_counts.keys())
+                    counts = [length_counts[l] for l in lengths]
+                    
+                    fig_length = go.Figure(data=[
+                        go.Scatter(
+                            x=lengths,
+                            y=counts,
+                            mode='lines+markers',
+                            marker=dict(color='#f5576c', size=10),
+                            line=dict(color='#f5576c', width=3),
+                            fill='tozeroy',
+                            fillcolor='rgba(245, 87, 108, 0.2)'
+                        )
+                    ])
+                    fig_length.update_layout(
+                        height=300,
+                        xaxis_title="Word Length",
+                        yaxis_title="Frequency",
+                        paper_bgcolor='rgba(0,0,0,0)',
+                        plot_bgcolor='rgba(0,0,0,0)',
+                        font=dict(color="white"),
+                        xaxis=dict(color="white"),
+                        yaxis=dict(color="white")
+                    )
+                    st.plotly_chart(fig_length, use_container_width=True)
+                else:
+                    st.info("No words to analyze")
 
 # Info Section with glassmorphism cards
 st.markdown("---")
