@@ -20,6 +20,7 @@ from src.visualization import (
     wordcloud_figure,
     annotated_message_html,
     create_metric_card,
+    message_complexity_radar,
 )
 
 # Initialize page with premium design
@@ -215,11 +216,11 @@ if predict_button:
                 
                 col1, col2 = st.columns([1, 1])
                 with col1:
-                    fig_wc = wordcloud_figure(dict(word_freq))
-                    st.plotly_chart(fig_wc, use_container_width=True, config={'displayModeBar': False})
-                with col2:
                     fig_words = top_words_bar(words_list, freq_list, spam_wordset=spam_words_set)
                     st.plotly_chart(fig_words, use_container_width=True, config={'displayModeBar': False})
+                with col2:
+                    fig_wc = wordcloud_figure(dict(word_freq))
+                    st.plotly_chart(fig_wc, use_container_width=True, config={'displayModeBar': False})
 
             # Message characteristics
             st.markdown("<br>", unsafe_allow_html=True)
@@ -229,7 +230,7 @@ if predict_button:
                 </h4>
             """, unsafe_allow_html=True)
             
-            col1, col2 = st.columns(2)
+            col1, col2, col3 = st.columns(3)
             with col1:
                 labels = ['Characters (no spaces)', 'Spaces']
                 values = [char_count_no_spaces, char_count - char_count_no_spaces]
@@ -250,6 +251,17 @@ if predict_button:
                             <div style="color: #cbd5e1;">No word data available for analysis</div>
                         </div>
                     """, unsafe_allow_html=True)
+            with col3:
+                # Calculate average word length
+                avg_word_len = sum(word_lengths) / len(word_lengths) if word_lengths else 0
+                fig_radar = message_complexity_radar(
+                    word_count=word_count,
+                    char_count=char_count,
+                    sentence_count=sentence_count,
+                    unique_word_count=len(set(words)),
+                    avg_word_length=avg_word_len
+                )
+                st.plotly_chart(fig_radar, use_container_width=True, config={'displayModeBar': False})
 
             # Detailed pattern analysis
             st.markdown("<br><br>", unsafe_allow_html=True)
