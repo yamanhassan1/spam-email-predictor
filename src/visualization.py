@@ -616,6 +616,76 @@ def figure_to_image_bytes(fig: go.Figure, fmt: str = "png") -> Optional[bytes]:
         return None
 
 
+def message_complexity_radar(
+    word_count: int,
+    char_count: int,
+    sentence_count: int,
+    unique_word_count: int,
+    avg_word_length: float,
+    height: int = 400
+) -> go.Figure:
+    """
+    Create a radar chart showing message complexity metrics.
+    """
+    # Normalize values to 0-100 scale for better visualization
+    max_words = 200
+    max_chars = 1000
+    max_sentences = 20
+    max_unique = 150
+    max_avg_len = 10
+    
+    normalized_values = [
+        min(100, (word_count / max_words) * 100),
+        min(100, (char_count / max_chars) * 100),
+        min(100, (sentence_count / max_sentences) * 100),
+        min(100, (unique_word_count / max_unique) * 100),
+        min(100, (avg_word_length / max_avg_len) * 100)
+    ]
+    
+    categories = [
+        'Word Count',
+        'Character Count',
+        'Sentences',
+        'Vocabulary',
+        'Avg Word Length'
+    ]
+    
+    fig = go.Figure()
+    
+    fig.add_trace(go.Scatterpolar(
+        r=normalized_values,
+        theta=categories,
+        fill='toself',
+        fillcolor='rgba(59, 130, 246, 0.2)',
+        line=dict(color='#3b82f6', width=3),
+        marker=dict(size=8, color='#06b6d4'),
+        name='Message Metrics',
+        hovertemplate='<b>%{theta}</b><br>Score: %{r:.1f}/100<extra></extra>'
+    ))
+    
+    fig.update_layout(
+        polar=dict(
+            radialaxis=dict(
+                visible=True,
+                range=[0, 100],
+                gridcolor='rgba(255, 255, 255, 0.04)',
+                tickfont=dict(size=10, color='#94a3b8')
+            ),
+            angularaxis=dict(
+                gridcolor='rgba(255, 255, 255, 0.04)',
+                tickfont=dict(size=11, color='#cbd5e1')
+            ),
+            bgcolor='rgba(0, 0, 0, 0)'
+        ),
+        showlegend=False,
+        title={'text': '📐 Message Complexity Profile'},
+        height=height
+    )
+    
+    _apply_responsive(fig, height=height)
+    return fig
+
+
 def create_metric_card(
     title: str,
     value: str,
@@ -650,3 +720,73 @@ def create_metric_card(
     </div>
     '''
     return html
+
+
+def message_complexity_radar(
+    word_count: int,
+    char_count: int,
+    sentence_count: int,
+    unique_word_count: int,
+    avg_word_length: float,
+    height: int = 400
+) -> go.Figure:
+    """
+    Create a radar chart showing message complexity metrics.
+    """
+    # Normalize values to 0-100 scale for better visualization
+    max_words = 200
+    max_chars = 1000
+    max_sentences = 20
+    max_unique = 150
+    max_avg_len = 10
+    
+    normalized_values = [
+        min(100, (word_count / max_words) * 100),
+        min(100, (char_count / max_chars) * 100),
+        min(100, (sentence_count / max_sentences) * 100),
+        min(100, (unique_word_count / max_unique) * 100),
+        min(100, (avg_word_length / max_avg_len) * 100)
+    ]
+    
+    categories = [
+        'Word Count',
+        'Character Count',
+        'Sentences',
+        'Vocabulary',
+        'Avg Word Length'
+    ]
+    
+    fig = go.Figure()
+    
+    fig.add_trace(go.Scatterpolar(
+        r=normalized_values,
+        theta=categories,
+        fill='toself',
+        fillcolor='rgba(59, 130, 246, 0.2)',
+        line=dict(color='#3b82f6', width=3),
+        marker=dict(size=8, color='#06b6d4'),
+        name='Message Metrics',
+        hovertemplate='<b>%{theta}</b><br>Score: %{r:.1f}/100<extra></extra>'
+    ))
+    
+    fig.update_layout(
+        polar=dict(
+            radialaxis=dict(
+                visible=True,
+                range=[0, 100],
+                gridcolor='rgba(255, 255, 255, 0.04)',
+                tickfont=dict(size=10, color='#94a3b8')
+            ),
+            angularaxis=dict(
+                gridcolor='rgba(255, 255, 255, 0.04)',
+                tickfont=dict(size=11, color='#cbd5e1')
+            ),
+            bgcolor='rgba(0, 0, 0, 0)'
+        ),
+        showlegend=False,
+        title={'text': '📐 Message Complexity Profile'},
+        height=height
+    )
+    
+    _apply_responsive(fig, height=height)
+    return fig
