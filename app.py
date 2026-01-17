@@ -11,6 +11,8 @@ from PIL import Image
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 import numpy as np
+import pandas as pd
+import re
 
 # Read logo and convert to base64 for favicon (app icon)
 logo_base64 = ""
@@ -473,6 +475,16 @@ def transformed_text(text):
 tfidf = pickle.load(open("Models/vectorizer.pkl", "rb"))
 model = pickle.load(open("Models/model.pkl", "rb"))
 
+# Load spam and ham word lists
+try:
+    spam_words_df = pd.read_csv("Data/preprocessed/top_30_most_used_spam_words.csv")
+    ham_words_df = pd.read_csv("Data/preprocessed/top_30_most_used_ham_words.csv")
+    spam_words_set = set(spam_words_df['word'].str.lower().tolist())
+    ham_words_set = set(ham_words_df['word'].str.lower().tolist())
+except Exception as e:
+    spam_words_set = set()
+    ham_words_set = set()
+
 # Header - Home Page
 st.markdown("""
     <div class="main-header">
@@ -731,6 +743,176 @@ if predict_button:
                     st.plotly_chart(fig_length, use_container_width=True)
                 else:
                     st.info("No words to analyze")
+            
+            # Detailed Analysis Section - What Makes It Spam or Safe
+            st.markdown("<br>", unsafe_allow_html=True)
+            st.markdown("### 🔍 Detailed Analysis: What Makes This Message Spam or Safe?")
+            
+            # Pattern Detection
+            url_pattern = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
+            urls = re.findall(url_pattern, input_sms)
+            url_count = len(urls)
+            
+            # Count numbers
+            numbers = re.findall(r'\d+', input_sms)
+            number_count = len(numbers)
+            
+            # Count special characters and excessive punctuation
+            exclamation_count = input_sms.count('!')
+            question_count = input_sms.count('?')
+            uppercase_count = sum(1 for c in input_sms if c.isupper())
+            uppercase_ratio = uppercase_count / char_count if char_count > 0 else 0
+            
+            # Check for common spam patterns
+            spam_patterns = {
+                'Free/Freebie': bool(re.search(r'\bfree\b', input_sms, re.IGNORECASE)),
+                'Win/Prize': bool(re.search(r'\b(win|won|prize|award)\b', input_sms, re.IGNORECASE)),
+                'Urgent': bool(re.search(r'\burgent\b', input_sms, re.IGNORECASE)),
+                'Click Here': bool(re.search(r'\bclick\b', input_sms, re.IGNORECASE)),
+                'Limited Time': bool(re.search(r'\b(limited|time|offer|expire)\b', input_sms, re.IGNORECASE)),
+                'Money/Cash': bool(re.search(r'\b(money|cash|dollar|£|€|$)\b', input_sms, re.IGNORECASE)),
+                'Congratulations': bool(re.search(r'\bcongrat\b', input_sms, re.IGNORECASE)),
+            }
+            
+            # Check for common ham patterns
+            ham_patterns = {
+                'Personal Greeting': bool(re.search(r'\b(hi|hello|hey|dear|thanks|thank you)\b', input_sms, re.IGNORECASE)),
+                'Personal Pronouns': bool(re.search(r'\b(i|you|we|they|me|us)\b', input_sms, re.IGNORECASE)),
+                'Question Words': bool(re.search(r'\b(what|when|where|why|how|who)\b', input_sms, re.IGNORECASE)),
+                'Casual Language': bool(re.search(r'\b(ok|yeah|sure|maybe|probably)\b', input_sms, re.IGNORECASE)),
+            }
+            
+            # Find matching spam and ham words in the message
+            message_words_lower = [w.lower() for w in words]
+            found_spam_words = [w for w in message_words_lower if w in spam_words_set]
+            found_ham_words = [w for w in message_words_lower if w in ham_words_set]
+            
+            # Calculate spam/ham indicators score
+            spam_indicators = sum(spam_patterns.values()) + len(found_spam_words) + (1 if url_count > 0 else 0) + (1 if exclamation_count > 3 else 0) + (1 if uppercase_ratio > 0.3 else 0)
+            ham_indicators = sum(ham_patterns.values()) + len(found_ham_words)
+            
+            # Display Analysis in Columns
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                st.markdown("""
+                    <div class="info-card" style="padding: 1.5rem; text-align: left;">
+                        <h4 style="color: #f5576c; margin-bottom: 1rem;">🚨 Spam Indicators Found</h4>
+                """, unsafe_allow_html=True)
+                
+                # Spam patterns
+                spam_patterns_found = [k for k, v in spam_patterns.items() if v]
+                if spam_patterns_found:
+                    st.markdown("**Patterns Detected:**")
+                    for pattern in spam_patterns_found:
+                        st.markdown(f"• {pattern}")
+                else:
+                    st.markdown("• No common spam patterns detected")
+                
+                # Spam words
+                if found_spam_words:
+                    st.markdown(f"<br><strong>Common Spam Words Found ({len(found_spam_words)}):</strong>", unsafe_allow_html=True)
+                    spam_words_display = ", ".join(found_spam_words[:10])
+                    st.markdown(f"• {spam_words_display}")
+                    if len(found_spam_words) > 10:
+                        st.markdown(f"• ... and {len(found_spam_words) - 10} more")
+                else:
+                    st.markdown("<br><strong>Common Spam Words:</strong> None found", unsafe_allow_html=True)
+                
+                # Other spam indicators
+                st.markdown("<br><strong>Other Indicators:</strong>", unsafe_allow_html=True)
+                if url_count > 0:
+                    st.markdown(f"• Contains {url_count} URL(s)")
+                if exclamation_count > 3:
+                    st.markdown(f"• Excessive exclamation marks ({exclamation_count})")
+                if uppercase_ratio > 0.3:
+                    st.markdown(f"• High uppercase ratio ({uppercase_ratio*100:.1f}%)")
+                if number_count > 5:
+                    st.markdown(f"• Many numbers detected ({number_count})")
+                
+                st.markdown("</div>", unsafe_allow_html=True)
+            
+            with col2:
+                st.markdown("""
+                    <div class="info-card" style="padding: 1.5rem; text-align: left;">
+                        <h4 style="color: #4facfe; margin-bottom: 1rem;">✅ Safe (Ham) Indicators Found</h4>
+                """, unsafe_allow_html=True)
+                
+                # Ham patterns
+                ham_patterns_found = [k for k, v in ham_patterns.items() if v]
+                if ham_patterns_found:
+                    st.markdown("**Patterns Detected:**")
+                    for pattern in ham_patterns_found:
+                        st.markdown(f"• {pattern}")
+                else:
+                    st.markdown("• No common safe patterns detected")
+                
+                # Ham words
+                if found_ham_words:
+                    st.markdown(f"<br><strong>Common Safe Words Found ({len(found_ham_words)}):</strong>", unsafe_allow_html=True)
+                    ham_words_display = ", ".join(found_ham_words[:10])
+                    st.markdown(f"• {ham_words_display}")
+                    if len(found_ham_words) > 10:
+                        st.markdown(f"• ... and {len(found_ham_words) - 10} more")
+                else:
+                    st.markdown("<br><strong>Common Safe Words:</strong> None found", unsafe_allow_html=True)
+                
+                # Other safe indicators
+                st.markdown("<br><strong>Other Indicators:</strong>", unsafe_allow_html=True)
+                if url_count == 0:
+                    st.markdown("• No suspicious URLs")
+                if exclamation_count <= 1:
+                    st.markdown("• Normal punctuation usage")
+                if uppercase_ratio < 0.1:
+                    st.markdown("• Normal capitalization")
+                
+                st.markdown("</div>", unsafe_allow_html=True)
+            
+            # Summary Explanation
+            st.markdown("<br>", unsafe_allow_html=True)
+            st.markdown("""
+                <div class="info-card" style="padding: 2rem; text-align: left;">
+                    <h4 style="color: #667eea; margin-bottom: 1rem;">📝 Classification Summary</h4>
+            """, unsafe_allow_html=True)
+            
+            if result == 1:
+                st.markdown(f"""
+                    <p style="color: #f5576c; font-weight: 600; margin-bottom: 1rem;">
+                        This message was classified as <strong>SPAM</strong> because:
+                    </p>
+                    <ul style="color: #666; line-height: 1.8;">
+                        <li>It contains <strong>{spam_indicators} spam indicator(s)</strong> compared to <strong>{ham_indicators} safe indicator(s)</strong></li>
+                        <li>The model assigned a <strong>{spam_prob:.1f}% probability</strong> that this is spam</li>
+                """, unsafe_allow_html=True)
+                
+                if spam_patterns_found:
+                    st.markdown(f"<li>Detected spam patterns: {', '.join(spam_patterns_found)}</li>", unsafe_allow_html=True)
+                if found_spam_words:
+                    st.markdown(f"<li>Contains words commonly found in spam messages</li>", unsafe_allow_html=True)
+                if url_count > 0:
+                    st.markdown(f"<li>Contains {url_count} URL(s) which may be suspicious</li>", unsafe_allow_html=True)
+                
+                st.markdown("</ul>", unsafe_allow_html=True)
+            else:
+                st.markdown(f"""
+                    <p style="color: #4facfe; font-weight: 600; margin-bottom: 1rem;">
+                        This message was classified as <strong>SAFE (HAM)</strong> because:
+                    </p>
+                    <ul style="color: #666; line-height: 1.8;">
+                        <li>It contains <strong>{ham_indicators} safe indicator(s)</strong> compared to <strong>{spam_indicators} spam indicator(s)</strong></li>
+                        <li>The model assigned a <strong>{ham_prob:.1f}% probability</strong> that this is safe</li>
+                """, unsafe_allow_html=True)
+                
+                if ham_patterns_found:
+                    st.markdown(f"<li>Contains natural language patterns typical of legitimate messages</li>", unsafe_allow_html=True)
+                if found_ham_words:
+                    st.markdown(f"<li>Contains words commonly found in safe messages</li>", unsafe_allow_html=True)
+                if url_count == 0:
+                    st.markdown(f"<li>No suspicious URLs detected</li>", unsafe_allow_html=True)
+                
+                st.markdown("</ul>", unsafe_allow_html=True)
+            
+            st.markdown("</div>", unsafe_allow_html=True)
 
 # Info Section with glassmorphism cards
 st.markdown("---")
