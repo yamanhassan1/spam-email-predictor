@@ -11,9 +11,9 @@ _DEFAULT_LAYOUT = dict(
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
     font=dict(color="white", family="Inter, system-ui, -apple-system, 'Segoe UI', Roboto"),
-    margin=dict(l=20, r=20, t=40, b=20),
+    margin=dict(l=12, r=12, t=36, b=12),
     autosize=True,
-    transition={'duration': 600, 'easing': 'cubic-in-out'},
+    transition={'duration': 420, 'easing': 'cubic-in-out'},
 )
 
 
@@ -29,55 +29,56 @@ def _apply_responsive(fig: go.Figure, height: Optional[int] = None) -> go.Figure
         fig.update_layout(height=height)
     fig.update_layout(**_DEFAULT_LAYOUT)
     # smooth entry animation configuration for Plotly; Streamlit animates on update
-    fig.layout.transition = dict(duration=520, easing="cubic-in-out")
+    fig.layout.transition = dict(duration=420, easing="cubic-in-out")
     return fig
 
 
-def confidence_gauge(confidence: float, is_spam: bool, height: int = 360, show_threshold: bool = True) -> go.Figure:
+def confidence_gauge(confidence: float, is_spam: bool, height: int = 220, show_threshold: bool = True) -> go.Figure:
     """
     Professional gauge indicating confidence (0-100).
-    Uses layered colors and a subtle animation-friendly layout.
+    Default height reduced for more compact layout.
     """
     value = max(0.0, min(100.0, _norm_pct(confidence)))
     bar_color = "#ff6b6b" if is_spam else "#4facfe"
-    # Create an outer donut to act as ring + inner gauge for number
+
     fig = go.Figure()
 
-    # Gauge indicator (main)
+    # Primary gauge indicator (compact)
     fig.add_trace(go.Indicator(
         mode="gauge+number",
         value=value,
-        number={'suffix': '%', 'font': {'size': 28, 'color': 'white'}},
+        number={'suffix': '%', 'font': {'size': 22, 'color': 'white'}},
         gauge={
-            'axis': {'range': [0, 100], 'tickcolor': 'rgba(255,255,255,0.6)'},
-            'bar': {'color': bar_color, 'thickness': 0.25},
-            'bgcolor': "rgba(255,255,255,0.03)",
+            'axis': {'range': [0, 100], 'tickcolor': 'rgba(255,255,255,0.6)', 'tickfont': {'size': 10}},
+            'bar': {'color': bar_color, 'thickness': 0.28},
+            'bgcolor': "rgba(255,255,255,0.02)",
             'steps': [
                 {'range': [0, 40], 'color': '#2b3340'},
                 {'range': [40, 70], 'color': '#223046'},
                 {'range': [70, 100], 'color': '#16202b'}
             ],
-            'threshold': {'line': {'color': "red", 'width': 4}, 'thickness': 0.75, 'value': 90} if show_threshold else None
+            'threshold': {'line': {'color': "red", 'width': 3}, 'thickness': 0.7, 'value': 90} if show_threshold else None
         },
         domain={'x': [0, 1], 'y': [0, 1]}
     ))
 
-    # Add a faint ring (donut) behind the gauge for visual weight
-    fig.add_trace(go.Pie(values=[value, 100 - value], hole=0.7, marker_colors=[bar_color, 'rgba(255,255,255,0.02)'],
+    # Add subtle ring for visual weight (small donut)
+    fig.add_trace(go.Pie(values=[value, 100 - value], hole=0.75,
+                         marker_colors=[bar_color, 'rgba(255,255,255,0.02)'],
                          textinfo='none', sort=False, hoverinfo='none', showlegend=False))
-    # Layering: ensure pie sits below indicator visually
+    # Ensure indicator sits above the pie
     fig.data = (fig.data[0], fig.data[1])
-
     fig.update_traces(selector=dict(type='pie'), marker_line_width=0)
-    fig.update_layout(title={'text': "Model Confidence", 'x': 0.5})
+
+    fig.update_layout(title={'text': "Confidence", 'x': 0.5})
     _apply_responsive(fig, height=height)
     return fig
 
 
-def probability_bar(ham_prob: float, spam_prob: float, height: int = 360, show_annotations: bool = True) -> go.Figure:
+def probability_bar(ham_prob: float, spam_prob: float, height: int = 220, show_annotations: bool = True) -> go.Figure:
     """
-    Bar chart showing Safe vs Spam probabilities with percent labels, hover information, and smooth transition.
-    Accepts percentages (0-100) or ratios (0-1); normalizes to 0-100.
+    Compact bar chart showing Safe vs Spam probabilities with percent labels and hover info.
+    Default height reduced for compact layout.
     """
     ham = max(0.0, min(100.0, _norm_pct(ham_prob)))
     spam = max(0.0, min(100.0, _norm_pct(spam_prob)))
@@ -86,7 +87,6 @@ def probability_bar(ham_prob: float, spam_prob: float, height: int = 360, show_a
     values = [ham, spam]
     colors = ['#4facfe', '#ff6b6b']
 
-    # Rounded bars using marker.line and width + small gap
     fig = go.Figure(
         data=[
             go.Bar(
@@ -101,22 +101,22 @@ def probability_bar(ham_prob: float, spam_prob: float, height: int = 360, show_a
         ]
     )
 
-    fig.update_layout(title={'text': "Classification Probabilities", 'x': 0.5}, yaxis_title="Probability (%)",
-                      bargap=0.3)
+    fig.update_layout(title={'text': "Classification Probabilities", 'x': 0.5}, yaxis_title="Probability (%)", bargap=0.35)
     fig.update_yaxes(range=[0, 100], gridcolor="rgba(255,255,255,0.04)")
     if show_annotations:
         dominant = labels[0] if values[0] >= values[1] else labels[1]
         dom_val = max(values)
-        fig.add_annotation(x=dominant, y=min(dom_val + 6.5, 100), text=f"Predicted: <b>{dominant.split()[0]}</b>",
-                           showarrow=False, font=dict(size=12, color="white"))
+        fig.add_annotation(x=dominant, y=min(dom_val + 6, 100), text=f"Predicted: <b>{dominant.split()[0]}</b>",
+                           showarrow=False, font=dict(size=11, color="white"))
     _apply_responsive(fig, height=height)
     return fig
 
 
 def top_words_bar(words: Sequence[str], freqs: Sequence[int], spam_wordset: Optional[set] = None,
-                  height: int = 380) -> go.Figure:
+                  height: int = 260) -> go.Figure:
     """
-    Horizontal bar for top words. Highlights spam-indicative words and adds smooth entry transition.
+    Horizontal bar for top words. Highlights spam-indicative words.
+    Only a single 'Top Words' visualization is provided (wordcloud removed).
     """
     if not words or not freqs:
         fig = go.Figure()
@@ -124,7 +124,6 @@ def top_words_bar(words: Sequence[str], freqs: Sequence[int], spam_wordset: Opti
         return fig
 
     spam_wordset = spam_wordset or set()
-    # Order descending, Plotly will show top at bottom for horizontal bars by reversing y axis
     colors = ['#7a86ff' if w not in spam_wordset else '#ff8a8a' for w in words]
 
     fig = go.Figure()
@@ -144,25 +143,25 @@ def top_words_bar(words: Sequence[str], freqs: Sequence[int], spam_wordset: Opti
     return fig
 
 
-def characters_pie(labels: Sequence[str], values: Sequence[int], height: int = 320) -> go.Figure:
+def characters_pie(labels: Sequence[str], values: Sequence[int], height: int = 200) -> go.Figure:
     """
-    Pie chart for character / space distribution with center annotation and subtle shadow.
+    Compact pie chart for character / space distribution with center annotation.
     """
     total = sum(values) if values else 0
     colors = ['#667eea', '#764ba2']
-    fig = go.Figure(data=[go.Pie(labels=list(labels), values=list(values), hole=0.45,
+    fig = go.Figure(data=[go.Pie(labels=list(labels), values=list(values), hole=0.5,
                                  marker_colors=colors,
                                  hovertemplate="%{label}: %{value}<extra></extra>")])
     fig.update_layout(title={'text': "Message Character Distribution", 'x': 0.5})
     fig.add_annotation(x=0.5, y=0.5, text=f"<b>{total}</b> chars", showarrow=False,
-                       font=dict(size=12, color="rgba(255,255,255,0.9)"))
+                       font=dict(size=11, color="rgba(255,255,255,0.9)"))
     _apply_responsive(fig, height=height)
     return fig
 
 
-def word_length_line(lengths: Sequence[int], counts: Sequence[int], height: int = 320) -> go.Figure:
+def word_length_line(lengths: Sequence[int], counts: Sequence[int], height: int = 200) -> go.Figure:
     """
-    Smooth line for word length distribution with shaded fill and markers.
+    Compact smooth line for word length distribution with shaded fill.
     """
     if not lengths or not counts:
         fig = go.Figure()
@@ -174,8 +173,8 @@ def word_length_line(lengths: Sequence[int], counts: Sequence[int], height: int 
         x=list(lengths),
         y=list(counts),
         mode='lines+markers',
-        marker=dict(color='#ff7b88', size=8),
-        line=dict(color='#ff7b88', width=3),
+        marker=dict(color='#ff7b88', size=6),
+        line=dict(color='#ff7b88', width=2.5),
         fill='tozeroy',
         fillcolor='rgba(255,123,136,0.12)',
         hovertemplate='Length %{x}<br>Count %{y}<extra></extra>'
@@ -183,52 +182,6 @@ def word_length_line(lengths: Sequence[int], counts: Sequence[int], height: int 
     fig.update_layout(title={'text': "Word Length Distribution", 'x': 0.5})
     fig.update_xaxes(title_text="Word Length", gridcolor="rgba(255,255,255,0.04)")
     fig.update_yaxes(title_text="Frequency", gridcolor="rgba(255,255,255,0.04)")
-    _apply_responsive(fig, height=height)
-    return fig
-
-
-def wordcloud_figure(words_freq: Dict[str, int], height: int = 360, fallback_to_bar: bool = True) -> go.Figure:
-    """
-    Create a word cloud image and embed it into a Plotly figure. Fall back to top_words_bar if WordCloud unavailable.
-    """
-    try:
-        from wordcloud import WordCloud  # optional dependency
-    except Exception:
-        # fallback to bar
-        if fallback_to_bar:
-            words, freqs = zip(*sorted(words_freq.items(), key=lambda x: x[1], reverse=True)[:10]) if words_freq else ([], [])
-            return top_words_bar(list(words), list(freqs), height=height)
-        fig = go.Figure()
-        fig.update_layout(title={'text': "Word Cloud Not Available", 'x': 0.5}, height=height, **_DEFAULT_LAYOUT)
-        return fig
-
-    if not words_freq:
-        fig = go.Figure()
-        fig.update_layout(title={'text': "No Words to Render", 'x': 0.5}, height=height, **_DEFAULT_LAYOUT)
-        return fig
-
-    wc = WordCloud(width=800, height=400, background_color=None, mode='RGBA', colormap='viridis')
-    wc.generate_from_frequencies(words_freq)
-
-    img = wc.to_image()
-    buf = io.BytesIO()
-    img.save(buf, format='PNG')
-    buf.seek(0)
-    encoded = base64.b64encode(buf.read()).decode('utf-8')
-
-    fig = go.Figure()
-    fig.add_layout_image(
-        dict(
-            source="data:image/png;base64," + encoded,
-            xref="paper", yref="paper",
-            x=0, y=1,
-            sizex=1, sizey=1,
-            xanchor="left", yanchor="top"
-        )
-    )
-    fig.update_xaxes(visible=False)
-    fig.update_yaxes(visible=False)
-    fig.update_layout(title={'text': "Word Cloud", 'x': 0.5})
     _apply_responsive(fig, height=height)
     return fig
 
