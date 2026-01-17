@@ -4,30 +4,13 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 
-# Set page icon and config
+# Set page icon
 st.set_page_config(
     page_title="Email Spam Detector",
-    page_icon="image/logo.png",
+    page_icon="🛡️",
     layout="centered",
-    initial_sidebar_state="collapsed",
-    menu_items={
-        'Get Help': None,
-        'Report a bug': None,
-        'About': None
-    }
+    initial_sidebar_state="collapsed"
 )
-
-# Hide Streamlit default menu and footer
-hide_streamlit_style = """
-    <style>
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
-    .stDeployButton {display:none;}
-    div[data-testid="stToolbar"] {visibility: hidden;}
-    </style>
-"""
-st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 nltk.download("stopwords")
 nltk.download("punkt")
@@ -56,15 +39,14 @@ def transformed_text(text):
 tfidf = pickle.load(open("Models/vectorizer.pkl", "rb"))
 model = pickle.load(open("Models/model.pkl", "rb"))
 
-# Logo and Header - Home Page
+# Logo and Header
 col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
-    # Display logo image
-    st.image("image/logo.png", width=200, use_container_width=False)
     st.markdown("""
-    <div style='text-align: center; padding: 10px 0 20px 0;'>
-        <h1 style='font-size: 36px; margin: 10px 0; color: #1f77b4; font-weight: bold;'>Email / SMS Spam Classifier</h1>
-        <p style='color: #666; margin-top: 5px; font-size: 16px;'>Protect your inbox from unwanted messages</p>
+    <div style='text-align: center; padding: 20px 0;'>
+        <h1 style='font-size: 48px; margin-bottom: 10px;'>📧🛡️</h1>
+        <h1 style='font-size: 36px; margin: 0; color: #1f77b4;'>Email / SMS Spam Classifier</h1>
+        <p style='color: #666; margin-top: 5px;'>Protect your inbox from unwanted messages</p>
     </div>
     """, unsafe_allow_html=True)
 
