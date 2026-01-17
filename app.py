@@ -17,6 +17,7 @@ from src.design import setup_page
 from src.nlp import setup_nltk, transformed_text, get_stopwords
 from src.model import load_model
 from src.analysis import SPAM_WORDS, HAM_WORDS
+from src.visualization import confidence_gauge, probability_bar, top_words_bar, characters_pie, word_length_line, wordcloud_figure
 
 # Initialize page and CSS (keeps identical page config and CSS)
 setup_page()
