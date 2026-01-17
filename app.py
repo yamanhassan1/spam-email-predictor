@@ -1,13 +1,15 @@
 import streamlit as st
 import pickle
 import nltk
+import base64
+from pathlib import Path
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 
 # Set page icon and config
 st.set_page_config(
     page_title="Email Spam Detector",
-    page_icon="image/logo.png",
+    page_icon="🛡️",
     layout="centered",
     initial_sidebar_state="collapsed",
     menu_items={
@@ -17,16 +19,30 @@ st.set_page_config(
     }
 )
 
-# Hide Streamlit default menu and footer
-hide_streamlit_style = """
+# Read logo and convert to base64 for favicon
+logo_base64 = ""
+logo_path = Path("image/logo.png")
+if logo_path.exists():
+    try:
+        with open(logo_path, "rb") as f:
+            logo_data = f.read()
+            logo_base64 = base64.b64encode(logo_data).decode()
+    except Exception:
+        logo_base64 = ""
+
+# Hide Streamlit default menu and footer, and set custom favicon
+hide_streamlit_style = f"""
     <style>
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
-    .stDeployButton {display:none;}
-    div[data-testid="stToolbar"] {visibility: hidden;}
+    #MainMenu {{visibility: hidden;}}
+    footer {{visibility: hidden;}}
+    header {{visibility: hidden;}}
+    .stDeployButton {{display:none;}}
+    div[data-testid="stToolbar"] {{visibility: hidden;}}
     </style>
 """
+if logo_base64:
+    hide_streamlit_style += f'<link rel="icon" type="image/png" href="data:image/png;base64,{logo_base64}">'
+
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 nltk.download("stopwords")
