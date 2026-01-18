@@ -552,8 +552,8 @@ def render_header(
     """
     st.markdown(f"""
         <div class="card" style="text-align: center; padding: 2rem; background: linear-gradient(135deg, rgba(59, 130, 246, 0.03), rgba(139, 92, 246, 0.02)); margin-top: 3rem; margin-bottom: 2rem;">
-            <div style="font-size: 2.5rem; margin-bottom: 1rem;">🛡️</div>
-                <h1 style="color: #f8fafc; font-size: 1.9rem; font-weight: 900; margin-bottom: 0.75rem; letter-spacing: -0.02em;">
+            <div style="font-size: 4.5rem; margin-bottom: 1rem;">🛡️</div>
+                <h1 style="color: #f8fafc; font-size: 2.9rem; font-weight: 1200; margin-bottom: 0.75rem; letter-spacing: -0.02em;">
                     AI-Powered Spam Detector
                 </h1>
                 <p style="color: #cbd5e1; margin-bottom: 1rem; line-height: 1.6;">
