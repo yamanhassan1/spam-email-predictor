@@ -214,11 +214,25 @@ if predict_button:
                     </h4>
                 """, unsafe_allow_html=True)
                 
-                col1, col2 = st.columns([1, 1])
+                col1, col2 = st.columns(2)
                 with col1:
+                    st.markdown("""
+                        <div style='margin-bottom: 0.5rem;'>
+                            <h5 style='color: #cbd5e1; font-size: 0.95rem; font-weight: 600; margin: 0; text-align: center;'>
+                                Top Words Frequency
+                            </h5>
+                        </div>
+                    """, unsafe_allow_html=True)
                     fig_words = top_words_bar(words_list, freq_list, spam_wordset=spam_words_set)
                     st.plotly_chart(fig_words, use_container_width=True, config={'displayModeBar': False})
                 with col2:
+                    st.markdown("""
+                        <div style='margin-bottom: 0.5rem;'>
+                            <h5 style='color: #cbd5e1; font-size: 0.95rem; font-weight: 600; margin: 0; text-align: center;'>
+                                Word Cloud Visualization
+                            </h5>
+                        </div>
+                    """, unsafe_allow_html=True)
                     fig_wc = wordcloud_figure(dict(word_freq))
                     st.plotly_chart(fig_wc, use_container_width=True, config={'displayModeBar': False})
 
@@ -545,11 +559,11 @@ with col1:
         <h4 style="color: #f8fafc; font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
             <span style="font-size: 1.5rem;">🧠</span> Multi-Layer Analysis
         </h4>
-        <ul style="color: #cbd5e1; line-height: 1.8; margin: 0; padding-left: 1.5rem;">
-            <li>Pattern recognition for common spam phrases and structures</li>
-            <li>URL and link analysis for phishing detection</li>
-            <li>Linguistic analysis including tone, urgency, and sentiment</li>
-            <li>Statistical modeling of message characteristics</li>
+        <ul style="color: #cbd5e1; line-height: 1.8; margin: 0; padding-left: 1.5rem; list-style-type: disc;">
+            <li style="margin-bottom: 0.5rem;">Pattern recognition for common spam phrases and structures</li>
+            <li style="margin-bottom: 0.5rem;">URL and link analysis for phishing detection</li>
+            <li style="margin-bottom: 0.5rem;">Linguistic analysis including tone, urgency, and sentiment</li>
+            <li style="margin-bottom: 0.5rem;">Statistical modeling of message characteristics</li>
             <li>Word frequency and vocabulary profiling</li>
         </ul>
     </div>
@@ -561,11 +575,11 @@ with col2:
         <h4 style="color: #f8fafc; font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
             <span style="font-size: 1.5rem;">📈</span> Comprehensive Reporting
         </h4>
-        <ul style="color: #cbd5e1; line-height: 1.8; margin: 0; padding-left: 1.5rem;">
-            <li>Confidence scores with detailed probability breakdowns</li>
-            <li>Visual analytics including charts and word clouds</li>
-            <li>Highlighted message annotations showing key indicators</li>
-            <li>Side-by-side comparison of spam vs safe indicators</li>
+        <ul style="color: #cbd5e1; line-height: 1.8; margin: 0; padding-left: 1.5rem; list-style-type: disc;">
+            <li style="margin-bottom: 0.5rem;">Confidence scores with detailed probability breakdowns</li>
+            <li style="margin-bottom: 0.5rem;">Visual analytics including charts and word clouds</li>
+            <li style="margin-bottom: 0.5rem;">Highlighted message annotations showing key indicators</li>
+            <li style="margin-bottom: 0.5rem;">Side-by-side comparison of spam vs safe indicators</li>
             <li>Actionable insights explaining the classification</li>
         </ul>
     </div>
@@ -716,7 +730,7 @@ st.markdown("""
         </div>
         <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.08);">
             <p style="color: #94a3b8; font-size: 0.85rem; margin: 0;">
-                © 2024 AI Spam Detector • All rights reserved • Your privacy is our priority
+                © 2026 AI Spam Detector • All rights reserved • Your privacy is our priority
             </p>
         </div>
     </div>
