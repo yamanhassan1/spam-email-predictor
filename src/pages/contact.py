@@ -73,7 +73,43 @@ def render_contact_page():
             height=150,
             max_chars=1000
         )
-        
+        # Make the 'Email' field clickable by providing a mailto: link
+
+        # After the user submits the form, provide a mailto: fallback if desired
+        # But for the info card below (Contact Information), make the email clickable:
+        # (The editable content is above the info cards, but let's also add a helper
+        #   below if you want an extra direct-send button.)
+
+        # For the form fields themselves, if you want to pre-fill a mailto, you can generate a link:
+        mailto_link = ""
+        if name and email and message:
+            subject_encoded = subject.replace(" ", "%20")
+            body = f"From: {name} <{email}>\n\n{message}"
+            body_encoded = body.replace("\n", "%0A").replace(" ", "%20")
+            mailto_link = f"mailto:yamanhassan.10@yahoo.com?subject={subject_encoded}&body={body_encoded}"
+
+        # Display mailto button if ALL fields are filled (as extra direct send option):
+        if name and email and message:
+            st.markdown(
+                f"""
+                <a href="{mailto_link}" target="_blank" style="display:inline-block; text-decoration:none;">
+                    <button style="
+                        background: linear-gradient(90deg,#3b82f6,#8b5cf6);
+                        color: #fff;
+                        border: none;
+                        border-radius: 12px;
+                        padding: 0.75rem 2.5rem;
+                        font-size: 1.08rem;
+                        font-weight: 700;
+                        box-shadow: 0 2px 8px rgba(59,130,246,0.15);
+                        cursor: pointer;
+                        margin-top: 1rem;
+                    ">📧 Send via Email Client</button>
+                </a>
+                """,
+                unsafe_allow_html=True
+            )
+            
         col1, col2, col3 = st.columns([1, 2, 1])
         with col2:
             submitted = st.form_submit_button("📤 Send Message", use_container_width=True)
@@ -101,7 +137,7 @@ def render_contact_page():
                 <div style="font-size: 3rem; margin-bottom: 1rem;">📧</div>
                 <h4 style="color: #f8fafc; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem;">Email</h4>
                 <p style="color: #cbd5e1; line-height: 1.6; margin: 0;">
-                    support@spamdetector.ai
+                    yamanhassan.10@yahoo.com
                 </p>
             </div>
         """, unsafe_allow_html=True)
@@ -165,7 +201,7 @@ def render_contact_page():
                 🤝 Connect With Us
             </h3>
             <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 1.5rem;">
-                <a href="https://twitter.com/SpamDetectorAI" target="_blank" style="display: flex; flex-direction: column; align-items: center; text-decoration: none; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                <a href="https://instagram.com/SpamDetectorAI" target="_blank" style="display: flex; flex-direction: column; align-items: center; text-decoration: none; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
                     <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #1DA1F2, #0d8bd9); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; box-shadow: 0 8px 24px rgba(29, 161, 242, 0.3);">🐦</div>
                     <span style="color: #cbd5e1; margin-top: 0.5rem; font-size: 0.9rem;">Twitter</span>
                 </a>
@@ -176,14 +212,6 @@ def render_contact_page():
                 <a href="https://github.com/SpamDetectorAI" target="_blank" style="display: flex; flex-direction: column; align-items: center; text-decoration: none; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
                     <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #333, #000); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);">🐙</div>
                     <span style="color: #cbd5e1; margin-top: 0.5rem; font-size: 0.9rem;">GitHub</span>
-                </a>
-                <a href="https://discord.gg/spamdetectorai" target="_blank" style="display: flex; flex-direction: column; align-items: center; text-decoration: none; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
-                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #7289DA, #5865F2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; box-shadow: 0 8px 24px rgba(114, 137, 218, 0.3);">💬</div>
-                    <span style="color: #cbd5e1; margin-top: 0.5rem; font-size: 0.9rem;">Discord</span>
-                </a>
-                <a href="https://youtube.com/@SpamDetectorAI" target="_blank" style="display: flex; flex-direction: column; align-items: center; text-decoration: none; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
-                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #FF0000, #CC0000); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; box-shadow: 0 8px 24px rgba(255, 0, 0, 0.3);">📺</div>
-                    <span style="color: #cbd5e1; margin-top: 0.5rem; font-size: 0.9rem;">YouTube</span>
                 </a>
             </div>
         </div>
