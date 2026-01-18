@@ -78,55 +78,54 @@ def render_contact_page():
                 </div>
             </div>
         """, unsafe_allow_html=True)
-st.markdown(
-    """
-    <div class="card animate">
-        <h3 style="color:#f8fafc; font-size:1.5rem; font-weight:700; margin-bottom:1.5rem; text-align:center;">
+
+        
+st.markdown("""
+    <div class="card animate" style="height: 100%;">
+        <h3 style="color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; text-align: center;">
             🤝 Connect With Us
         </h3>
-        <div style="display:flex; gap:1.75rem; flex-wrap:wrap; justify-content:center;">
-            <a href="https://twitter.com/SpamDetectorAI" target="_blank" style="text-decoration:none;">
-                <div style="width:56px;height:56px;border-radius:14px;
-                            background:linear-gradient(135deg,#1DA1F2,#0d8bd9);
-                            display:flex;align-items:center;justify-content:center;
-                            font-size:1.5rem;
-                            margin-bottom:0.5rem;">
+        <div style="display: flex; gap: 1.75rem; flex-wrap: wrap; justify-content: center;">
+            <a href="https://twitter.com/SpamDetectorAI" target="_blank" style="text-decoration: none;">
+                <div style="width: 56px; height: 56px; border-radius: 14px;
+                            background: linear-gradient(135deg, #1DA1F2, #0d8bd9);
+                            display: flex; align-items: center; justify-content: center;
+                            font-size: 1.5rem;
+                            margin-bottom: 0.5rem;">
                     🐦
                 </div>
-                <div style="color:#cbd5e1; font-size:0.95rem; text-align:center;">Twitter</div>
+                <div style="color: #cbd5e1; font-size: 0.95rem; text-align: center;">Twitter</div>
             </a>
-            <a href="https://linkedin.com/company/spamdetectorai" target="_blank" style="text-decoration:none;">
-                <div style="width:56px;height:56px;border-radius:14px;
-                            background:linear-gradient(135deg,#0077B5,#005582);
-                            display:flex;align-items:center;justify-content:center;
-                            font-size:1.5rem;
-                            margin-bottom:0.5rem;">
+            <a href="https://linkedin.com/company/spamdetectorai" target="_blank" style="text-decoration: none;">
+                <div style="width: 56px; height: 56px; border-radius: 14px;
+                            background: linear-gradient(135deg, #0077B5, #005582);
+                            display: flex; align-items: center; justify-content: center;
+                            font-size: 1.5rem;
+                            margin-bottom: 0.5rem;">
                     💼
                 </div>
-                <div style="color:#cbd5e1; font-size:0.95rem; text-align:center;">LinkedIn</div>
+                <div style="color: #cbd5e1; font-size: 0.95rem; text-align: center;">LinkedIn</div>
             </a>
-            <a href="https://github.com/SpamDetectorAI" target="_blank" style="text-decoration:none;">
-                <div style="width:56px;height:56px;border-radius:14px;
-                            background:linear-gradient(135deg,#333,#000);
-                            display:flex;align-items:center;justify-content:center;
-                            font-size:1.5rem;
-                            margin-bottom:0.5rem;">
+            <a href="https://github.com/SpamDetectorAI" target="_blank" style="text-decoration: none;">
+                <div style="width: 56px; height: 56px; border-radius: 14px;
+                            background: linear-gradient(135deg, #333, #000);
+                            display: flex; align-items: center; justify-content: center;
+                            font-size: 1.5rem;
+                            margin-bottom: 0.5rem;">
                     🐙
                 </div>
-                <div style="color:#cbd5e1; font-size:0.95rem; text-align:center;">GitHub</div>
+                <div style="color: #cbd5e1; font-size: 0.95rem; text-align: center;">GitHub</div>
             </a>
-            <a href="https://discord.gg/spamdetectorai" target="_blank" style="text-decoration:none;">
-                <div style="width:56px;height:56px;border-radius:14px;
-                            background:linear-gradient(135deg,#7289DA,#5865F2);
-                            display:flex;align-items:center;justify-content:center;
-                            font-size:1.5rem;
-                            margin-bottom:0.5rem;">
+            <a href="https://discord.gg/spamdetectorai" target="_blank" style="text-decoration: none;">
+                <div style="width: 56px; height: 56px; border-radius: 14px;
+                            background: linear-gradient(135deg, #7289DA, #5865F2);
+                            display: flex; align-items: center; justify-content: center;
+                            font-size: 1.5rem;
+                            margin-bottom: 0.5rem;">
                     💬
                 </div>
-                <div style="color:#cbd5e1; font-size:0.95rem; text-align:center;">Discord</div>
+                <div style="color: #cbd5e1; font-size: 0.95rem; text-align: center;">Discord</div>
             </a>
         </div>
     </div>
-    """,
-    unsafe_allow_html=True,
-)
+""", unsafe_allow_html=True)
