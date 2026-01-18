@@ -544,8 +544,8 @@ def get_css(logo_base64: str, animations: bool = True, compact: bool = False) ->
 
 
 def render_header(
-    title: str = "🛡️ Email / SMS Spam Classifier",
-    subtitle: str = "Protect your inbox from unwanted messages with AI-powered detection"
+    title,
+    subtitle
 ):
     """
     Render premium header with gradient accents and animations.
