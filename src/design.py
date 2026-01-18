@@ -734,7 +734,7 @@ def render_sidebar():
             <div style="text-align: center; padding: 1.5rem 0; border-top: 1px solid rgba(255, 255, 255, 0.08); margin-top: 2rem;">
                 <p style="color: #94a3b8; font-size: 0.8rem; margin: 0;">
                     © 2026 Spam Detector<br>
-                    Built with ❤️ using AI
+                    Built with ❤️
                 </p>
             </div>
         """, unsafe_allow_html=True)
