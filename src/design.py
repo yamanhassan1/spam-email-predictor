@@ -1,13 +1,14 @@
 import streamlit as st
 import base64
 from pathlib import Path
-from PIL import Image
 from typing import Optional, Iterable, Dict
 
 
 def setup_page(
     title: str = "Email Spam Detector",
-    logo_path: Optional[Path] = Path("image/logo.png"),
+    logo_path: Optional[Path] = (
+    Path(__file__).parent.parent / "image" / "logo.png"
+    ),
     initial_sidebar_state: str = "collapsed",
     animations: bool = True,
     compact: bool = False,
@@ -23,6 +24,7 @@ def setup_page(
             with open(logo_path, "rb") as f:
                 logo_base64 = base64.b64encode(f.read()).decode()
             try:
+                from PIL import Image
                 page_icon = Image.open(logo_path)
             except Exception:
                 page_icon = "🛡️"

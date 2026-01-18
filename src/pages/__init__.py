@@ -1,24 +1,12 @@
 # src/pages/__init__.py
-
 """
 Page-level modules for the Spam Detector app.
+Each page must be safe to import (no Streamlit execution at import time).
 """
 
-try:
-    from . import home
-except Exception as e:
-    raise ImportError("Failed to import home page") from e
-
-try:
-    from . import prediction_analysis
-except Exception as e:
-    raise ImportError("Failed to import prediction_analysis page") from e
-
-try:
-    from . import info_sections
-except Exception as e:
-    raise ImportError("Failed to import info_sections page") from e
-
+from . import home
+from . import prediction_analysis
+from . import info_sections
 
 __all__ = [
     "home",
