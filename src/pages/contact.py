@@ -109,29 +109,7 @@ def render_contact_page():
                 """,
                 unsafe_allow_html=True
             )
-        # Replace the 'Send Message' button with a link styled as a button that opens the user's email client
-        # Only display the send link if all fields are filled
-        if name and email and message:
-            st.markdown(
-                f"""
-                <a href="{mailto_link}" target="_blank" style="display:inline-block; text-decoration:none; width:100%;">
-                    <button style="
-                        width: 100%;
-                        background: linear-gradient(90deg,#3b82f6,#8b5cf6);
-                        color: #fff;
-                        border: none;
-                        border-radius: 12px;
-                        padding: 0.9rem 0;
-                        font-size: 1.12rem;
-                        font-weight: 700;
-                        box-shadow: 0 2px 8px rgba(59,130,246,0.15);
-                        cursor: pointer;
-                        margin-top: 1.2rem;
-                    ">📤 Send Message</button>
-                </a>
-                """,
-                unsafe_allow_html=True
-            )
+        
         col1, col2, col3 = st.columns([1, 2, 1])
         with col2:
             submitted = st.form_submit_button("📤 Send Message", use_container_width=True)
@@ -150,19 +128,6 @@ def render_contact_page():
             📞 Contact Information
         </h3>
     """, unsafe_allow_html=True)
-    
-    col1, col2, col3 = st.columns(3)
-    
-    with col1:
-        st.markdown("""
-            <div class="card animate" style="text-align: center; height: 100%;">
-                <div style="font-size: 3rem; margin-bottom: 1rem;">📧</div>
-                <h4 style="color: #f8fafc; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem;">Email</h4>
-                <p style="color: #cbd5e1; line-height: 1.6; margin: 0;">
-                    yamanhassan.10@yahoo.com
-                </p>
-            </div>
-        """, unsafe_allow_html=True)
     
     with col2:
         st.markdown("""
