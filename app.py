@@ -9,10 +9,10 @@ from src.model import load_model
 from src.analysis import SPAM_WORDS, HAM_WORDS
 
 # ============================
-# Page modules
+# Page modules - Import directly to avoid circular imports
 # ============================
-# Only import pages at the top-level, no cross-page imports inside pages
-from src.pages import home, info_sections
+from src.pages.home import render_home_page
+from src.pages.info_sections import render_info_sections
 
 
 def main():
@@ -58,13 +58,12 @@ def main():
     # ----------------------------
     # 6. Render home page
     # ----------------------------
-    # Lazy imports inside page functions are unnecessary since pages no longer import each other
-    home.render_home_page(tfidf, model, spam_words_set, ham_words_set, stop_words)
+    render_home_page(tfidf, model, spam_words_set, ham_words_set, stop_words)
 
     # ----------------------------
     # 7. Render info sections
     # ----------------------------
-    info_sections.render_info_sections()
+    render_info_sections()
 
 
 # ============================
