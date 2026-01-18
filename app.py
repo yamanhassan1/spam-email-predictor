@@ -25,7 +25,8 @@ def main():
     """
 
     # ----------------------------
-    # 1. Configure Streamlit page
+    # 1. CRITICAL: Configure Streamlit page FIRST
+    # This loads all CSS and styles before any rendering
     # ----------------------------
     setup_page(
         title="AI Spam Detector - Protect Your Inbox",
@@ -34,29 +35,26 @@ def main():
     )
 
     # ----------------------------
-    # 2. Render sidebar navigation
+    # 2. Render sidebar navigation AFTER page setup
     # ----------------------------
     page = render_sidebar()
 
     # ----------------------------
-    # 3. Initialize NLP resources
+    # 3. Initialize NLP resources (only needed for Home page)
     # ----------------------------
-    setup_nltk()
-    stop_words = get_stopwords()
+    if page == "🏠 Home":
+        setup_nltk()
+        stop_words = get_stopwords()
+        
+        # Load ML model and vectorizer
+        tfidf, model = load_model()
+        
+        # Load word lists for pattern detection
+        spam_words_set = SPAM_WORDS
+        ham_words_set = HAM_WORDS
 
     # ----------------------------
-    # 4. Load ML model and vectorizer
-    # ----------------------------
-    tfidf, model = load_model()
-
-    # ----------------------------
-    # 5. Load word lists for pattern detection
-    # ----------------------------
-    spam_words_set = SPAM_WORDS
-    ham_words_set = HAM_WORDS
-
-    # ----------------------------
-    # 6. Render content based on selected page
+    # 4. Render content based on selected page
     # ----------------------------
     if page == "🏠 Home":
         # Render premium header

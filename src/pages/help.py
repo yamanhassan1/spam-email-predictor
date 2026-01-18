@@ -194,75 +194,57 @@ def render_help_page():
     
     st.markdown("<br>", unsafe_allow_html=True)
     
-    # FAQs
+    # FAQs using expanders instead of HTML details
     st.markdown("""
         <h3 style='color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin: 2rem 0 1.5rem 0; letter-spacing: -0.02em;'>
             ❓ Frequently Asked Questions
         </h3>
     """, unsafe_allow_html=True)
     
-    st.markdown("""
-        <div class="card gradient-border animate">
-            <div style="display: grid; gap: 1.25rem;">
-                <details style="background: rgba(255, 255, 255, 0.03); padding: 1.25rem; border-radius: 12px; cursor: pointer;">
-                    <summary style="color: #60a5fa; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.75rem; cursor: pointer;">
-                        How accurate is the spam detector?
-                    </summary>
-                    <p style="color: #cbd5e1; line-height: 1.7; margin-top: 0.75rem;">
-                        Our AI model achieves over 97% accuracy on test data, trained on millions of real-world messages. 
-                        However, no system is perfect - always use your judgment alongside the AI's analysis.
-                    </p>
-                </details>
-                
-                <details style="background: rgba(255, 255, 255, 0.03); padding: 1.25rem; border-radius: 12px; cursor: pointer;">
-                    <summary style="color: #60a5fa; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.75rem; cursor: pointer;">
-                        Is my data stored or shared?
-                    </summary>
-                    <p style="color: #cbd5e1; line-height: 1.7; margin-top: 0.75rem;">
-                        No! Your privacy is our priority. All messages are analyzed in real-time and immediately discarded. 
-                        We never store, log, or share your data with anyone.
-                    </p>
-                </details>
-                
-                <details style="background: rgba(255, 255, 255, 0.03); padding: 1.25rem; border-radius: 12px; cursor: pointer;">
-                    <summary style="color: #60a5fa; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.75rem; cursor: pointer;">
-                        Can I use this for any language?
-                    </summary>
-                    <p style="color: #cbd5e1; line-height: 1.7; margin-top: 0.75rem;">
-                        Currently, the model is optimized for English language messages. Support for additional 
-                        languages may be added in future updates.
-                    </p>
-                </details>
-                
-                <details style="background: rgba(255, 255, 255, 0.03); padding: 1.25rem; border-radius: 12px; cursor: pointer;">
-                    <summary style="color: #60a5fa; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.75rem; cursor: pointer;">
-                        What should I do if I find a false positive?
-                    </summary>
-                    <p style="color: #cbd5e1; line-height: 1.7; margin-top: 0.75rem;">
-                        While rare, false positives can occur. Always review the detailed analysis to understand 
-                        why a message was flagged. If you believe it's legitimate, verify through official channels.
-                    </p>
-                </details>
-                
-                <details style="background: rgba(255, 255, 255, 0.03); padding: 1.25rem; border-radius: 12px; cursor: pointer;">
-                    <summary style="color: #60a5fa; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.75rem; cursor: pointer;">
-                        How do I report spam that wasn't detected?
-                    </summary>
-                    <p style="color: #cbd5e1; line-height: 1.7; margin-top: 0.75rem;">
-                        If you encounter spam that our system didn't detect, please use the contact form to report it. 
-                        This helps us continuously improve our detection algorithms.
-                    </p>
-                </details>
-                
-                <details style="background: rgba(255, 255, 255, 0.03); padding: 1.25rem; border-radius: 12px; cursor: pointer;">
-                    <summary style="color: #60a5fa; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.75rem; cursor: pointer;">
-                        Is this tool free to use?
-                    </summary>
-                    <p style="color: #cbd5e1; line-height: 1.7; margin-top: 0.75rem;">
-                        Yes! The AI Spam Detector is completely free to use. We believe everyone deserves 
-                        access to tools that protect them from malicious messages.
-                    </p>
-                </details>
-            </div>
-        </div>
-    """, unsafe_allow_html=True)
+    with st.expander("How accurate is the spam detector?", expanded=False):
+        st.markdown("""
+            <p style="color: #cbd5e1; line-height: 1.7; margin: 0;">
+                Our AI model achieves over 97% accuracy on test data, trained on millions of real-world messages. 
+                However, no system is perfect - always use your judgment alongside the AI's analysis.
+            </p>
+        """, unsafe_allow_html=True)
+    
+    with st.expander("Is my data stored or shared?", expanded=False):
+        st.markdown("""
+            <p style="color: #cbd5e1; line-height: 1.7; margin: 0;">
+                No! Your privacy is our priority. All messages are analyzed in real-time and immediately discarded. 
+                We never store, log, or share your data with anyone.
+            </p>
+        """, unsafe_allow_html=True)
+    
+    with st.expander("Can I use this for any language?", expanded=False):
+        st.markdown("""
+            <p style="color: #cbd5e1; line-height: 1.7; margin: 0;">
+                Currently, the model is optimized for English language messages. Support for additional 
+                languages may be added in future updates.
+            </p>
+        """, unsafe_allow_html=True)
+    
+    with st.expander("What should I do if I find a false positive?", expanded=False):
+        st.markdown("""
+            <p style="color: #cbd5e1; line-height: 1.7; margin: 0;">
+                While rare, false positives can occur. Always review the detailed analysis to understand 
+                why a message was flagged. If you believe it's legitimate, verify through official channels.
+            </p>
+        """, unsafe_allow_html=True)
+    
+    with st.expander("How do I report spam that wasn't detected?", expanded=False):
+        st.markdown("""
+            <p style="color: #cbd5e1; line-height: 1.7; margin: 0;">
+                If you encounter spam that our system didn't detect, please use the contact form to report it. 
+                This helps us continuously improve our detection algorithms.
+            </p>
+        """, unsafe_allow_html=True)
+    
+    with st.expander("Is this tool free to use?", expanded=False):
+        st.markdown("""
+            <p style="color: #cbd5e1; line-height: 1.7; margin: 0;">
+                Yes! The AI Spam Detector is completely free to use. We believe everyone deserves 
+                access to tools that protect them from malicious messages.
+            </p>
+        """, unsafe_allow_html=True)
