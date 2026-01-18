@@ -6,8 +6,8 @@ def render_contact_page():
     st.markdown("""
         <div class="card gradient-border animate" style="text-align: center; padding: 3rem 2rem; margin-bottom: 2rem;">
             <div style="font-size: 4rem; margin-bottom: 1rem;">📧</div>
-            <h1 style="font-size: 3rem; font-weight: 900; margin-bottom: 1rem;">Get In Touch</h1>
-            <div style="height: 4px; width: 100px; margin: 0 auto 1.5rem; background: linear-gradient(90deg, var(--blue-400), var(--purple-400)); border-radius: 999px;"></div>
+            <h1 style="font-size: 3rem; font-weight: 900; margin-bottom: 1rem; color: #f8fafc;">Get In Touch</h1>
+            <div style="height: 4px; width: 100px; margin: 0 auto 1.5rem; background: linear-gradient(90deg, #3b82f6, #8b5cf6); border-radius: 999px;"></div>
             <p style="color: #cbd5e1; font-size: 1.1rem;">We'd love to hear from you!</p>
         </div>
     """, unsafe_allow_html=True)
@@ -20,7 +20,7 @@ def render_contact_page():
                 <h3 style="color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem;">
                     📬 Send Us a Message
                 </h3>
-            """, unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
         
         with st.form("contact_form"):
             name = st.text_input("Your Name", placeholder="John Doe")
@@ -46,19 +46,19 @@ def render_contact_page():
                 </h3>
                 
                 <div style="display: grid; gap: 1.25rem;">
-                    <div style="background: rgba(59, 130, 246, 0.05); padding: 1.25rem; border-radius: 12px; border-left: 4px solid var(--blue-400);">
+                    <div style="background: rgba(59, 130, 246, 0.05); padding: 1.25rem; border-radius: 12px; border-left: 4px solid #3b82f6;">
                         <div style="font-size: 1.75rem; margin-bottom: 0.5rem;">📧</div>
                         <h4 style="color: #60a5fa; font-weight: 700; margin-bottom: 0.5rem;">Email</h4>
                         <p style="color: #cbd5e1; margin: 0;">support@spamdetector.ai</p>
                     </div>
                     
-                    <div style="background: rgba(139, 92, 246, 0.05); padding: 1.25rem; border-radius: 12px; border-left: 4px solid var(--purple-400);">
+                    <div style="background: rgba(139, 92, 246, 0.05); padding: 1.25rem; border-radius: 12px; border-left: 4px solid #8b5cf6;">
                         <div style="font-size: 1.75rem; margin-bottom: 0.5rem;">💬</div>
                         <h4 style="color: #a78bfa; font-weight: 700; margin-bottom: 0.5rem;">Live Chat</h4>
                         <p style="color: #cbd5e1; margin: 0;">Available Mon-Fri, 9AM-5PM EST</p>
                     </div>
                     
-                    <div style="background: rgba(16, 185, 129, 0.05); padding: 1.25rem; border-radius: 12px; border-left: 4px solid var(--green-400);">
+                    <div style="background: rgba(16, 185, 129, 0.05); padding: 1.25rem; border-radius: 12px; border-left: 4px solid #10b981;">
                         <div style="font-size: 1.75rem; margin-bottom: 0.5rem;">🌐</div>
                         <h4 style="color: #34d399; font-weight: 700; margin-bottom: 0.5rem;">Social Media</h4>
                         <p style="color: #cbd5e1; margin: 0;">Follow us @SpamDetectorAI</p>

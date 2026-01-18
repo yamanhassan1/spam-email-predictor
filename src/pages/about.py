@@ -6,8 +6,8 @@ def render_about_page():
     st.markdown("""
         <div class="card gradient-border animate" style="text-align: center; padding: 3rem 2rem; margin-bottom: 2rem;">
             <div style="font-size: 4rem; margin-bottom: 1rem;">🛡️</div>
-            <h1 style="font-size: 3rem; font-weight: 900; margin-bottom: 1rem;">About This Project</h1>
-            <div style="height: 4px; width: 100px; margin: 0 auto 1.5rem; background: linear-gradient(90deg, var(--blue-400), var(--purple-400)); border-radius: 999px;"></div>
+            <h1 style="font-size: 3rem; font-weight: 900; margin-bottom: 1rem; color: #f8fafc;">About This Project</h1>
+            <div style="height: 4px; width: 100px; margin: 0 auto 1.5rem; background: linear-gradient(90deg, #3b82f6, #8b5cf6); border-radius: 999px;"></div>
         </div>
     """, unsafe_allow_html=True)
     

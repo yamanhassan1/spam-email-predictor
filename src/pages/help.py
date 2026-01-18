@@ -6,8 +6,8 @@ def render_help_page():
     st.markdown("""
         <div class="card gradient-border animate" style="text-align: center; padding: 3rem 2rem; margin-bottom: 2rem;">
             <div style="font-size: 4rem; margin-bottom: 1rem;">❓</div>
-            <h1 style="font-size: 3rem; font-weight: 900; margin-bottom: 1rem;">Help & Documentation</h1>
-            <div style="height: 4px; width: 100px; margin: 0 auto 1.5rem; background: linear-gradient(90deg, var(--blue-400), var(--purple-400)); border-radius: 999px;"></div>
+            <h1 style="font-size: 3rem; font-weight: 900; margin-bottom: 1rem; color: #f8fafc;">Help & Documentation</h1>
+            <div style="height: 4px; width: 100px; margin: 0 auto 1.5rem; background: linear-gradient(90deg, #3b82f6, #8b5cf6); border-radius: 999px;"></div>
             <p style="color: #cbd5e1; font-size: 1.1rem;">Everything you need to know to use the AI Spam Detector</p>
         </div>
     """, unsafe_allow_html=True)
@@ -17,7 +17,7 @@ def render_help_page():
             <h3 style="color: #f8fafc; font-size: 1.75rem; font-weight: 700; margin-bottom: 1.5rem;">
                 🚀 Quick Start Guide
             </h3>
-            <div style="background: rgba(59, 130, 246, 0.05); padding: 1.5rem; border-radius: 16px; border-left: 4px solid var(--blue-400); margin-bottom: 1.5rem;">
+            <div style="background: rgba(59, 130, 246, 0.05); padding: 1.5rem; border-radius: 16px; border-left: 4px solid #3b82f6; margin-bottom: 1.5rem;">
                 <h4 style="color: #60a5fa; font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem;">Step 1: Enter Your Message</h4>
                 <p style="color: #cbd5e1; line-height: 1.8; margin: 0;">
                     Navigate to the Home page and paste any email or SMS message into the text area. 
@@ -25,7 +25,7 @@ def render_help_page():
                 </p>
             </div>
             
-            <div style="background: rgba(139, 92, 246, 0.05); padding: 1.5rem; border-radius: 16px; border-left: 4px solid var(--purple-400); margin-bottom: 1.5rem;">
+            <div style="background: rgba(139, 92, 246, 0.05); padding: 1.5rem; border-radius: 16px; border-left: 4px solid #8b5cf6; margin-bottom: 1.5rem;">
                 <h4 style="color: #a78bfa; font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem;">Step 2: Click Analyze</h4>
                 <p style="color: #cbd5e1; line-height: 1.8; margin: 0;">
                     Click the "🔍 Analyze Message Now" button to process your message. 
@@ -33,7 +33,7 @@ def render_help_page():
                 </p>
             </div>
             
-            <div style="background: rgba(16, 185, 129, 0.05); padding: 1.5rem; border-radius: 16px; border-left: 4px solid var(--green-400);">
+            <div style="background: rgba(16, 185, 129, 0.05); padding: 1.5rem; border-radius: 16px; border-left: 4px solid #10b981;">
                 <h4 style="color: #34d399; font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem;">Step 3: Review Results</h4>
                 <p style="color: #cbd5e1; line-height: 1.8; margin: 0;">
                     Get instant results with confidence scores, detailed pattern analysis, visual charts, 
