@@ -1,10 +1,8 @@
 import streamlit as st
 import streamlit.components.v1 as components
-
-
 def render_contact_page():
 
-    # ================= HEADER (UNCHANGED) =================
+    # ================= HEADER =================
     st.markdown("""
         <div class="card gradient-border animate" style="text-align: center; padding: 3rem 2rem; margin-bottom: 2rem;">
             <div style="font-size: 4rem; margin-bottom: 1rem;">📧</div>
@@ -16,7 +14,7 @@ def render_contact_page():
 
     col1, col2 = st.columns(2)
 
-    # ================= SEND MESSAGE (UNCHANGED) =================
+    # ================= SEND MESSAGE =================
     with col1:
         st.markdown("""
             <div class="card animate">
@@ -44,88 +42,38 @@ def render_contact_page():
 
         st.markdown("</div>", unsafe_allow_html=True)
 
-    # ================= CONTACT INFORMATION (STYLE MATCHED) =================
+    # ================= CONTACT INFORMATION (FIXED OUTPUT) =================
     with col2:
         st.markdown("""
             <div class="card animate" style="height: 100%;">
                 <h3 style="color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem;">
                     📞 Contact Information
                 </h3>
-                <div style="display: grid; gap: 1.25rem;">
-                    <div style="padding: 1.25rem; border-radius: 12px;
-                                background: rgba(59,130,246,0.06);
-                                border-left: 4px solid #3b82f6;">
-                        <h4 style="color: #60a5fa; font-weight: 700; font-size: 1rem; margin-bottom: 0.4rem;">📧 Email</h4>
-                        <p style="color: #cbd5e1; font-size: 1rem; margin: 0 0 0.2rem 0;">support@spamdetector.ai</p>
-                    </div>
-                    <div style="padding: 1.25rem; border-radius: 12px;
-                                background: rgba(139,92,246,0.06);
-                                border-left: 4px solid #8b5cf6;">
-                        <h4 style="color: #a78bfa; font-weight: 700; font-size: 1rem; margin-bottom: 0.4rem;">💬 Live Chat</h4>
-                        <p style="color: #cbd5e1; font-size: 1rem; margin: 0 0 0.2rem 0;">Mon–Fri, 9AM–5PM EST</p>
-                    </div>
-                    <div style="padding: 1.25rem; border-radius: 12px;
-                                background: rgba(16,185,129,0.06);
-                                border-left: 4px solid #10b981;">
-                        <h4 style="color: #34d399; font-weight: 700; font-size: 1rem; margin-bottom: 0.4rem;">🌐 Social Media</h4>
-                        <p style="color: #cbd5e1; font-size: 1rem; margin: 0 0 0.2rem 0;">@SpamDetectorAI</p>
-                    </div>
+                <div style="color: #cbd5e1; font-size: 1rem; margin-bottom: 1rem;">
+                    <strong>Email:</strong> <a href="mailto:support@spamdetector.com" style="color: #60a5fa;">support@spamdetector.com</a>
                 </div>
-                <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.08);">
-                    <p style="color: #94a3b8; font-size: 0.95rem; text-align: center; line-height: 1.7;">
-                        ⏱ We typically respond within 24 hours on business days.
-                    </p>
+                <div style="color: #cbd5e1; font-size: 1rem; margin-bottom: 1rem;">
+                    <strong>Twitter:</strong> <a href="https://twitter.com/spamdetector" target="_blank" style="color: #60a5fa;">@spamdetector</a>
+                </div>
+                <div style="color: #cbd5e1; font-size: 1rem; margin-bottom: 1rem;">
+                    <strong>GitHub:</strong> <a href="https://github.com/spamdetector" target="_blank" style="color: #60a5fa;">github.com/spamdetector</a>
+                </div>
+                <div style="color: #cbd5e1; font-size: 1rem; margin-bottom: 0.5rem;">
+                    <strong>Location:</strong> Remote • Worldwide 🌎
+                </div>
+                <div style="color: #94a3b8; font-size: 0.93rem; margin-top: 1.5rem;">
+                    <em>We're always open to feedback and collaboration opportunities.</em>
                 </div>
             </div>
         """, unsafe_allow_html=True)
 
-        
+    # ========== FOOTER (OPTIONAL) ==========
+    st.markdown("<br>", unsafe_allow_html=True)
     st.markdown("""
-        <div class="card animate" style="height: 100%;">
-            <h3 style="color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; text-align: center;">
-                🤝 Connect With Us
-            </h3>
-            <div style="display: flex; gap: 1.75rem; flex-wrap: wrap; justify-content: center;">
-                <a href="https://twitter.com/SpamDetectorAI" target="_blank" style="text-decoration: none;">
-                    <div style="width: 56px; height: 56px; border-radius: 14px;
-                                background: linear-gradient(135deg, #1DA1F2, #0d8bd9);
-                                display: flex; align-items: center; justify-content: center;
-                                font-size: 1.5rem;
-                                margin-bottom: 0.5rem;">
-                        🐦
-                    </div>
-                    <div style="color: #cbd5e1; font-size: 0.95rem; text-align: center;">Twitter</div>
-                </a>
-                <a href="https://linkedin.com/company/spamdetectorai" target="_blank" style="text-decoration: none;">
-                    <div style="width: 56px; height: 56px; border-radius: 14px;
-                                background: linear-gradient(135deg, #0077B5, #005582);
-                                display: flex; align-items: center; justify-content: center;
-                                font-size: 1.5rem;
-                                margin-bottom: 0.5rem;">
-                        💼
-                    </div>
-                    <div style="color: #cbd5e1; font-size: 0.95rem; text-align: center;">LinkedIn</div>
-                </a>
-                <a href="https://github.com/SpamDetectorAI" target="_blank" style="text-decoration: none;">
-                    <div style="width: 56px; height: 56px; border-radius: 14px;
-                                background: linear-gradient(135deg, #333, #000);
-                                display: flex; align-items: center; justify-content: center;
-                                font-size: 1.5rem;
-                                margin-bottom: 0.5rem;">
-                        🐙
-                    </div>
-                    <div style="color: #cbd5e1; font-size: 0.95rem; text-align: center;">GitHub</div>
-                </a>
-                <a href="https://discord.gg/spamdetectorai" target="_blank" style="text-decoration: none;">
-                    <div style="width: 56px; height: 56px; border-radius: 14px;
-                                background: linear-gradient(135deg, #7289DA, #5865F2);
-                                display: flex; align-items: center; justify-content: center;
-                                font-size: 1.5rem;
-                                margin-bottom: 0.5rem;">
-                        💬
-                    </div>
-                    <div style="color: #cbd5e1; font-size: 0.95rem; text-align: center;">Discord</div>
-                </a>
-            </div>
+        <div style="text-align: center; padding: 1.5rem 0; border-top: 1px solid rgba(255, 255, 255, 0.08); margin-top: 2rem;">
+            <p style="color: #94a3b8; font-size: 0.8rem; margin: 0;">
+                © 2026 Spam Detector<br>
+                Built with ❤️
+            </p>
         </div>
     """, unsafe_allow_html=True)
