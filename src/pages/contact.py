@@ -3,9 +3,8 @@ import streamlit.components.v1 as components
 
 
 def render_contact_page():
-    """Render the Contact page."""
 
-    # ---------------- HEADER ----------------
+    # ================= HEADER (UNCHANGED) =================
     st.markdown("""
         <div class="card gradient-border animate" style="text-align: center; padding: 3rem 2rem; margin-bottom: 2rem;">
             <div style="font-size: 4rem; margin-bottom: 1rem;">📧</div>
@@ -15,9 +14,9 @@ def render_contact_page():
         </div>
     """, unsafe_allow_html=True)
 
-    col1, col2 = st.columns([1, 1])
+    col1, col2 = st.columns(2)
 
-    # ---------------- FORM ----------------
+    # ================= SEND MESSAGE (UNCHANGED) =================
     with col1:
         st.markdown("""
             <div class="card animate">
@@ -39,76 +38,90 @@ def render_contact_page():
 
             if submitted:
                 if name and email and message:
-                    st.success("✅ Thank you! Your message has been sent successfully. We'll get back to you soon!")
+                    st.success("✅ Thank you! Your message has been sent successfully.")
                 else:
                     st.error("❌ Please fill in all required fields.")
 
         st.markdown("</div>", unsafe_allow_html=True)
 
-    # ---------------- CONTACT INFO (FIXED) ----------------
+    # ================= CONTACT INFORMATION (STYLE MATCHED) =================
     with col2:
         components.html("""
-            <div class="card animate" style="animation-delay: 0.1s; height: 100%;">
+            <div class="card animate" style="height: 100%;">
                 <h3 style="color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem;">
                     📞 Contact Information
                 </h3>
 
-                <div style="display: grid; gap: 1.25rem;">
-                    <div style="background: rgba(59, 130, 246, 0.05); padding: 1.25rem; border-radius: 12px; border-left: 4px solid #3b82f6;">
-                        <div style="font-size: 1.75rem; margin-bottom: 0.5rem;">📧</div>
-                        <h4 style="color: #60a5fa; font-weight: 700; margin-bottom: 0.5rem;">Email</h4>
-                        <p style="color: #cbd5e1; margin: 0;">support@spamdetector.ai</p>
+                <div style="display:grid; gap:1.25rem;">
+                    <div style="padding:1.25rem; border-radius:12px;
+                                background: rgba(59,130,246,0.05);
+                                border-left:4px solid #3b82f6;">
+                        <h4 style="color:#60a5fa; font-weight:700;">📧 Email</h4>
+                        <p style="color:#cbd5e1; margin:0;">support@spamdetector.ai</p>
                     </div>
 
-                    <div style="background: rgba(139, 92, 246, 0.05); padding: 1.25rem; border-radius: 12px; border-left: 4px solid #8b5cf6;">
-                        <div style="font-size: 1.75rem; margin-bottom: 0.5rem;">💬</div>
-                        <h4 style="color: #a78bfa; font-weight: 700; margin-bottom: 0.5rem;">Live Chat</h4>
-                        <p style="color: #cbd5e1; margin: 0;">Available Mon-Fri, 9AM-5PM EST</p>
+                    <div style="padding:1.25rem; border-radius:12px;
+                                background: rgba(139,92,246,0.05);
+                                border-left:4px solid #8b5cf6;">
+                        <h4 style="color:#a78bfa; font-weight:700;">💬 Live Chat</h4>
+                        <p style="color:#cbd5e1; margin:0;">Mon–Fri, 9AM–5PM EST</p>
                     </div>
 
-                    <div style="background: rgba(16, 185, 129, 0.05); padding: 1.25rem; border-radius: 12px; border-left: 4px solid #10b981;">
-                        <div style="font-size: 1.75rem; margin-bottom: 0.5rem;">🌐</div>
-                        <h4 style="color: #34d399; font-weight: 700; margin-bottom: 0.5rem;">Social Media</h4>
-                        <p style="color: #cbd5e1; margin: 0;">Follow us @SpamDetectorAI</p>
+                    <div style="padding:1.25rem; border-radius:12px;
+                                background: rgba(16,185,129,0.05);
+                                border-left:4px solid #10b981;">
+                        <h4 style="color:#34d399; font-weight:700;">🌐 Social Media</h4>
+                        <p style="color:#cbd5e1; margin:0;">@SpamDetectorAI</p>
                     </div>
                 </div>
 
-                <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.08);">
-                    <h4 style="color: #f8fafc; font-weight: 700; margin-bottom: 1rem; text-align: center;">Response Time</h4>
-                    <p style="color: #94a3b8; text-align: center; line-height: 1.7;">
-                        We typically respond within 24 hours during business days.
-                        For urgent technical issues, please mark your inquiry as "Technical Support".
+                <div style="margin-top:2rem; padding-top:1.5rem;
+                            border-top:1px solid rgba(255,255,255,0.08);">
+                    <p style="color:#94a3b8; text-align:center; line-height:1.7;">
+                        ⏱ We typically respond within 24 hours on business days.
                     </p>
                 </div>
             </div>
-        """, height=620)
+        """, height=610)
 
-    # ---------------- CONNECT WITH US (FIXED) ----------------
+    # ================= CONNECT WITH US (STYLE MATCHED) =================
     components.html("""
-        <div class="card gradient-border animate" style="animation-delay: 0.2s;">
-            <h3 style="color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; text-align: center;">
+        <div class="card animate">
+            <h3 style="color:#f8fafc; font-size:1.5rem; font-weight:700; margin-bottom:1.5rem; text-align:center;">
                 🤝 Connect With Us
             </h3>
 
-            <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 1.5rem;">
-                <div style="text-align:center">
-                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #1DA1F2, #0d8bd9); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.75rem;">🐦</div>
-                    <span style="color: #cbd5e1;">Twitter</span>
+            <div style="display:flex; justify-content:center; gap:2rem; flex-wrap:wrap;">
+                <div style="text-align:center;">
+                    <div style="width:60px;height:60px;border-radius:50%;
+                                background:linear-gradient(135deg,#1DA1F2,#0d8bd9);
+                                display:flex;align-items:center;justify-content:center;
+                                font-size:1.6rem;">🐦</div>
+                    <span style="color:#cbd5e1;">Twitter</span>
                 </div>
 
-                <div style="text-align:center">
-                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #0077B5, #005582); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.75rem;">💼</div>
-                    <span style="color: #cbd5e1;">LinkedIn</span>
+                <div style="text-align:center;">
+                    <div style="width:60px;height:60px;border-radius:50%;
+                                background:linear-gradient(135deg,#0077B5,#005582);
+                                display:flex;align-items:center;justify-content:center;
+                                font-size:1.6rem;">💼</div>
+                    <span style="color:#cbd5e1;">LinkedIn</span>
                 </div>
 
-                <div style="text-align:center">
-                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #333, #000); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.75rem;">🐙</div>
-                    <span style="color: #cbd5e1;">GitHub</span>
+                <div style="text-align:center;">
+                    <div style="width:60px;height:60px;border-radius:50%;
+                                background:linear-gradient(135deg,#333,#000);
+                                display:flex;align-items:center;justify-content:center;
+                                font-size:1.6rem;">🐙</div>
+                    <span style="color:#cbd5e1;">GitHub</span>
                 </div>
 
-                <div style="text-align:center">
-                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #7289DA, #5865F2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.75rem;">💬</div>
-                    <span style="color: #cbd5e1;">Discord</span>
+                <div style="text-align:center;">
+                    <div style="width:60px;height:60px;border-radius:50%;
+                                background:linear-gradient(135deg,#7289DA,#5865F2);
+                                display:flex;align-items:center;justify-content:center;
+                                font-size:1.6rem;">💬</div>
+                    <span style="color:#cbd5e1;">Discord</span>
                 </div>
             </div>
         </div>
