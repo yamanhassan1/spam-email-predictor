@@ -84,45 +84,57 @@ def render_contact_page():
             </div>
         """, height=610)
 
-    # ================= CONNECT WITH US (STYLE MATCHED) =================
-    components.html("""
-        <div class="card animate">
-            <h3 style="color:#f8fafc; font-size:1.5rem; font-weight:700; margin-bottom:1.5rem; text-align:center;">
-                🤝 Connect With Us
-            </h3>
+    # ================= CONNECT WITH US (EXACT STYLE MATCH) =================
+components.html("""
+    <div class="card animate">
+        <h3 style="color:#f8fafc; font-size:1.5rem; font-weight:700; margin-bottom:1.5rem; text-align:center;">
+            🤝 Connect With Us
+        </h3>
 
-            <div style="display:flex; justify-content:center; gap:2rem; flex-wrap:wrap;">
-                <div style="text-align:center;">
-                    <div style="width:60px;height:60px;border-radius:50%;
-                                background:linear-gradient(135deg,#1DA1F2,#0d8bd9);
-                                display:flex;align-items:center;justify-content:center;
-                                font-size:1.6rem;">🐦</div>
-                    <span style="color:#cbd5e1;">Twitter</span>
+        <div style="display:flex; gap:1.75rem; flex-wrap:wrap;">
+            <div>
+                <div style="width:56px;height:56px;border-radius:14px;
+                            background:linear-gradient(135deg,#1DA1F2,#0d8bd9);
+                            display:flex;align-items:center;justify-content:center;
+                            font-size:1.5rem;
+                            margin-bottom:0.5rem;">
+                    🐦
                 </div>
+                <span style="color:#cbd5e1; font-size:0.95rem;">Twitter</span>
+            </div>
 
-                <div style="text-align:center;">
-                    <div style="width:60px;height:60px;border-radius:50%;
-                                background:linear-gradient(135deg,#0077B5,#005582);
-                                display:flex;align-items:center;justify-content:center;
-                                font-size:1.6rem;">💼</div>
-                    <span style="color:#cbd5e1;">LinkedIn</span>
+            <div>
+                <div style="width:56px;height:56px;border-radius:14px;
+                            background:linear-gradient(135deg,#0077B5,#005582);
+                            display:flex;align-items:center;justify-content:center;
+                            font-size:1.5rem;
+                            margin-bottom:0.5rem;">
+                    💼
                 </div>
+                <span style="color:#cbd5e1; font-size:0.95rem;">LinkedIn</span>
+            </div>
 
-                <div style="text-align:center;">
-                    <div style="width:60px;height:60px;border-radius:50%;
-                                background:linear-gradient(135deg,#333,#000);
-                                display:flex;align-items:center;justify-content:center;
-                                font-size:1.6rem;">🐙</div>
-                    <span style="color:#cbd5e1;">GitHub</span>
+            <div>
+                <div style="width:56px;height:56px;border-radius:14px;
+                            background:linear-gradient(135deg,#333,#000);
+                            display:flex;align-items:center;justify-content:center;
+                            font-size:1.5rem;
+                            margin-bottom:0.5rem;">
+                    🐙
                 </div>
+                <span style="color:#cbd5e1; font-size:0.95rem;">GitHub</span>
+            </div>
 
-                <div style="text-align:center;">
-                    <div style="width:60px;height:60px;border-radius:50%;
-                                background:linear-gradient(135deg,#7289DA,#5865F2);
-                                display:flex;align-items:center;justify-content:center;
-                                font-size:1.6rem;">💬</div>
-                    <span style="color:#cbd5e1;">Discord</span>
+            <div>
+                <div style="width:56px;height:56px;border-radius:14px;
+                            background:linear-gradient(135deg,#7289DA,#5865F2);
+                            display:flex;align-items:center;justify-content:center;
+                            font-size:1.5rem;
+                            margin-bottom:0.5rem;">
+                    💬
                 </div>
+                <span style="color:#cbd5e1; font-size:0.95rem;">Discord</span>
             </div>
         </div>
-    """, height=260)
+    </div>
+""", height=250)
