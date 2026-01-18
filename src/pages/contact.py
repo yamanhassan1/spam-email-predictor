@@ -77,31 +77,25 @@ def render_contact_page():
                     <div style="padding: 1.25rem; border-radius: 12px;
                                 background: rgba(59,130,246,0.06);
                                 border-left: 4px solid #3b82f6;">
-                        <h4 style="color: #60a5fa; font-weight: 700; font-size: 1rem; margin-bottom: 0.4rem;">Name</h4>
-                        <p style="color: #cbd5e1; font-size: 1rem; margin: 0 0 0.2rem 0;">John Doe</p>
+                        <h4 style="color: #60a5fa; font-weight: 700; font-size: 1rem; margin-bottom: 0.4rem;">📧 Email</h4>
+                        <p style="color: #cbd5e1; font-size: 1rem; margin: 0 0 0.2rem 0;">support@spamdetector.ai</p>
                     </div>
                     <div style="padding: 1.25rem; border-radius: 12px;
                                 background: rgba(139,92,246,0.06);
                                 border-left: 4px solid #8b5cf6;">
-                        <h4 style="color: #a78bfa; font-weight: 700; font-size: 1rem; margin-bottom: 0.4rem;">Email</h4>
-                        <p style="color: #cbd5e1; font-size: 1rem; margin: 0 0 0.2rem 0;">john@example.com</p>
+                        <h4 style="color: #a78bfa; font-weight: 700; font-size: 1rem; margin-bottom: 0.4rem;">💬 Live Chat</h4>
+                        <p style="color: #cbd5e1; font-size: 1rem; margin: 0 0 0.2rem 0;">Mon–Fri, 9AM–5PM EST</p>
                     </div>
                     <div style="padding: 1.25rem; border-radius: 12px;
                                 background: rgba(16,185,129,0.06);
                                 border-left: 4px solid #10b981;">
-                        <h4 style="color: #34d399; font-weight: 700; font-size: 1rem; margin-bottom: 0.4rem;">Subject</h4>
-                        <p style="color: #cbd5e1; font-size: 1rem; margin: 0 0 0.2rem 0;">General Inquiry</p>
-                    </div>
-                    <div style="padding: 1.25rem; border-radius: 12px;
-                                background: rgba(251,191,36,0.06);
-                                border-left: 4px solid #fbbf24;">
-                        <h4 style="color: #fbbf24; font-weight: 700; font-size: 1rem; margin-bottom: 0.4rem;">Message</h4>
-                        <p style="color: #cbd5e1; font-size: 1rem; margin: 0 0 0.2rem 0;">Type your message here...</p>
+                        <h4 style="color: #34d399; font-weight: 700; font-size: 1rem; margin-bottom: 0.4rem;">🌐 Social Media</h4>
+                        <p style="color: #cbd5e1; font-size: 1rem; margin: 0 0 0.2rem 0;">@SpamDetectorAI</p>
                     </div>
                 </div>
                 <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.08);">
                     <p style="color: #94a3b8; font-size: 0.95rem; text-align: center; line-height: 1.7;">
-                        📤 Form submission is disabled in this demo.
+                        ⏱ We typically respond within 24 hours on business days.
                     </p>
                 </div>
             </div>
