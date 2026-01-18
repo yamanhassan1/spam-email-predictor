@@ -12,7 +12,7 @@ from src.analysis import SPAM_WORDS, HAM_WORDS
 # Page modules - Import directly to avoid circular imports
 # ============================
 from src.pages.home import render_home_page
-from src.pages.info_sections import render_info_sections
+from src.pages.info_section import render_info_sections
 
 
 def main():

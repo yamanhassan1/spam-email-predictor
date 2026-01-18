@@ -5,7 +5,7 @@ from src.design import render_result_card
 from src.nlp import transformed_text
 
 
-def render_home_page(tfidf, model, spam_words_set, ham_words_set):
+def render_home_page(tfidf, model, spam_words_set, ham_words_set, stop_words):
     """
     Render the main home page with input section and prediction logic.
     """
