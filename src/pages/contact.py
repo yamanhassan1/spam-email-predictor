@@ -46,44 +46,38 @@ def render_contact_page():
 
     # ================= CONTACT INFORMATION (STYLE MATCHED) =================
     with col2:
-        components.html("""
+        st.markdown("""
             <div class="card animate" style="height: 100%;">
                 <h3 style="color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem;">
                     📞 Contact Information
                 </h3>
-
-                <div style="display:grid; gap:1.25rem;">
-                    <div style="padding:1.25rem; border-radius:12px;
-                                background: rgba(59,130,246,0.05);
-                                border-left:4px solid #3b82f6;">
-                        <h4 style="color:#60a5fa; font-weight:700;">📧 Email</h4>
-                        <p style="color:#cbd5e1; margin:0;">support@spamdetector.ai</p>
+                <div style="display: grid; gap: 1.25rem;">
+                    <div style="padding: 1.25rem; border-radius: 12px; 
+                                background: rgba(59,130,246,0.06); 
+                                border-left: 4px solid #3b82f6;">
+                        <h4 style="color:#60a5fa; font-weight:700; font-size: 1rem; margin-bottom: 0.4rem;">📧 Email</h4>
+                        <p style="color: #cbd5e1; font-size: 1rem; margin: 0 0 0.2rem 0;">support@spamdetector.ai</p>
                     </div>
-
-                    <div style="padding:1.25rem; border-radius:12px;
-                                background: rgba(139,92,246,0.05);
-                                border-left:4px solid #8b5cf6;">
-                        <h4 style="color:#a78bfa; font-weight:700;">💬 Live Chat</h4>
-                        <p style="color:#cbd5e1; margin:0;">Mon–Fri, 9AM–5PM EST</p>
+                    <div style="padding: 1.25rem; border-radius: 12px;
+                                background: rgba(139,92,246,0.06);
+                                border-left: 4px solid #8b5cf6;">
+                        <h4 style="color:#a78bfa; font-weight:700; font-size: 1rem; margin-bottom: 0.4rem;">💬 Live Chat</h4>
+                        <p style="color:#cbd5e1; font-size: 1rem; margin: 0 0 0.2rem 0;">Mon–Fri, 9AM–5PM EST</p>
                     </div>
-
-                    <div style="padding:1.25rem; border-radius:12px;
-                                background: rgba(16,185,129,0.05);
-                                border-left:4px solid #10b981;">
-                        <h4 style="color:#34d399; font-weight:700;">🌐 Social Media</h4>
-                        <p style="color:#cbd5e1; margin:0;">@SpamDetectorAI</p>
+                    <div style="padding: 1.25rem; border-radius: 12px;
+                                background: rgba(16,185,129,0.06);
+                                border-left: 4px solid #10b981;">
+                        <h4 style="color:#34d399; font-weight:700; font-size: 1rem; margin-bottom: 0.4rem;">🌐 Social Media</h4>
+                        <p style="color:#cbd5e1; font-size: 1rem; margin: 0 0 0.2rem 0;">@SpamDetectorAI</p>
                     </div>
                 </div>
-
-                <div style="margin-top:2rem; padding-top:1.5rem;
-                            border-top:1px solid rgba(255,255,255,0.08);">
-                    <p style="color:#94a3b8; text-align:center; line-height:1.7;">
+                <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.08);">
+                    <p style="color: #94a3b8; font-size: 0.95rem; text-align: center; line-height: 1.7;">
                         ⏱ We typically respond within 24 hours on business days.
                     </p>
                 </div>
             </div>
-        """, height=610)
-
+        """, unsafe_allow_html=True)
     # ================= CONNECT WITH US (EXACT STYLE MATCH) =================
 st.markdown(
     """
