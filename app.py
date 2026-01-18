@@ -1,4 +1,10 @@
 import streamlit as st
+import sys
+from pathlib import Path
+
+ROOT_DIR = Path(__file__).parent
+sys.path.insert(0, str(ROOT_DIR))
+
 
 # Core modules
 from src.design import setup_page, render_header

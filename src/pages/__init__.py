@@ -1,22 +1,27 @@
-# ============================================
 # src/pages/__init__.py
-# ============================================
-"""
-Pages module for the spam detector application.
-Contains all page-level rendering logic.
 
-This module organizes the application into distinct pages:
-- home: Main prediction and input interface
-- prediction_analysis: Visualization and analysis components
-- info_sections: Static informational content
+"""
+Page-level modules for the Spam Detector app.
 """
 
-from . import home
-from . import prediction_analysis
-from . import info_sections
+try:
+    from . import home
+except Exception as e:
+    raise ImportError("Failed to import home page") from e
+
+try:
+    from . import prediction_analysis
+except Exception as e:
+    raise ImportError("Failed to import prediction_analysis page") from e
+
+try:
+    from . import info_sections
+except Exception as e:
+    raise ImportError("Failed to import info_sections page") from e
+
 
 __all__ = [
-    'home',
-    'prediction_analysis',
-    'info_sections',
+    "home",
+    "prediction_analysis",
+    "info_sections",
 ]
