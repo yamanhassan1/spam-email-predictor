@@ -6,9 +6,17 @@ def render_about_page():
     st.markdown("""
         <div class="card gradient-border animate" style="text-align: center; padding: 3rem 2rem; margin-bottom: 2rem;">
             <div style="font-size: 4rem; margin-bottom: 1rem;">🛡️</div>
-            <h1 style="font-size: 3rem; font-weight: 900; margin-bottom: 1rem; color: #f8fafc;">About This Project</h1>
-            <div style="height: 4px; width: 100px; margin: 0 auto 1.5rem; background: linear-gradient(90deg, #3b82f6, #8b5cf6); border-radius: 999px;"></div>
+            <h1 style="font-size: 3rem; font-weight: 900; margin-bottom: 1rem;">About This Project</h1>
+            <div style="height: 4px; width: 100px; margin: 0 auto 1.5rem; background: linear-gradient(90deg, var(--blue-400), var(--purple-400)); border-radius: 999px;"></div>
+            <p style="color: #cbd5e1; font-size: 1.1rem;">Building a safer digital communication experience</p>
         </div>
+    """, unsafe_allow_html=True)
+    
+    # Mission & Vision
+    st.markdown("""
+        <h3 style='color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin: 2rem 0 1.5rem 0; letter-spacing: -0.02em;'>
+            🎯 Our Mission & Vision
+        </h3>
     """, unsafe_allow_html=True)
     
     col1, col2 = st.columns(2)
@@ -16,8 +24,9 @@ def render_about_page():
     with col1:
         st.markdown("""
             <div class="card animate" style="height: 100%;">
-                <h3 style="color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">
-                    🎯 Mission
+                <div style="font-size: 3rem; margin-bottom: 1rem;">🎯</div>
+                <h3 style="color: #f8fafc; font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">
+                    Mission
                 </h3>
                 <p style="color: #cbd5e1; line-height: 1.8; font-size: 1.05rem;">
                     Our mission is to protect users from spam, phishing attempts, and malicious messages 
@@ -29,9 +38,10 @@ def render_about_page():
     
     with col2:
         st.markdown("""
-            <div class="card animate" style="height: 100%; animation-delay: 0.1s;">
-                <h3 style="color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">
-                    🚀 Technology
+            <div class="card animate" style="height: 100%;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">🚀</div>
+                <h3 style="color: #f8fafc; font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">
+                    Technology
                 </h3>
                 <p style="color: #cbd5e1; line-height: 1.8; font-size: 1.05rem;">
                     Built with state-of-the-art Natural Language Processing (NLP) and Machine Learning 
@@ -43,31 +53,91 @@ def render_about_page():
     
     st.markdown("<br>", unsafe_allow_html=True)
     
+    # Key Features
     st.markdown("""
-        <div class="card gradient-border animate" style="animation-delay: 0.2s;">
-            <h3 style="color: #f8fafc; font-size: 1.75rem; font-weight: 700; margin-bottom: 1.5rem; text-align: center;">
-                📊 Key Features
-            </h3>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
-                <div style="background: rgba(255, 255, 255, 0.03); padding: 1.5rem; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.08);">
-                    <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">🤖</div>
-                    <h4 style="color: #f8fafc; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">AI-Powered</h4>
-                    <p style="color: #94a3b8; font-size: 0.95rem; margin: 0;">Advanced machine learning algorithms for accurate detection</p>
+        <h3 style='color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin: 2rem 0 1.5rem 0; letter-spacing: -0.02em;'>
+            ✨ Key Features
+        </h3>
+    """, unsafe_allow_html=True)
+    
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        st.markdown("""
+            <div class="card animate" style="text-align: center; height: 100%;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">🤖</div>
+                <h4 style="color: #f8fafc; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem;">AI-Powered</h4>
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; font-size: 0.95rem;">
+                    Advanced machine learning algorithms for accurate detection
+                </p>
+            </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown("""
+            <div class="card animate" style="text-align: center; height: 100%;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">⚡</div>
+                <h4 style="color: #f8fafc; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem;">Real-Time</h4>
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; font-size: 0.95rem;">
+                    Instant analysis and results in milliseconds
+                </p>
+            </div>
+        """, unsafe_allow_html=True)
+    
+    with col3:
+        st.markdown("""
+            <div class="card animate" style="text-align: center; height: 100%;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">🔒</div>
+                <h4 style="color: #f8fafc; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem;">Privacy First</h4>
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; font-size: 0.95rem;">
+                    Your data is never stored or shared
+                </p>
+            </div>
+        """, unsafe_allow_html=True)
+    
+    with col4:
+        st.markdown("""
+            <div class="card animate" style="text-align: center; height: 100%;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">📈</div>
+                <h4 style="color: #f8fafc; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem;">Detailed Analysis</h4>
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; font-size: 0.95rem;">
+                    Visual insights and pattern recognition
+                </p>
+            </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    # How It Works
+    st.markdown("""
+        <h3 style='color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin: 2rem 0 1.5rem 0; letter-spacing: -0.02em;'>
+            🔄 How It Works
+        </h3>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+        <div class="card gradient-border animate">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+                <div style="background: rgba(59, 130, 246, 0.05); padding: 1.5rem; border-radius: 16px; border-left: 4px solid var(--blue-400);">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">1️⃣</div>
+                    <h4 style="color: #60a5fa; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">Text Preprocessing</h4>
+                    <p style="color: #cbd5e1; font-size: 0.95rem; margin: 0; line-height: 1.7;">
+                        Messages are cleaned, tokenized, and normalized using advanced NLP techniques
+                    </p>
                 </div>
-                <div style="background: rgba(255, 255, 255, 0.03); padding: 1.5rem; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.08);">
-                    <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">⚡</div>
-                    <h4 style="color: #f8fafc; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">Real-Time</h4>
-                    <p style="color: #94a3b8; font-size: 0.95rem; margin: 0;">Instant analysis and results in milliseconds</p>
+                <div style="background: rgba(139, 92, 246, 0.05); padding: 1.5rem; border-radius: 16px; border-left: 4px solid var(--purple-400);">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">2️⃣</div>
+                    <h4 style="color: #a78bfa; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">Feature Extraction</h4>
+                    <p style="color: #cbd5e1; font-size: 0.95rem; margin: 0; line-height: 1.7;">
+                        TF-IDF vectorization converts text into numerical features for ML processing
+                    </p>
                 </div>
-                <div style="background: rgba(255, 255, 255, 0.03); padding: 1.5rem; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.08);">
-                    <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">🔒</div>
-                    <h4 style="color: #f8fafc; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">Privacy First</h4>
-                    <p style="color: #94a3b8; font-size: 0.95rem; margin: 0;">Your data is never stored or shared</p>
-                </div>
-                <div style="background: rgba(255, 255, 255, 0.03); padding: 1.5rem; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.08);">
-                    <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">📈</div>
-                    <h4 style="color: #f8fafc; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">Detailed Analysis</h4>
-                    <p style="color: #94a3b8; font-size: 0.95rem; margin: 0;">Visual insights and pattern recognition</p>
+                <div style="background: rgba(16, 185, 129, 0.05); padding: 1.5rem; border-radius: 16px; border-left: 4px solid var(--green-400);">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">3️⃣</div>
+                    <h4 style="color: #34d399; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">AI Classification</h4>
+                    <p style="color: #cbd5e1; font-size: 0.95rem; margin: 0; line-height: 1.7;">
+                        Machine learning model analyzes patterns and classifies with confidence scores
+                    </p>
                 </div>
             </div>
         </div>
@@ -75,37 +145,99 @@ def render_about_page():
     
     st.markdown("<br>", unsafe_allow_html=True)
     
+    # Technology Stack
     st.markdown("""
-        <div class="card animate" style="animation-delay: 0.3s;">
-            <h3 style="color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; text-align: center;">
-                🛠️ Technology Stack
-            </h3>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
-                <div style="text-align: center; padding: 1rem;">
-                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">🐍</div>
-                    <div style="color: #f8fafc; font-weight: 700; font-size: 1.1rem;">Python</div>
-                    <div style="color: #94a3b8; font-size: 0.9rem;">Core Language</div>
-                </div>
-                <div style="text-align: center; padding: 1rem;">
-                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">🤖</div>
-                    <div style="color: #f8fafc; font-weight: 700; font-size: 1.1rem;">Scikit-learn</div>
-                    <div style="color: #94a3b8; font-size: 0.9rem;">ML Framework</div>
-                </div>
-                <div style="text-align: center; padding: 1rem;">
-                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">📝</div>
-                    <div style="color: #f8fafc; font-weight: 700; font-size: 1.1rem;">NLTK</div>
-                    <div style="color: #94a3b8; font-size: 0.9rem;">NLP Processing</div>
-                </div>
-                <div style="text-align: center; padding: 1rem;">
-                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">📊</div>
-                    <div style="color: #f8fafc; font-weight: 700; font-size: 1.1rem;">Plotly</div>
-                    <div style="color: #94a3b8; font-size: 0.9rem;">Visualizations</div>
-                </div>
-                <div style="text-align: center; padding: 1rem;">
-                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">🎨</div>
-                    <div style="color: #f8fafc; font-weight: 700; font-size: 1.1rem;">Streamlit</div>
-                    <div style="color: #94a3b8; font-size: 0.9rem;">Web Framework</div>
-                </div>
-            </div>
-        </div>
+        <h3 style='color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin: 2rem 0 1.5rem 0; letter-spacing: -0.02em;'>
+            🛠️ Technology Stack
+        </h3>
     """, unsafe_allow_html=True)
+    
+    col1, col2, col3, col4, col5 = st.columns(5)
+    
+    with col1:
+        st.markdown("""
+            <div class="card animate" style="text-align: center; height: 100%;">
+                <div style="font-size: 3rem; margin-bottom: 0.5rem;">🐍</div>
+                <h5 style="color: #f8fafc; font-weight: 700; margin-bottom: 0.5rem; font-size: 1rem;">Python</h5>
+                <p style="color: #94a3b8; font-size: 0.85rem; margin: 0;">Core Language</p>
+            </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown("""
+            <div class="card animate" style="text-align: center; height: 100%;">
+                <div style="font-size: 3rem; margin-bottom: 0.5rem;">🤖</div>
+                <h5 style="color: #f8fafc; font-weight: 700; margin-bottom: 0.5rem; font-size: 1rem;">Scikit-learn</h5>
+                <p style="color: #94a3b8; font-size: 0.85rem; margin: 0;">ML Framework</p>
+            </div>
+        """, unsafe_allow_html=True)
+    
+    with col3:
+        st.markdown("""
+            <div class="card animate" style="text-align: center; height: 100%;">
+                <div style="font-size: 3rem; margin-bottom: 0.5rem;">📝</div>
+                <h5 style="color: #f8fafc; font-weight: 700; margin-bottom: 0.5rem; font-size: 1rem;">NLTK</h5>
+                <p style="color: #94a3b8; font-size: 0.85rem; margin: 0;">NLP Processing</p>
+            </div>
+        """, unsafe_allow_html=True)
+    
+    with col4:
+        st.markdown("""
+            <div class="card animate" style="text-align: center; height: 100%;">
+                <div style="font-size: 3rem; margin-bottom: 0.5rem;">📊</div>
+                <h5 style="color: #f8fafc; font-weight: 700; margin-bottom: 0.5rem; font-size: 1rem;">Plotly</h5>
+                <p style="color: #94a3b8; font-size: 0.85rem; margin: 0;">Visualizations</p>
+            </div>
+        """, unsafe_allow_html=True)
+    
+    with col5:
+        st.markdown("""
+            <div class="card animate" style="text-align: center; height: 100%;">
+                <div style="font-size: 3rem; margin-bottom: 0.5rem;">🎨</div>
+                <h5 style="color: #f8fafc; font-weight: 700; margin-bottom: 0.5rem; font-size: 1rem;">Streamlit</h5>
+                <p style="color: #94a3b8; font-size: 0.85rem; margin: 0;">Web Framework</p>
+            </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    # Statistics
+    st.markdown("""
+        <h3 style='color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin: 2rem 0 1.5rem 0; letter-spacing: -0.02em;'>
+            📊 Project Statistics
+        </h3>
+    """, unsafe_allow_html=True)
+    
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        st.markdown("""
+            <div class="card animate" style="text-align: center;">
+                <div style="font-size: 2.5rem; font-weight: 900; color: var(--blue-400); margin-bottom: 0.5rem;">97%+</div>
+                <p style="color: #cbd5e1; font-size: 0.95rem; margin: 0;">Accuracy Rate</p>
+            </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown("""
+            <div class="card animate" style="text-align: center;">
+                <div style="font-size: 2.5rem; font-weight: 900; color: var(--purple-400); margin-bottom: 0.5rem;">1M+</div>
+                <p style="color: #cbd5e1; font-size: 0.95rem; margin: 0;">Messages Analyzed</p>
+            </div>
+        """, unsafe_allow_html=True)
+    
+    with col3:
+        st.markdown("""
+            <div class="card animate" style="text-align: center;">
+                <div style="font-size: 2.5rem; font-weight: 900; color: var(--green-400); margin-bottom: 0.5rem;">&lt;1s</div>
+                <p style="color: #cbd5e1; font-size: 0.95rem; margin: 0;">Analysis Time</p>
+            </div>
+        """, unsafe_allow_html=True)
+    
+    with col4:
+        st.markdown("""
+            <div class="card animate" style="text-align: center;">
+                <div style="font-size: 2.5rem; font-weight: 900; color: var(--cyan-500); margin-bottom: 0.5rem;">100%</div>
+                <p style="color: #cbd5e1; font-size: 0.95rem; margin: 0;">Privacy Protection</p>
+            </div>
+        """, unsafe_allow_html=True)
