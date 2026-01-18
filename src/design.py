@@ -556,7 +556,7 @@ def render_header(
                 <h1 style="color: #f8fafc; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.75rem; letter-spacing: -0.02em;">
                     AI-Powered Spam Detector
                 </h1>
-                <p style="color: var(--text-muted); font-size: clamp(0.9rem, 2vw, 1.1rem); margin: 0.5rem 0 0 0; max-width: 600px;">
+                <p style="color: #cbd5e1; margin-bottom: 1rem; line-height: 1.6;">
                     {subtitle}
                 </p>
             </div>
