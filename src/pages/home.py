@@ -3,16 +3,18 @@ import nltk
 from collections import Counter
 from src.design import render_result_card
 from src.nlp import transformed_text
-from src.pages import prediction_analysis
-from src.components import input_section
 
 
 def render_home_page(tfidf, model, spam_words_set, ham_words_set):
     """
     Render the main home page with input section and prediction logic.
     """
+    # Import here to avoid circular imports
+    from src.components.input_section import render_input_section
+    from src.pages.prediction_analysis import render_analysis_section
+    
     # Render input section
-    input_sms = input_section.render_input_section()
+    input_sms = render_input_section()
     
     # Prediction button
     col1, col2, col3 = st.columns([1, 2, 1])
@@ -63,7 +65,7 @@ def render_home_page(tfidf, model, spam_words_set, ham_words_set):
                 st.markdown(render_result_card(result == 1, confidence), unsafe_allow_html=True)
                 
                 # Render detailed analysis
-                prediction_analysis.render_analysis_section(
+                render_analysis_section(
                     input_sms=input_sms,
                     transformed_sms=transformed_sms,
                     result=result,

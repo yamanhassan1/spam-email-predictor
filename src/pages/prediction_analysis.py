@@ -11,7 +11,6 @@ from src.visualization import (
     create_metric_card,
     message_complexity_radar,
 )
-from src.components import pattern_analysis
 
 
 def render_analysis_section(
@@ -22,6 +21,9 @@ def render_analysis_section(
     """
     Render the complete analysis section including visualizations and pattern analysis.
     """
+    # Import here to avoid circular imports
+    from src.components.pattern_analysis import render_pattern_analysis
+    
     # Statistics section
     render_statistics_section(word_count, char_count, sentence_count, words)
     
@@ -33,7 +35,7 @@ def render_analysis_section(
     )
     
     # Pattern analysis
-    pattern_analysis.render_pattern_analysis(
+    render_pattern_analysis(
         input_sms, result, confidence, spam_prob, ham_prob,
         words, spam_words_set, ham_words_set
     )
