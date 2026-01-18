@@ -553,7 +553,7 @@ def render_header(
     st.markdown(f"""
         <div class="card gradient-border animate" style="text-align: center; margin-bottom: 2rem;">
             <div class="accent-bar"></div>
-            <div style="display: flex; align-items: center; gap: 1rem; justify-content: center; flex-direction: column; color: #cbd5e1;">
+            <div style="display: flex; align-items: center; gap: 1rem; justify-content: center; flex-direction: column; color: #f8fafc;">
                 <h1 style="font-weight: 900; font-size: clamp(1.5rem, 4vw, 2.25rem); margin: 0;" class="shimmer">
                     {title}
                 </h1>
