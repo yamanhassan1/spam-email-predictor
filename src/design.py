@@ -556,7 +556,7 @@ def render_header(
                 <h1 style="color: #f8fafc; font-size: 2.9rem; font-weight: 1200; margin-bottom: 0.75rem; letter-spacing: -0.02em;">
                     {title}
                 </h1>
-                <p style="color: #cbd5e1; margin-bottom: 1rem; line-height: 1.6;">
+                <p style="color: #cbd5e1; margin-bottom: 1rem; line-height: 1.6; font-size: 1.1rem;">
                     {subtitle}
                 </p>
             </div>

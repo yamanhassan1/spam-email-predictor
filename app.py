@@ -41,7 +41,7 @@ ham_words_set = HAM_WORDS
 
 # Render premium header
 render_header(
-    title="🛡️ AI-Powered Spam Detector",
+    title="AI-Powered Spam Detector",
     subtitle="Advanced machine learning protection against phishing, scams, and unwanted messages"
 )
 
