@@ -556,20 +556,14 @@ col1, col2 = st.columns(2)
 with col1:
     st.markdown("""
     <div class="card gradient-border animate" style="height: 100%; position: relative; overflow: visible;">
-        <!-- Decorative corner accent -->
         <div style="position: absolute; top: -1px; right: -1px; width: 60px; height: 60px; background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), transparent); border-radius: 0 16px 0 40px;"></div>
-        
-        <!-- Icon badge -->
         <div style="width: 56px; height: 56px; background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.1)); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2); border: 1px solid rgba(59, 130, 246, 0.2);">
             <span style="font-size: 1.8rem;">🧠</span>
         </div>
-        
         <h4 style="color: #f8fafc; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.75rem; letter-spacing: -0.02em;">
             Multi-Layer Analysis
         </h4>
-        
         <div style="height: 3px; background: linear-gradient(90deg, #3b82f6, #8b5cf6, transparent); margin-bottom: 1.25rem; border-radius: 2px; box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);"></div>
-        
         <ul style="color: #cbd5e1; line-height: 2; margin: 0; padding-left: 0; list-style: none;">
             <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
                 <span style="position: absolute; left: 0; color: #60a5fa; font-weight: bold;">▸</span>
@@ -592,8 +586,6 @@ with col1:
                 Word frequency and vocabulary profiling
             </li>
         </ul>
-        
-        <!-- Bottom accent line -->
         <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.3), transparent);"></div>
     </div>
     """, unsafe_allow_html=True)
@@ -601,20 +593,14 @@ with col1:
 with col2:
     st.markdown("""
     <div class="card gradient-border animate" style="height: 100%; position: relative; overflow: visible;">
-        <!-- Decorative corner accent -->
         <div style="position: absolute; top: -1px; right: -1px; width: 60px; height: 60px; background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), transparent); border-radius: 0 16px 0 40px;"></div>
-        
-        <!-- Icon badge -->
         <div style="width: 56px; height: 56px; background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(59, 130, 246, 0.1)); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; box-shadow: 0 8px 24px rgba(139, 92, 246, 0.2); border: 1px solid rgba(139, 92, 246, 0.2);">
             <span style="font-size: 1.8rem;">📈</span>
         </div>
-        
         <h4 style="color: #f8fafc; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.75rem; letter-spacing: -0.02em;">
             Comprehensive Reporting
         </h4>
-        
         <div style="height: 3px; background: linear-gradient(90deg, #8b5cf6, #3b82f6, transparent); margin-bottom: 1.25rem; border-radius: 2px; box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);"></div>
-        
         <ul style="color: #cbd5e1; line-height: 2; margin: 0; padding-left: 0; list-style: none;">
             <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
                 <span style="position: absolute; left: 0; color: #a78bfa; font-weight: bold;">▸</span>
@@ -637,8 +623,6 @@ with col2:
                 Actionable insights explaining the classification
             </li>
         </ul>
-        
-        <!-- Bottom accent line -->
         <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.3), transparent);"></div>
     </div>
     """, unsafe_allow_html=True)
