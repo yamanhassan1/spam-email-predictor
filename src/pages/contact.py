@@ -71,39 +71,24 @@ def render_contact_page():
         st.markdown("""
             <div class="card animate" style="height: 100%;">
                 <h3 style="color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem;">
-                    📬 Send Us a Message
+                    💌 Message Us
                 </h3>
-                <div style="display: grid; gap: 1.25rem;">
-                    <div style="padding: 1.25rem; border-radius: 12px;
-                                background: rgba(59,130,246,0.06);
-                                border-left: 4px solid #3b82f6;">
-                        <h4 style="color: #60a5fa; font-weight: 700; font-size: 1rem; margin-bottom: 0.4rem;">Name</h4>
-                        <p style="color: #cbd5e1; font-size: 1rem; margin: 0 0 0.2rem 0;">John Doe</p>
-                    </div>
-                    <div style="padding: 1.25rem; border-radius: 12px;
-                                background: rgba(139,92,246,0.06);
-                                border-left: 4px solid #8b5cf6;">
-                        <h4 style="color: #a78bfa; font-weight: 700; font-size: 1rem; margin-bottom: 0.4rem;">Email</h4>
-                        <p style="color: #cbd5e1; font-size: 1rem; margin: 0 0 0.2rem 0;">john@example.com</p>
-                    </div>
-                    <div style="padding: 1.25rem; border-radius: 12px;
-                                background: rgba(16,185,129,0.06);
-                                border-left: 4px solid #10b981;">
-                        <h4 style="color: #34d399; font-weight: 700; font-size: 1rem; margin-bottom: 0.4rem;">Subject</h4>
-                        <p style="color: #cbd5e1; font-size: 1rem; margin: 0 0 0.2rem 0;">General Inquiry</p>
-                    </div>
-                    <div style="padding: 1.25rem; border-radius: 12px;
-                                background: rgba(251,191,36,0.06);
-                                border-left: 4px solid #fbbf24;">
-                        <h4 style="color: #fbbf24; font-weight: 700; font-size: 1rem; margin-bottom: 0.4rem;">Message</h4>
-                        <p style="color: #cbd5e1; font-size: 1rem; margin: 0 0 0.2rem 0;">Type your message here...</p>
-                    </div>
-                </div>
-                <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.08);">
-                    <p style="color: #94a3b8; font-size: 0.95rem; text-align: center; line-height: 1.7;">
-                        📤 Form submission is disabled in this demo.
-                    </p>
-                </div>
+            </div>
+        """, unsafe_allow_html=True)
+
+        with st.form("contact_form"):
+            name = st.text_input("Your Name", max_chars=80)
+            email = st.text_input("Your Email", max_chars=120)
+            subject = st.text_input("Subject", max_chars=120)
+            message = st.text_area("Message", height=120, max_chars=1000)
+            submitted = st.form_submit_button("Send Message", disabled=True)
+            if submitted:
+                st.info("📤 Form submission is disabled in this demo.")
+
+        st.markdown("""
+            <div style="margin-top: 1.5rem; color: #94a3b8; font-size: 0.97rem; text-align: center;">
+                📤 Form submission is disabled in this demo.<br>
+                Please use the contact information or social links if you need to reach us.
             </div>
         """, unsafe_allow_html=True)
     # ================= CONTACT INFORMATION (STYLE MATCHED) =================
