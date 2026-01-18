@@ -551,11 +551,10 @@ def render_header(
     Render premium header with gradient accents and animations.
     """
     st.markdown(f"""
-        <div class="card gradient-border animate" style="text-align: center; margin-bottom: 2rem;">
-            <div class="accent-bar"></div>
-            <div style="display: flex; align-items: center; gap: 1rem; justify-content: center; flex-direction: column; color: #f8fafc;">
-                <h1 style="font-weight: 900; font-size: clamp(1.5rem, 4vw, 2.25rem); margin: 0;" class="shimmer">
-                    {title}
+        <div class="card" style="text-align: center; padding: 2rem; background: linear-gradient(135deg, rgba(59, 130, 246, 0.03), rgba(139, 92, 246, 0.02)); margin-top: 3rem;">
+            <div style="font-size: 2.5rem; margin-bottom: 1rem;">🛡️</div>
+                <h1 style="color: #f8fafc; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.75rem; letter-spacing: -0.02em;">
+                    AI-Powered Spam Detector
                 </h1>
                 <p style="color: var(--text-muted); font-size: clamp(0.9rem, 2vw, 1.1rem); margin: 0.5rem 0 0 0; max-width: 600px;">
                     {subtitle}
