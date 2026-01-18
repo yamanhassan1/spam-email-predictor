@@ -85,14 +85,14 @@ def render_contact_page():
         """, height=610)
 
     # ================= CONNECT WITH US (EXACT STYLE MATCH) =================
-components.html("""
+st.markdown(
+    """
     <div class="card animate">
         <h3 style="color:#f8fafc; font-size:1.5rem; font-weight:700; margin-bottom:1.5rem; text-align:center;">
             🤝 Connect With Us
         </h3>
-
-        <div style="display:flex; gap:1.75rem; flex-wrap:wrap;">
-            <div>
+        <div style="display:flex; gap:1.75rem; flex-wrap:wrap; justify-content:center;">
+            <a href="https://twitter.com/SpamDetectorAI" target="_blank" style="text-decoration:none;">
                 <div style="width:56px;height:56px;border-radius:14px;
                             background:linear-gradient(135deg,#1DA1F2,#0d8bd9);
                             display:flex;align-items:center;justify-content:center;
@@ -100,10 +100,9 @@ components.html("""
                             margin-bottom:0.5rem;">
                     🐦
                 </div>
-                <span style="color:#cbd5e1; font-size:0.95rem;">Twitter</span>
-            </div>
-
-            <div>
+                <div style="color:#cbd5e1; font-size:0.95rem; text-align:center;">Twitter</div>
+            </a>
+            <a href="https://linkedin.com/company/spamdetectorai" target="_blank" style="text-decoration:none;">
                 <div style="width:56px;height:56px;border-radius:14px;
                             background:linear-gradient(135deg,#0077B5,#005582);
                             display:flex;align-items:center;justify-content:center;
@@ -111,10 +110,9 @@ components.html("""
                             margin-bottom:0.5rem;">
                     💼
                 </div>
-                <span style="color:#cbd5e1; font-size:0.95rem;">LinkedIn</span>
-            </div>
-
-            <div>
+                <div style="color:#cbd5e1; font-size:0.95rem; text-align:center;">LinkedIn</div>
+            </a>
+            <a href="https://github.com/SpamDetectorAI" target="_blank" style="text-decoration:none;">
                 <div style="width:56px;height:56px;border-radius:14px;
                             background:linear-gradient(135deg,#333,#000);
                             display:flex;align-items:center;justify-content:center;
@@ -122,10 +120,9 @@ components.html("""
                             margin-bottom:0.5rem;">
                     🐙
                 </div>
-                <span style="color:#cbd5e1; font-size:0.95rem;">GitHub</span>
-            </div>
-
-            <div>
+                <div style="color:#cbd5e1; font-size:0.95rem; text-align:center;">GitHub</div>
+            </a>
+            <a href="https://discord.gg/spamdetectorai" target="_blank" style="text-decoration:none;">
                 <div style="width:56px;height:56px;border-radius:14px;
                             background:linear-gradient(135deg,#7289DA,#5865F2);
                             display:flex;align-items:center;justify-content:center;
@@ -133,8 +130,10 @@ components.html("""
                             margin-bottom:0.5rem;">
                     💬
                 </div>
-                <span style="color:#cbd5e1; font-size:0.95rem;">Discord</span>
-            </div>
+                <div style="color:#cbd5e1; font-size:0.95rem; text-align:center;">Discord</div>
+            </a>
         </div>
     </div>
-""", height=250)
+    """,
+    unsafe_allow_html=True,
+)
