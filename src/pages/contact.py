@@ -67,7 +67,6 @@ def render_contact_page():
 
     col1, col2 = st.columns(2)
 
-    # ================= SEND MESSAGE (UNCHANGED) =================
     with col1:
         st.markdown("""
             <div class="card animate">
@@ -94,7 +93,7 @@ def render_contact_page():
                     st.error("❌ Please fill in all required fields.")
 
         st.markdown("</div>", unsafe_allow_html=True)
-
+    
     # ================= CONTACT INFORMATION (STYLE MATCHED) =================
     with col2:
         st.markdown("""
