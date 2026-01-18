@@ -51,7 +51,7 @@ st.markdown("""
         <h3 style='color: #f8fafc; margin-bottom: 0.75rem; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em;'>
             📝 Enter Your Message
         </h3>
-        <p style='color: #cbd5e1; margin-bottom: 0; line-height: 1.6;'>
+        <p style='color: #cbd5e1; margin-bottom: 0; line-height: 1.9;'>
             Paste any email or SMS message below for instant AI-powered analysis and threat detection.
         </p>
     </div>
