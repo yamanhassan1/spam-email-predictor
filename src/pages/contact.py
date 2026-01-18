@@ -73,47 +73,31 @@ def render_contact_page():
                 <h3 style="color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem;">
                     📬 Send Us a Message
                 </h3>
-                <form>
-                    <div style="display: grid; gap: 1.25rem;">
-                        <div style="padding: 1.25rem; border-radius: 12px;
-                                    background: rgba(59,130,246,0.06);
-                                    border-left: 4px solid #3b82f6;">
-                            <label style="color: #60a5fa; font-weight: 700; font-size: 1rem; margin-bottom: 0.4rem; display: block;">Name</label>
-                            <input type="text" name="name" placeholder="Your Name" disabled
-                                style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #334155; background: #1e293b; color: #cbd5e1; font-size: 1rem; outline: none;">
-                        </div>
-                        <div style="padding: 1.25rem; border-radius: 12px;
-                                    background: rgba(139,92,246,0.06);
-                                    border-left: 4px solid #8b5cf6;">
-                            <label style="color: #a78bfa; font-weight: 700; font-size: 1rem; margin-bottom: 0.4rem; display: block;">Email</label>
-                            <input type="email" name="email" placeholder="you@email.com" disabled
-                                style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #334155; background: #1e293b; color: #cbd5e1; font-size: 1rem; outline: none;">
-                        </div>
-                        <div style="padding: 1.25rem; border-radius: 12px;
-                                    background: rgba(16,185,129,0.06);
-                                    border-left: 4px solid #10b981;">
-                            <label style="color: #34d399; font-weight: 700; font-size: 1rem; margin-bottom: 0.4rem; display: block;">Subject</label>
-                            <input type="text" name="subject" placeholder="Subject" disabled
-                                style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #334155; background: #1e293b; color: #cbd5e1; font-size: 1rem; outline: none;">
-                        </div>
-                        <div style="padding: 1.25rem; border-radius: 12px;
-                                    background: rgba(251,191,36,0.06);
-                                    border-left: 4px solid #fbbf24;">
-                            <label style="color: #fbbf24; font-weight: 700; font-size: 1rem; margin-bottom: 0.4rem; display: block;">Message</label>
-                            <textarea name="message" placeholder="Type your message here..." disabled
-                                style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #334155; background: #1e293b; color: #cbd5e1; font-size: 1rem; min-height: 68px; resize: vertical; outline: none;"></textarea>
-                        </div>
+                <div style="display: grid; gap: 1.25rem;">
+                    <div style="padding: 1.25rem; border-radius: 12px;
+                                background: rgba(59,130,246,0.06);
+                                border-left: 4px solid #3b82f6;">
+                        <h4 style="color: #60a5fa; font-weight: 700; font-size: 1rem; margin-bottom: 0.4rem;">📧 Email</h4>
+                        <p style="color: #cbd5e1; font-size: 1rem; margin: 0 0 0.2rem 0;">support@spamdetector.ai</p>
                     </div>
-                    <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.08);">
-                        <button type="submit" disabled
-                            style="background: linear-gradient(90deg, #3b82f6, #8b5cf6); color: #fff; border: none; border-radius: 8px; font-weight: 700; font-size: 1rem; padding: 0.75rem 2.25rem; margin: 0 auto; display: block; cursor: not-allowed; opacity: 0.55;">
-                            📤 Send Message
-                        </button>
-                        <p style="color: #94a3b8; font-size: 0.95rem; text-align: center; line-height: 1.7; margin-top: 1rem;">
-                            Form submission is disabled in this demo.
-                        </p>
+                    <div style="padding: 1.25rem; border-radius: 12px;
+                                background: rgba(139,92,246,0.06);
+                                border-left: 4px solid #8b5cf6;">
+                        <h4 style="color: #a78bfa; font-weight: 700; font-size: 1rem; margin-bottom: 0.4rem;">💬 Live Chat</h4>
+                        <p style="color: #cbd5e1; font-size: 1rem; margin: 0 0 0.2rem 0;">Mon–Fri, 9AM–5PM EST</p>
                     </div>
-                </form>
+                    <div style="padding: 1.25rem; border-radius: 12px;
+                                background: rgba(16,185,129,0.06);
+                                border-left: 4px solid #10b981;">
+                        <h4 style="color: #34d399; font-weight: 700; font-size: 1rem; margin-bottom: 0.4rem;">🌐 Social Media</h4>
+                        <p style="color: #cbd5e1; font-size: 1rem; margin: 0 0 0.2rem 0;">@SpamDetectorAI</p>
+                    </div>
+                </div>
+                <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.08);">
+                    <p style="color: #94a3b8; font-size: 0.95rem; text-align: center; line-height: 1.7;">
+                        ⏱ We typically respond within 24 hours on business days.
+                    </p>
+                </div>
             </div>
         """, unsafe_allow_html=True)
     # ================= CONTACT INFORMATION (STYLE MATCHED) =================
