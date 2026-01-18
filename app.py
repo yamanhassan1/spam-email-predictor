@@ -559,6 +559,7 @@ with col1:
         <h4 style="color: #f8fafc; font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
             <span style="font-size: 1.5rem;">🧠</span> Multi-Layer Analysis
         </h4>
+        <div style="height: 2px; background: linear-gradient(90deg, rgba(59, 130, 246, 0.4), rgba(139, 92, 246, 0.2)); margin-bottom: 1rem; border-radius: 2px;"></div>
         <ul style="color: #cbd5e1; line-height: 1.8; margin: 0; padding-left: 1.5rem; list-style-type: disc;">
             <li style="margin-bottom: 0.5rem;">Pattern recognition for common spam phrases and structures</li>
             <li style="margin-bottom: 0.5rem;">URL and link analysis for phishing detection</li>
@@ -575,6 +576,7 @@ with col2:
         <h4 style="color: #f8fafc; font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
             <span style="font-size: 1.5rem;">📈</span> Comprehensive Reporting
         </h4>
+        <div style="height: 2px; background: linear-gradient(90deg, rgba(59, 130, 246, 0.4), rgba(139, 92, 246, 0.2)); margin-bottom: 1rem; border-radius: 2px;"></div>
         <ul style="color: #cbd5e1; line-height: 1.8; margin: 0; padding-left: 1.5rem; list-style-type: disc;">
             <li style="margin-bottom: 0.5rem;">Confidence scores with detailed probability breakdowns</li>
             <li style="margin-bottom: 0.5rem;">Visual analytics including charts and word clouds</li>
@@ -730,7 +732,7 @@ st.markdown("""
         </div>
         <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.08);">
             <p style="color: #94a3b8; font-size: 0.85rem; margin: 0;">
-                © 2026 AI Spam Detector • All rights reserved • Your privacy is our priority
+                © 2024 AI Spam Detector • All rights reserved • Your privacy is our priority
             </p>
         </div>
     </div>
