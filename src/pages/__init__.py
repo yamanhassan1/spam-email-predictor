@@ -7,4 +7,7 @@ __all__ = [
     "home",
     "prediction_analysis", 
     "info_section",
+    "about",
+    "help",
+    "contact",
 ]

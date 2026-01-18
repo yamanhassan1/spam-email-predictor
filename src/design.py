@@ -637,3 +637,106 @@ def render_info_cards(cards: Iterable[Dict[str, str]]):
                 </div>
             </div>
             """, unsafe_allow_html=True)
+
+# Add this function to your existing src/design.py file
+
+def render_sidebar():
+    """
+    Render premium sidebar with navigation.
+    """
+    with st.sidebar:
+        st.markdown("""
+            <div style="text-align: center; padding: 2rem 0 1.5rem 0;">
+                <div style="font-size: 3.5rem; margin-bottom: 0.75rem; filter: drop-shadow(0 4px 12px rgba(59, 130, 246, 0.4));">🛡️</div>
+                <h2 style="font-size: 1.5rem; font-weight: 900; margin: 0; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                    Spam Detector
+                </h2>
+                <div style="height: 3px; width: 60px; margin: 0.75rem auto 0; background: linear-gradient(90deg, var(--blue-400), var(--purple-400)); border-radius: 999px;"></div>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("""
+            <style>
+            .sidebar-nav {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            .stRadio > div {
+                gap: 0.5rem;
+            }
+            .stRadio > div > label {
+                background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)) !important;
+                backdrop-filter: blur(10px) !important;
+                border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                border-radius: 12px !important;
+                padding: 1rem 1.25rem !important;
+                cursor: pointer !important;
+                transition: all 0.3s ease !important;
+                margin: 0 !important;
+            }
+            .stRadio > div > label:hover {
+                background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04)) !important;
+                border-color: rgba(59, 130, 246, 0.3) !important;
+                transform: translateX(5px) !important;
+            }
+            .stRadio > div > label[data-checked="true"] {
+                background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.1)) !important;
+                border-color: var(--blue-400) !important;
+                box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3) !important;
+            }
+            .stRadio > div > label > div {
+                color: #f8fafc !important;
+                font-weight: 600 !important;
+                font-size: 1rem !important;
+            }
+            </style>
+        """, unsafe_allow_html=True)
+        
+        page = st.radio(
+            "Navigation",
+            ["🏠 Home", "ℹ️ About", "❓ Help", "📧 Contact"],
+            label_visibility="collapsed"
+        )
+        
+        st.markdown("<br><br>", unsafe_allow_html=True)
+        
+        st.markdown("""
+            <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(139, 92, 246, 0.05)); padding: 1.25rem; border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.2); margin-bottom: 1.5rem;">
+                <h3 style="color: #60a5fa; font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem;">📊 Quick Stats</h3>
+                <div style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.8;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span>Accuracy:</span>
+                        <strong style="color: #34d399;">97%+</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span>Speed:</span>
+                        <strong style="color: #60a5fa;">Real-time</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>Privacy:</span>
+                        <strong style="color: #a78bfa;">100%</strong>
+                    </div>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("""
+            <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(5, 150, 105, 0.05)); padding: 1.25rem; border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.2); margin-bottom: 1.5rem;">
+                <h3 style="color: #34d399; font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem;">💡 Pro Tip</h3>
+                <p style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.6; margin: 0;">
+                    Always verify unexpected messages from banks, delivery services, or institutions through official channels.
+                </p>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("""
+            <div style="text-align: center; padding: 1.5rem 0; border-top: 1px solid rgba(255, 255, 255, 0.08); margin-top: 2rem;">
+                <p style="color: #94a3b8; font-size: 0.8rem; margin: 0;">
+                    © 2024 Spam Detector<br>
+                    Built with ❤️ using AI
+                </p>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        return page
