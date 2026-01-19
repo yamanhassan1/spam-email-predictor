@@ -89,7 +89,7 @@ def render_visualization_section(
                 </h4>
             </div>
         """, unsafe_allow_html=True)
-        fig_prob = probability_bar(spam_prob, ham_prob)
+        fig_prob = probability_bar(ham_prob, spam_prob)
         st.plotly_chart(fig_prob, use_container_width=True, config={'displayModeBar': False})
     
     # Word analysis
