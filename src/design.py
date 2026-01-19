@@ -748,52 +748,11 @@ def render_sidebar():
         """, unsafe_allow_html=True)
         
         # Navigation
-        # Initialize active page
-        if "page" not in st.session_state:
-            st.session_state.page = "🏠 Home"
-
-        def nav_button(label):
-            active = st.session_state.page == label
-            style = """
-                background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.15));
-                border: 1px solid #3b82f6;
-                box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
-                transform: translateX(8px);
-            """ if active else ""
-
-            return st.markdown(f"""
-                <form method="post">
-                    <button name="nav" value="{label}"
-                        style="
-                            all: unset;
-                            width: 100%;
-                            cursor: pointer;
-                            background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
-                            backdrop-filter: blur(20px) saturate(150%);
-                            border: 1px solid rgba(255,255,255,0.1);
-                            border-radius: 12px;
-                            padding: 1rem 1.25rem;
-                            margin-bottom: 0.75rem;
-                            color: #f8fafc;
-                            font-weight: 600;
-                            transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
-                            {style}
-                        ">
-                        {label}
-                    </button>
-                </form>
-            """, unsafe_allow_html=True)
-
-        # Render nav buttons
-        for item in ["🏠 Home", "ℹ️ About", "❓ Help", "📧 Contact"]:
-            nav_button(item)
-
-        # Capture click
-        if st.session_state.get("nav"):
-            st.session_state.page = st.session_state.nav
-
-        page = st.session_state.page
-
+        page = st.radio(
+            "Navigation",
+            ["🏠 Home", "ℹ️ About", "❓ Help", "📧 Contact"],
+            label_visibility="collapsed"
+        )
         
         st.markdown("<br><br>", unsafe_allow_html=True)
         
