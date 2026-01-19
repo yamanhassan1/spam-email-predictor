@@ -638,181 +638,158 @@ def render_info_cards(cards: Iterable[Dict[str, str]]):
             </div>
             """, unsafe_allow_html=True)
 
+import streamlit as st
+
 def render_sidebar():
     """
-    Render premium sidebar with navigation - fully responsive and matching home page design.
+    Render premium sidebar with navigation and auto-sliding cards.
     """
     with st.sidebar:
+
         # Logo and Title
         st.markdown("""
             <div style="text-align: center; padding: 2rem 0 1.5rem 0;">
                 <div style="font-size: 3.5rem; margin-bottom: 0.75rem; filter: drop-shadow(0 4px 12px rgba(59, 130, 246, 0.4)); animation: float 4s ease-in-out infinite;">🛡️</div>
-                <h2 style="font-size: 1.5rem; font-weight: 900; margin: 0; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                <h2 style="font-size: 1.5rem; font-weight: 900; margin: 0;
+                    background: linear-gradient(135deg, #667eea, #764ba2);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;">
                     Spam Detector
                 </h2>
-                <div style="height: 3px; width: 60px; margin: 0.75rem auto 0; background: linear-gradient(90deg, #3b82f6, #8b5cf6); border-radius: 999px; box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);"></div>
+                <div style="height: 3px; width: 60px; margin: 0.75rem auto 0;
+                    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+                    border-radius: 999px;"></div>
             </div>
         """, unsafe_allow_html=True)
-        
-        # Enhanced sidebar styling
+
+        # Sidebar + slideshow styles
         st.markdown("""
-            <style>
-            /* Sidebar background with gradient */
-            [data-testid="stSidebar"] {
-                background: linear-gradient(180deg, #0a0e27 0%, #0f1433 50%, #0a0e27 100%);
-            }
-            
-            [data-testid="stSidebar"] > div:first-child {
-                background: linear-gradient(180deg, #0a0e27 0%, #0f1433 50%, #0a0e27 100%);
-            }
-            
-            /* Navigation radio buttons styling */
-            .stRadio > div {
-                gap: 0.75rem;
-            }
-            
-            .stRadio > div > label {
-                background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)) !important;
-                backdrop-filter: blur(20px) saturate(150%) !important;
-                -webkit-backdrop-filter: blur(20px) saturate(150%) !important;
-                border: 1px solid rgba(255, 255, 255, 0.1) !important;
-                border-radius: 12px !important;
-                padding: 1rem 1.25rem !important;
-                cursor: pointer !important;
-                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-                margin: 0 !important;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
-            }
-            
-            .stRadio > div > label:hover {
-                background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05)) !important;
-                border-color: rgba(59, 130, 246, 0.4) !important;
-                transform: translateX(8px) scale(1.02) !important;
-                box-shadow: 0 4px 16px rgba(59, 130, 246, 0.2) !important;
-            }
-            
-            .stRadio > div > label[data-checked="true"] {
-                background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.15)) !important;
-                border-color: #3b82f6 !important;
-                box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
-                transform: translateX(8px) !important;
-            }
-            
-            .stRadio > div > label > div {
-                color: #f8fafc !important;
-                font-weight: 600 !important;
-                font-size: 1rem !important;
-            }
-            
-            /* Responsive adjustments */
-            @media (max-width: 768px) {
-                .stRadio > div > label {
-                    padding: 0.875rem 1rem !important;
-                    font-size: 0.9rem !important;
-                }
-                
-                .stRadio > div > label:hover {
-                    transform: translateX(5px) scale(1.01) !important;
-                }
-            }
-            
-            @media (max-width: 480px) {
-                .stRadio > div > label {
-                    padding: 0.75rem 0.875rem !important;
-                    font-size: 0.85rem !important;
-                }
-            }
-            
-            /* Scrollbar styling for sidebar */
-            [data-testid="stSidebar"] ::-webkit-scrollbar {
-                width: 8px;
-            }
-            
-            [data-testid="stSidebar"] ::-webkit-scrollbar-track {
-                background: rgba(255, 255, 255, 0.02);
-                border-radius: 10px;
-            }
-            
-            [data-testid="stSidebar"] ::-webkit-scrollbar-thumb {
-                background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-                border-radius: 10px;
-                border: 2px solid transparent;
-                background-clip: padding-box;
-            }
-            
-            [data-testid="stSidebar"] ::-webkit-scrollbar-thumb:hover {
-                background: linear-gradient(135deg, #60a5fa, #a78bfa);
-                background-clip: padding-box;
-            }
-            </style>
+        <style>
+        [data-testid="stSidebar"],
+        [data-testid="stSidebar"] > div:first-child {
+            background: linear-gradient(180deg, #0a0e27 0%, #0f1433 50%, #0a0e27 100%);
+        }
+
+        .stRadio > div { gap: 0.75rem; }
+
+        .stRadio > div > label {
+            background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            transition: all 0.3s ease;
+        }
+
+        .stRadio > div > label:hover {
+            transform: translateX(8px);
+            border-color: rgba(59,130,246,0.4);
+        }
+
+        .stRadio > div > label[data-checked="true"] {
+            background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(139,92,246,0.15));
+            border-color: #3b82f6;
+            transform: translateX(8px);
+        }
+
+        /* Slideshow */
+        .sidebar-slider {
+            position: relative;
+            height: 190px;
+            overflow: hidden;
+            margin-top: 1.5rem;
+        }
+
+        .sidebar-slide {
+            position: absolute;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideFade 12s infinite;
+        }
+
+        .sidebar-slide:nth-child(1) { animation-delay: 0s; }
+        .sidebar-slide:nth-child(2) { animation-delay: 4s; }
+        .sidebar-slide:nth-child(3) { animation-delay: 8s; }
+
+        @keyframes slideFade {
+            0%   { opacity: 0; transform: translateY(20px); }
+            8%   { opacity: 1; transform: translateY(0); }
+            30%  { opacity: 1; transform: translateY(0); }
+            38%  { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 0; }
+        }
+        </style>
         """, unsafe_allow_html=True)
-        
+
         # Navigation
         page = st.radio(
             "Navigation",
             ["🏠 Home", "ℹ️ About", "❓ Help", "📧 Contact"],
             label_visibility="collapsed"
         )
-        
-        st.markdown("<br><br>", unsafe_allow_html=True)
-        
-        # Quick Stats Card
+
+        # Slideshow Cards
         st.markdown("""
-            <div class="card" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(139, 92, 246, 0.05)); border: 1px solid rgba(59, 130, 246, 0.2); margin-bottom: 1.5rem; padding: 1.25rem; border-radius: 16px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);">
-                <h3 style="color: #60a5fa; font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
-                    📊 Quick Stats
-                </h3>
-                <div style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.8;">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
-                        <span>Accuracy:</span>
-                        <strong style="color: #34d399; font-weight: 700;">97%+</strong>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
-                        <span>Speed:</span>
-                        <strong style="color: #60a5fa; font-weight: 700;">Real-time</strong>
-                    </div>
-                    <div style="display: flex; justify-content: space-between;">
-                        <span>Privacy:</span>
-                        <strong style="color: #a78bfa; font-weight: 700;">100%</strong>
+        <div class="sidebar-slider">
+
+            <div class="sidebar-slide">
+                <div class="card" style="background: linear-gradient(135deg, rgba(59,130,246,0.08), rgba(139,92,246,0.05));
+                    border: 1px solid rgba(59,130,246,0.2);
+                    padding: 1.25rem; border-radius: 16px;">
+                    <h3 style="color:#60a5fa;">📊 Quick Stats</h3>
+                    <div style="color:#cbd5e1; font-size:0.9rem;">
+                        <div style="display:flex; justify-content:space-between;">
+                            <span>Accuracy:</span><strong style="color:#34d399;">97%+</strong>
+                        </div>
+                        <div style="display:flex; justify-content:space-between;">
+                            <span>Speed:</span><strong style="color:#60a5fa;">Real-time</strong>
+                        </div>
+                        <div style="display:flex; justify-content:space-between;">
+                            <span>Privacy:</span><strong style="color:#a78bfa;">100%</strong>
+                        </div>
                     </div>
                 </div>
             </div>
-        """, unsafe_allow_html=True)
-        
-        # Pro Tip Card
-        st.markdown("""
-            <div class="card" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(5, 150, 105, 0.05)); border: 1px solid rgba(16, 185, 129, 0.2); margin-bottom: 1.5rem; padding: 1.25rem; border-radius: 16px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);">
-                <h3 style="color: #34d399; font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
-                    💡 Pro Tip
-                </h3>
-                <p style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.6; margin: 0;">
-                    Always verify unexpected messages from banks, delivery services, or institutions through official channels.
-                </p>
+
+            <div class="sidebar-slide">
+                <div class="card" style="background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(5,150,105,0.05));
+                    border: 1px solid rgba(16,185,129,0.2);
+                    padding: 1.25rem; border-radius: 16px;">
+                    <h3 style="color:#34d399;">💡 Pro Tip</h3>
+                    <p style="color:#cbd5e1; font-size:0.85rem;">
+                        Always verify unexpected messages through official channels.
+                    </p>
+                </div>
             </div>
-        """, unsafe_allow_html=True)
-        
-        # Security Tips Card
-        st.markdown("""
-            <div class="card" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.08), rgba(220, 38, 38, 0.05)); border: 1px solid rgba(239, 68, 68, 0.2); margin-bottom: 1.5rem; padding: 1.25rem; border-radius: 16px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);">
-                <h3 style="color: #fecdd3; font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
-                    🔒 Security
-                </h3>
-                <p style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.6; margin: 0;">
-                    Your messages are analyzed in real-time and never stored. 100% privacy guaranteed.
-                </p>
+
+            <div class="sidebar-slide">
+                <div class="card" style="background: linear-gradient(135deg, rgba(239,68,68,0.08), rgba(220,38,38,0.05));
+                    border: 1px solid rgba(239,68,68,0.2);
+                    padding: 1.25rem; border-radius: 16px;">
+                    <h3 style="color:#fecdd3;">🔒 Security</h3>
+                    <p style="color:#cbd5e1; font-size:0.85rem;">
+                        Messages are analyzed in real-time and never stored.
+                    </p>
+                </div>
             </div>
+
+        </div>
         """, unsafe_allow_html=True)
-        
+
         # Footer
         st.markdown("""
-            <div style="text-align: center; padding: 1.5rem 0; border-top: 1px solid rgba(255, 255, 255, 0.08); margin-top: 2rem;">
-                <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🛡️</div>
-                <p style="color: #94a3b8; font-size: 0.8rem; margin: 0; line-height: 1.6;">
+            <div style="text-align:center; padding:1.5rem 0; margin-top:2rem;
+                border-top:1px solid rgba(255,255,255,0.08);">
+                <div style="font-size:1.5rem;">🛡️</div>
+                <p style="color:#94a3b8; font-size:0.8rem;">
                     © 2026 Spam Detector<br>
-                    <strong style="color: #60a5fa;">Built with ❤️</strong><br>
-                    <span style="font-size: 0.75rem;">Powered by AI & ML</span>
+                    <strong style="color:#60a5fa;">Built with ❤️</strong><br>
+                    <span style="font-size:0.75rem;">Powered by AI & ML</span>
                 </p>
             </div>
         """, unsafe_allow_html=True)
+
+        return page
+
         
         return page
