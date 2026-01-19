@@ -656,7 +656,7 @@ def render_sidebar():
         
         # Enhanced sidebar styling
         st.markdown("""
-            <style>
+            <style="text_align: center;">
             /* Sidebar background with gradient */
             [data-testid="stSidebar"] {
                 background: linear-gradient(180deg, #0a0e27 0%, #0f1433 50%, #0a0e27 100%);
@@ -669,13 +669,6 @@ def render_sidebar():
             /* Navigation radio buttons styling */
             .stRadio > div {
                 gap: 0.75rem;
-            .stRadio > div {
-                gap: 0.75rem;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-            }
             }
             
             .stRadio > div > label {
