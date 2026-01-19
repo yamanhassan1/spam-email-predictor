@@ -56,7 +56,7 @@ def main():
     # ----------------------------
     # 4. Render content based on selected page
     # ----------------------------
-    if page == "🏠 Home":
+    if page == "Home":
         # Render premium header
         render_header(
             title="AI-Powered Spam Detector",
@@ -68,7 +68,6 @@ def main():
         
         # Render info sections
         render_info_sections()
-    
     elif page == "ℹ️ About":
         render_about_page()
     

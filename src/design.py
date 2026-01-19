@@ -748,17 +748,23 @@ def render_sidebar():
         """, unsafe_allow_html=True)
         
         # Navigation
-        page = st.button(
-            "Navigation",
-            ["🏠 Home", "ℹ️ About", "❓ Help", "📧 Contact"],
-            label_visibility="collapsed"
+        page = None
+        nav_pages = ["🏠 Home", "ℹ️ About", "❓ Help", "📧 Contact"]
+        nav_labels = {
+            "🏠 Home": "Home",
+            "ℹ️ About": "About",
+            "❓ Help": "Help",
+            "📧 Contact": "Contact"
+        }
+        st.markdown(
+            "<div style='display: flex; flex-direction: column; gap: 0.7rem; margin-top: 1.3rem; margin-bottom: 1.3rem;'>",
+            unsafe_allow_html=True,
         )
-        for p in nav_pages:
-            if st.button(p, key=f"nav-btn-{p}"):
-                page = p
-        st.markdown("</div>", unsafe_allow_html=True)
-        if not page:
-            page = nav_pages[0]
+        btn_styles = (
+            "background: linear-gradient(90deg, #3b82f6, #8b5cf6); color: #fff; border: none; "
+            "border-radius: 10px; font-weight: 700; font-size: 1.01rem; width:100%; padding:0.8rem 0; "
+            "box-shadow: 0 4px 12px rgba(59,130,246,.13); transition: box-shadow .15s;"
+        )
         
         st.markdown("<br><br>", unsafe_allow_html=True)
         
