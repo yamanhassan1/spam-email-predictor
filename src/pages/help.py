@@ -6,7 +6,7 @@ def render_help_page():
     st.markdown("""
         <div class="card" style="text-align: center; padding: 3rem 2rem; margin-bottom: 2rem;">
             <div style="font-size: 4rem; margin-bottom: 1rem;">❓</div>
-            <h1 style="font-size: 3rem; font-weight: 900; margin-bottom: 1rem;">Help & Documentation</h1>
+            <h1 style="font-size: 2.5rem; font-weight: 900; margin-bottom: 1rem;">Help & Documentation</h1>
             <p style="color: #cbd5e1; font-size: 1.1rem;">Everything you need to know to use the AI Spam Detector</p>
         </div>
     """, unsafe_allow_html=True)
