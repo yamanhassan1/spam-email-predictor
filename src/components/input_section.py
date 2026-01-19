@@ -7,15 +7,16 @@ def render_input_section():
     Returns the user input text.
     """
     st.markdown("""
-        <div class="card gradient-border animate" style="margin-bottom: 2rem;">
-            <h3 style='color: #f8fafc; margin-bottom: 0.75rem; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em;'>
-                📝 Enter Your Message
-            </h3>
-            <p style='color: #cbd5e1; margin-bottom: 0; line-height: 1.9;'>
-                Paste any email or SMS message below for instant AI-powered analysis and threat detection.
-            </p>
-        </div>
-    """, unsafe_allow_html=True)
+    <div class="card" style="margin-bottom: 2rem; text-align: center;">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">📝</div>
+        <h3 style='color: #f8fafc; margin-bottom: 0.75rem; font-size: 1.1rem; font-weight: 700;'>
+            Enter Your Message
+        </h3>
+        <p style='color: #cbd5e1; margin-bottom: 0; line-height: 1.6;'>
+            Paste any email or SMS message below for instant AI-powered analysis and threat detection.
+        </p>
+    </div>
+""", unsafe_allow_html=True)
     
     # Custom styled text area
     st.markdown("""
