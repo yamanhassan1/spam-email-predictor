@@ -130,7 +130,7 @@ def render_word_analysis(words_list, freq_list, word_freq, spam_words_set):
             </div>
         """, unsafe_allow_html=True)
         fig_wc = wordcloud_figure(dict(word_freq))
-        st.plotly_chart(fig_wc, use_container_width=True, config={'displayModeBar': False})
+        st.altair_chart(fig_wc, use_container_width=True, config={'displayModeBar': False})
 
 
 def render_message_characteristics(char_count_no_spaces, char_count, words, word_count, sentence_count):
