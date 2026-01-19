@@ -6,21 +6,21 @@ def render_contact_page():
     
     # Header section
     st.markdown("""
-        <div class="card gradient-border animate" style="text-align: center; padding: 3rem 2rem; margin-bottom: 2rem;">
+        <div class="card" style="text-align: center; padding: 3rem 2rem; margin-bottom: 2rem;">
             <div style="font-size: 4rem; margin-bottom: 1rem;">📧</div>
             <h1 style="font-size: 3rem; font-weight: 900; margin-bottom: 1rem;">Get In Touch</h1>
-            <div style="height: 4px; width: 100px; margin: 0 auto 1.5rem; background: linear-gradient(90deg, var(--blue-400), var(--purple-400)); border-radius: 999px;"></div>
             <p style="color: #cbd5e1; font-size: 1.1rem;">We'd love to hear from you!</p>
         </div>
     """, unsafe_allow_html=True)
     
     # Contact Form Section
     st.markdown("""
-        <div class="card gradient-border animate" style="margin-bottom: 2rem;">
-            <h3 style='color: #f8fafc; margin-bottom: 0.75rem; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em;'>
-                📬 Send Us a Message
+        <div class="card" style="margin-bottom: 2rem; text-align: center;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">📬</div>
+            <h3 style='color: #f8fafc; margin-bottom: 0.75rem; font-size: 1.1rem; font-weight: 700;'>
+                Send Us a Message
             </h3>
-            <p style='color: #cbd5e1; margin-bottom: 0; line-height: 1.9;'>
+            <p style='color: #cbd5e1; margin-bottom: 0; line-height: 1.6;'>
                 Fill out the form below and we'll get back to you within 24 hours.
             </p>
         </div>
@@ -73,14 +73,8 @@ def render_contact_page():
             height=150,
             max_chars=1000
         )
-        # Make the 'Email' field clickable by providing a mailto: link
-
-        # After the user submits the form, provide a mailto: fallback if desired
-        # But for the info card below (Contact Information), make the email clickable:
-        # (The editable content is above the info cards, but let's also add a helper
-        #   below if you want an extra direct-send button.)
-
-        # For the form fields themselves, if you want to pre-fill a mailto, you can generate a link:
+        
+        # Generate mailto link if all fields are filled
         mailto_link = ""
         if name and email and message:
             subject_encoded = subject.replace(" ", "%20")
@@ -88,7 +82,7 @@ def render_contact_page():
             body_encoded = body.replace("\n", "%0A").replace(" ", "%20")
             mailto_link = f"mailto:yamanhassan.10@yahoo.com?subject={subject_encoded}&body={body_encoded}"
 
-        # Display mailto button if ALL fields are filled (as extra direct send option):
+        # Display mailto button if ALL fields are filled
         if name and email and message:
             st.markdown(
                 f"""
@@ -124,7 +118,7 @@ def render_contact_page():
     
     # Contact Information Cards
     st.markdown("""
-        <h3 style='color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin: 2rem 0 1.5rem 0; letter-spacing: -0.02em;'>
+        <h3 style='color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin: 2rem 0 1.5rem 0; text-align: center;'>
             📞 Contact Information
         </h3>
     """, unsafe_allow_html=True)
@@ -133,18 +127,18 @@ def render_contact_page():
     
     with col1:
         st.markdown("""
-            <div class="card animate" style="text-align: center; height: 100%;">
+            <div class="card" style="text-align: center; height: 100%;">
                 <div style="font-size: 3rem; margin-bottom: 1rem;">📧</div>
                 <h4 style="color: #f8fafc; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem;">Email</h4>
                 <p style="color: #cbd5e1; line-height: 1.6; margin: 0;">
-                    yamanhassan.10@yahoo.com
+                    <a href="mailto:yamanhassan.10@yahoo.com" style="color: #60a5fa; text-decoration: none;">yamanhassan.10@yahoo.com</a>
                 </p>
             </div>
         """, unsafe_allow_html=True)
     
     with col2:
         st.markdown("""
-            <div class="card animate" style="text-align: center; height: 100%;">
+            <div class="card" style="text-align: center; height: 100%;">
                 <div style="font-size: 3rem; margin-bottom: 1rem;">💬</div>
                 <h4 style="color: #f8fafc; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem;">Live Chat</h4>
                 <p style="color: #cbd5e1; line-height: 1.6; margin: 0;">
@@ -155,7 +149,7 @@ def render_contact_page():
     
     with col3:
         st.markdown("""
-            <div class="card animate" style="text-align: center; height: 100%;">
+            <div class="card" style="text-align: center; height: 100%;">
                 <div style="font-size: 3rem; margin-bottom: 1rem;">🌐</div>
                 <h4 style="color: #f8fafc; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem;">Social Media</h4>
                 <p style="color: #cbd5e1; line-height: 1.6; margin: 0;">
@@ -168,39 +162,64 @@ def render_contact_page():
     
     # Office Hours & Response Time
     st.markdown("""
-        <div class="card gradient-border animate">
-            <h3 style="color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; text-align: center;">
-                ⏰ Office Hours & Response Time
-            </h3>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
-                <div style="background: rgba(59, 130, 246, 0.05); padding: 1.5rem; border-radius: 16px; border-left: 4px solid var(--blue-400);">
-                    <div style="font-size: 2rem; margin-bottom: 0.75rem;">🕐</div>
-                    <h4 style="color: #60a5fa; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">Business Hours</h4>
-                    <p style="color: #cbd5e1; font-size: 0.95rem; margin: 0;">Monday - Friday: 9:00 AM - 6:00 PM EST<br>Saturday: 10:00 AM - 4:00 PM EST<br>Sunday: Closed</p>
-                </div>
-                <div style="background: rgba(139, 92, 246, 0.05); padding: 1.5rem; border-radius: 16px; border-left: 4px solid var(--purple-400);">
-                    <div style="font-size: 2rem; margin-bottom: 0.75rem;">⚡</div>
-                    <h4 style="color: #a78bfa; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">Response Time</h4>
-                    <p style="color: #cbd5e1; font-size: 0.95rem; margin: 0;">General Inquiries: Within 24 hours<br>Technical Support: Within 12 hours<br>Urgent Issues: Within 4 hours</p>
-                </div>
-                <div style="background: rgba(16, 185, 129, 0.05); padding: 1.5rem; border-radius: 16px; border-left: 4px solid var(--green-400);">
-                    <div style="font-size: 2rem; margin-bottom: 0.75rem;">🌍</div>
-                    <h4 style="color: #34d399; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">Global Support</h4>
-                    <p style="color: #cbd5e1; font-size: 0.95rem; margin: 0;">24/7 automated support<br>Multi-language assistance<br>Worldwide coverage</p>
-                </div>
-            </div>
-        </div>
+        <h3 style='color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin: 2rem 0 1.5rem 0; text-align: center;'>
+            ⏰ Office Hours & Response Time
+        </h3>
     """, unsafe_allow_html=True)
+    
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        st.markdown("""
+            <div class="card" style="height: 100%; text-align: center;">
+                <div style="font-size: 2rem; margin-bottom: 0.75rem;">🕐</div>
+                <h4 style="color: #f8fafc; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem;">Business Hours</h4>
+                <p style="color: #cbd5e1; font-size: 0.95rem; margin: 0; line-height: 1.7;">
+                    Monday - Friday: 9:00 AM - 6:00 PM EST<br>
+                    Saturday: 10:00 AM - 4:00 PM EST<br>
+                    Sunday: Closed
+                </p>
+            </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown("""
+            <div class="card" style="height: 100%; text-align: center;">
+                <div style="font-size: 2rem; margin-bottom: 0.75rem;">⚡</div>
+                <h4 style="color: #f8fafc; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem;">Response Time</h4>
+                <p style="color: #cbd5e1; font-size: 0.95rem; margin: 0; line-height: 1.7;">
+                    General Inquiries: Within 24 hours<br>
+                    Technical Support: Within 12 hours<br>
+                    Urgent Issues: Within 4 hours
+                </p>
+            </div>
+        """, unsafe_allow_html=True)
+    
+    with col3:
+        st.markdown("""
+            <div class="card" style="height: 100%; text-align: center;">
+                <div style="font-size: 2rem; margin-bottom: 0.75rem;">🌍</div>
+                <h4 style="color: #f8fafc; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem;">Global Support</h4>
+                <p style="color: #cbd5e1; font-size: 0.95rem; margin: 0; line-height: 1.7;">
+                    24/7 automated support<br>
+                    Multi-language assistance<br>
+                    Worldwide coverage
+                </p>
+            </div>
+        """, unsafe_allow_html=True)
     
     st.markdown("<br>", unsafe_allow_html=True)
     
     # Social Media Links
     st.markdown("""
-        <div class="card gradient-border animate">
-            <h3 style="color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; text-align: center;">
-                🤝 Connect With Us
-            </h3>
-            <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 1.5rem;">
+        <h3 style='color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin: 2rem 0 1.5rem 0; text-align: center;'>
+            🤝 Connect With Us
+        </h3>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+        <div class="card">
+            <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; padding: 1rem;">
                 <a href="https://instagram.com/SpamDetectorAI" target="_blank" style="display: flex; flex-direction: column; align-items: center; text-decoration: none; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
                     <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #1DA1F2, #0d8bd9); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; box-shadow: 0 8px 24px rgba(29, 161, 242, 0.3);">🐦</div>
                     <span style="color: #cbd5e1; margin-top: 0.5rem; font-size: 0.9rem;">Twitter</span>
@@ -221,10 +240,13 @@ def render_contact_page():
     
     # Office Location
     st.markdown("""
-        <div class="card animate">
-            <h3 style="color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; text-align: center;">
-                📍 Office Location
-            </h3>
+        <h3 style='color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin: 2rem 0 1.5rem 0; text-align: center;'>
+            📍 Office Location
+        </h3>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+        <div class="card">
             <div style="text-align: center; padding: 2rem;">
                 <div style="font-size: 3rem; margin-bottom: 1rem;">🏢</div>
                 <p style="color: #cbd5e1; font-size: 1.1rem; line-height: 1.8; margin: 0;">
