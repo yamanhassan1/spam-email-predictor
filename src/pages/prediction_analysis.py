@@ -1,5 +1,7 @@
 import streamlit as st
 from collections import Counter
+import plotly.express as px
+import pandas as pd
 from src.visualization import (
     confidence_gauge,
     probability_bar,
@@ -130,7 +132,32 @@ def render_word_analysis(words_list, freq_list, word_freq, spam_words_set):
             </div>
         """, unsafe_allow_html=True)
         fig_wc = wordcloud_figure(dict(word_freq))
-        st.altair_chart(fig_wc, use_container_width=True, config={'displayModeBar': False})
+        # Use a bubble chart instead of the word cloud visualization
+        
+        # Prepare DataFrame for bubble chart
+        wc_df = pd.DataFrame(list(word_freq.items()), columns=['word', 'frequency'])
+        wc_df = wc_df.sort_values("frequency", ascending=False).head(30)
+        fig_bubble = px.scatter(
+            wc_df,
+            x="word",
+            y="frequency",
+            size="frequency",
+            color="frequency",
+            color_continuous_scale="Blues",
+            title="Top Words Bubble Chart",
+            labels={"word": "Word", "frequency": "Frequency"},
+            height=330
+        )
+        fig_bubble.update_traces(mode='markers+text', text=wc_df["word"], textposition='top center')
+        fig_bubble.update_layout(
+            xaxis=dict(showticklabels=False, visible=False),
+            yaxis=dict(title='Frequency', gridcolor='rgba(255,255,255,0.07)'),
+            plot_bgcolor='rgba(10, 14, 39, 0.18)',
+            paper_bgcolor='rgba(10, 14, 39, 0.0)',
+            margin=dict(t=50,b=10,l=10,r=10),
+            coloraxis_colorbar=dict(title='Frequency'),
+        )
+        st.plotly_chart(fig_bubble, use_container_width=True, config={'displayModeBar': False})
 
 
 def render_message_characteristics(char_count_no_spaces, char_count, words, word_count, sentence_count):
