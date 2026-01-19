@@ -38,7 +38,7 @@ def main():
     # 2. Render sidebar navigation AFTER page setup
     # ----------------------------
     page = render_slidebar()
-    page = render_sidebar()
+    
 
     # ----------------------------
     # 3. Initialize NLP resources (only needed for Home page)
