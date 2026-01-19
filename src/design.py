@@ -669,6 +669,7 @@ def render_sidebar():
             /* Navigation radio buttons styling */
             .stRadio > div {
                 gap: 0.75rem;
+                display: flex;
             }
             
             .stRadio > div > label {
