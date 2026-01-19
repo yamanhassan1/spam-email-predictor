@@ -748,7 +748,7 @@ def render_sidebar():
         """, unsafe_allow_html=True)
         
         # Navigation
-        page = st.radio(
+        page = st.button(
             "Navigation",
             ["🏠 Home", "ℹ️ About", "❓ Help", "📧 Contact"],
             label_visibility="collapsed"
