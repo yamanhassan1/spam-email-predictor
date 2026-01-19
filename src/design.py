@@ -753,6 +753,12 @@ def render_sidebar():
             ["🏠 Home", "ℹ️ About", "❓ Help", "📧 Contact"],
             label_visibility="collapsed"
         )
+        for p in nav_pages:
+            if st.button(p, key=f"nav-btn-{p}"):
+                page = p
+        st.markdown("</div>", unsafe_allow_html=True)
+        if not page:
+            page = nav_pages[0]
         
         st.markdown("<br><br>", unsafe_allow_html=True)
         
