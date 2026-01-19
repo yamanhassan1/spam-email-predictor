@@ -669,7 +669,13 @@ def render_sidebar():
             /* Navigation radio buttons styling */
             .stRadio > div {
                 gap: 0.75rem;
-                align-items: flex;
+            .stRadio > div {
+                gap: 0.75rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
             }
             
             .stRadio > div > label {
