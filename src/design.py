@@ -656,7 +656,7 @@ def render_sidebar():
         
         # Enhanced sidebar styling
         st.markdown("""
-            <style="text_align: center;">
+            <style>
             /* Sidebar background with gradient */
             [data-testid="stSidebar"] {
                 background: linear-gradient(180deg, #0a0e27 0%, #0f1433 50%, #0a0e27 100%);
