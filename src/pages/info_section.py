@@ -108,7 +108,7 @@ def render_what_makes_special():
     """Render What Makes Our Detector Special section."""
     st.markdown("<br><br>", unsafe_allow_html=True)
     st.markdown("""
-        <h3 style='color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin: 2rem 0 1.5rem 0; text-align: center; letter-spacing: -0.02em;'>
+        <h3 style='color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin: 2rem 0 1.5rem 0; text-align: center;'>
             💡 What Makes Our Detector Special
         </h3>
     """, unsafe_allow_html=True)
@@ -117,78 +117,73 @@ def render_what_makes_special():
     
     with col1:
         st.markdown("""
-        <div class="card gradient-border animate" style="height: 100%; position: relative; overflow: visible;">
-            <div style="position: absolute; top: -1px; right: -1px; width: 60px; height: 60px; background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), transparent); border-radius: 0 16px 0 40px;"></div>
-            <div style="width: 56px; height: 56px; background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.1)); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2); border: 1px solid rgba(59, 130, 246, 0.2);">
-                <span style="font-size: 1.8rem;">🧠</span>
-            </div>
-            <h4 style="color: #f8fafc; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.75rem; letter-spacing: -0.02em;">
+        <div class="card" style="height: 100%;">
+            <div style="font-size: 3rem; margin-bottom: 1rem; text-align: center;">🧠</div>
+            <h4 style="color: #f8fafc; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem; text-align: center;">
                 Multi-Layer Analysis
             </h4>
-            <div style="height: 3px; background: linear-gradient(90deg, #3b82f6, #8b5cf6, transparent); margin-bottom: 1.25rem; border-radius: 2px; box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);"></div>
-            <ul style="color: #cbd5e1; line-height: 2; margin: 0; padding-left: 0; list-style: none;">
-                <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
-                    <span style="position: absolute; left: 0; color: #60a5fa; font-weight: bold;">▸</span>
-                    Pattern recognition for common spam phrases and structures
+            <p style="color: #cbd5e1; line-height: 1.6; margin-bottom: 1rem; text-align: center; font-size: 0.95rem;">
+                Our detector uses comprehensive analysis techniques to identify spam with precision
+            </p>
+            <ul style="color: #cbd5e1; line-height: 1.7; margin: 0; padding-left: 0; list-style: none; font-size: 0.95rem;">
+                <li style="margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative;">
+                    <span style="position: absolute; left: 0; color: #60a5fa;">•</span>
+                    Pattern recognition for common spam phrases
                 </li>
-                <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
-                    <span style="position: absolute; left: 0; color: #60a5fa; font-weight: bold;">▸</span>
+                <li style="margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative;">
+                    <span style="position: absolute; left: 0; color: #60a5fa;">•</span>
                     URL and link analysis for phishing detection
                 </li>
-                <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
-                    <span style="position: absolute; left: 0; color: #60a5fa; font-weight: bold;">▸</span>
-                    Linguistic analysis including tone, urgency, and sentiment
+                <li style="margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative;">
+                    <span style="position: absolute; left: 0; color: #60a5fa;">•</span>
+                    Linguistic analysis of tone and urgency
                 </li>
-                <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
-                    <span style="position: absolute; left: 0; color: #60a5fa; font-weight: bold;">▸</span>
+                <li style="margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative;">
+                    <span style="position: absolute; left: 0; color: #60a5fa;">•</span>
                     Statistical modeling of message characteristics
                 </li>
                 <li style="padding-left: 1.5rem; position: relative;">
-                    <span style="position: absolute; left: 0; color: #60a5fa; font-weight: bold;">▸</span>
+                    <span style="position: absolute; left: 0; color: #60a5fa;">•</span>
                     Word frequency and vocabulary profiling
                 </li>
             </ul>
-            <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.3), transparent);"></div>
         </div>
         """, unsafe_allow_html=True)
     
     with col2:
         st.markdown("""
-        <div class="card gradient-border animate" style="height: 100%; position: relative; overflow: visible;">
-            <div style="position: absolute; top: -1px; right: -1px; width: 60px; height: 60px; background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), transparent); border-radius: 0 16px 0 40px;"></div>
-            <div style="width: 56px; height: 56px; background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(59, 130, 246, 0.1)); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; box-shadow: 0 8px 24px rgba(139, 92, 246, 0.2); border: 1px solid rgba(139, 92, 246, 0.2);">
-                <span style="font-size: 1.8rem;">📈</span>
-            </div>
-            <h4 style="color: #f8fafc; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.75rem; letter-spacing: -0.02em;">
+        <div class="card" style="height: 100%;">
+            <div style="font-size: 3rem; margin-bottom: 1rem; text-align: center;">📈</div>
+            <h4 style="color: #f8fafc; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem; text-align: center;">
                 Comprehensive Reporting
             </h4>
-            <div style="height: 3px; background: linear-gradient(90deg, #8b5cf6, #3b82f6, transparent); margin-bottom: 1.25rem; border-radius: 2px; box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);"></div>
-            <ul style="color: #cbd5e1; line-height: 2; margin: 0; padding-left: 0; list-style: none;">
-                <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
-                    <span style="position: absolute; left: 0; color: #a78bfa; font-weight: bold;">▸</span>
-                    Confidence scores with detailed probability breakdowns
+            <p style="color: #cbd5e1; line-height: 1.6; margin-bottom: 1rem; text-align: center; font-size: 0.95rem;">
+                Get detailed insights and visual analytics to understand detection results clearly
+            </p>
+            <ul style="color: #cbd5e1; line-height: 1.7; margin: 0; padding-left: 0; list-style: none; font-size: 0.95rem;">
+                <li style="margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative;">
+                    <span style="position: absolute; left: 0; color: #a78bfa;">•</span>
+                    Confidence scores with probability breakdowns
                 </li>
-                <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
-                    <span style="position: absolute; left: 0; color: #a78bfa; font-weight: bold;">▸</span>
+                <li style="margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative;">
+                    <span style="position: absolute; left: 0; color: #a78bfa;">•</span>
                     Visual analytics including charts and word clouds
                 </li>
-                <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
-                    <span style="position: absolute; left: 0; color: #a78bfa; font-weight: bold;">▸</span>
-                    Highlighted message annotations showing key indicators
+                <li style="margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative;">
+                    <span style="position: absolute; left: 0; color: #a78bfa;">•</span>
+                    Highlighted message annotations showing indicators
                 </li>
-                <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
-                    <span style="position: absolute; left: 0; color: #a78bfa; font-weight: bold;">▸</span>
-                    Side-by-side comparison of spam vs safe indicators
+                <li style="margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative;">
+                    <span style="position: absolute; left: 0; color: #a78bfa;">•</span>
+                    Side-by-side spam vs safe comparison
                 </li>
                 <li style="padding-left: 1.5rem; position: relative;">
-                    <span style="position: absolute; left: 0; color: #a78bfa; font-weight: bold;">▸</span>
-                    Actionable insights explaining the classification
+                    <span style="position: absolute; left: 0; color: #a78bfa;">•</span>
+                    Actionable insights explaining classification
                 </li>
             </ul>
-            <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.3), transparent);"></div>
         </div>
         """, unsafe_allow_html=True)
-
 
 def render_safety_tips():
     """Render Safety Tips section."""
