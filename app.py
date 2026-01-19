@@ -3,7 +3,7 @@ import streamlit as st
 # ============================
 # Core modules
 # ============================
-from src.design import setup_page, render_header, render_sidebar, render_slidebar
+from src.design import setup_page, render_header, render_sidebar
 from src.nlp import setup_nltk, get_stopwords
 from src.model import load_model
 from src.analysis import SPAM_WORDS, HAM_WORDS
@@ -37,8 +37,7 @@ def main():
     # ----------------------------
     # 2. Render sidebar navigation AFTER page setup
     # ----------------------------
-    page = render_slidebar()
-    
+    page = render_sidebar()
 
     # ----------------------------
     # 3. Initialize NLP resources (only needed for Home page)
