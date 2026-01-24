@@ -639,6 +639,10 @@ def render_info_cards(cards: Iterable[Dict[str, str]]):
             </div>
             """, unsafe_allow_html=True)
 
+import streamlit as st
+import time
+
+
 def render_sidebar():
     """
     Render premium sidebar with navigation and auto-rotating slideshow cards.
@@ -678,27 +682,50 @@ def render_sidebar():
             @keyframes fadeIn {
                 from {
                     opacity: 0;
-                    transform: translateY(20px) scale(0.95);
+                    transform: translateX(-30px) scale(0.95);
                 }
                 to {
                     opacity: 1;
-                    transform: translateY(0) scale(1);
+                    transform: translateX(0) scale(1);
                 }
             }
             
             @keyframes fadeOut {
                 from {
                     opacity: 1;
-                    transform: translateY(0) scale(1);
+                    transform: translateX(0) scale(1);
                 }
                 to {
                     opacity: 0;
-                    transform: translateY(-20px) scale(0.95);
+                    transform: translateX(30px) scale(0.95);
+                }
+            }
+            
+            @keyframes slideInFromRight {
+                from {
+                    opacity: 0;
+                    transform: translateX(100%);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+            
+            @keyframes slideOutToLeft {
+                from {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+                to {
+                    opacity: 0;
+                    transform: translateX(-100%);
                 }
             }
             
             .slideshow-card {
-                animation: fadeIn 0.6s ease-out forwards;
+                animation: slideInFromRight 0.5s ease-out forwards;
+                transition: all 0.5s ease-out;
             }
             
             /* Navigation radio buttons styling */
@@ -893,18 +920,25 @@ def render_sidebar():
         # Get current slide
         current_slide = slides[st.session_state.slide_index]
         
-        # Display current slide with animation
-        st.markdown(f"""
-            <div class="slideshow-card" style="background: {current_slide['bg_gradient']}; border: 1px solid {current_slide['border']}; margin-bottom: 1rem; padding: 1.25rem; border-radius: 16px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);">
-                <h3 style="color: {current_slide['color']}; font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
-                    {current_slide['title']}
-                </h3>
-                {current_slide['content']}
-                <div class="slideshow-progress">
-                    <div class="slideshow-progress-bar"></div>
+        # Slideshow container with all slides
+        slideshow_html = '<div style="position: relative; min-height: 250px; overflow: hidden; border-radius: 16px; margin-bottom: 1rem;">'
+        
+        for idx, slide in enumerate(slides):
+            display_style = "block" if idx == st.session_state.slide_index else "none"
+            slideshow_html += f"""
+                <div class="slideshow-card" style="display: {display_style}; background: {slide['bg_gradient']}; border: 1px solid {slide['border']}; padding: 1.25rem; border-radius: 16px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);">
+                    <h3 style="color: {slide['color']}; font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+                        {slide['title']}
+                    </h3>
+                    {slide['content']}
+                    <div class="slideshow-progress">
+                        <div class="slideshow-progress-bar"></div>
+                    </div>
                 </div>
-            </div>
-        """, unsafe_allow_html=True)
+            """
+        
+        slideshow_html += '</div>'
+        st.markdown(slideshow_html, unsafe_allow_html=True)
         
         # Slide indicators (dots)
         dots_html = '<div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 1.5rem;">'
@@ -929,3 +963,52 @@ def render_sidebar():
         """, unsafe_allow_html=True)
         
         return page
+
+
+# Example usage
+if __name__ == "__main__":
+    st.set_page_config(
+        page_title="Spam Detector - Slideshow Sidebar",
+        page_icon="🛡️",
+        layout="wide",
+        initial_sidebar_state="expanded"
+    )
+    
+    # Main page styling
+    st.markdown("""
+        <style>
+        .stApp {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+    
+    # Render sidebar and get selected page
+    page = render_sidebar()
+    
+    # Main content based on selected page
+    st.title(f"You selected: {page}")
+    st.markdown("""
+        <div class="card">
+            <h2 style="color: #f8fafc; margin-bottom: 1rem;">Sidebar Slideshow Demo</h2>
+            <p style="color: #cbd5e1; line-height: 1.8;">
+                The sidebar now features an auto-rotating slideshow that cycles through different information cards every 5 seconds.
+                Watch the sidebar to see the smooth transitions between:
+            </p>
+            <ul style="color: #cbd5e1; line-height: 2;">
+                <li>📊 Quick Stats - System performance metrics</li>
+                <li>💡 Pro Tip - Security best practices</li>
+                <li>🔒 Security - Privacy information</li>
+                <li>⚡ Features - Key capabilities</li>
+            </ul>
+            <p style="color: #60a5fa; margin-top: 1.5rem; font-weight: 600;">
+                ✨ The progress bar at the bottom of each card shows the time until the next slide!
+            </p>
+        </div>
+    """, unsafe_allow_html=True)
