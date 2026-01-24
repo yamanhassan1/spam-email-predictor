@@ -639,10 +639,6 @@ def render_info_cards(cards: Iterable[Dict[str, str]]):
             </div>
             """, unsafe_allow_html=True)
 
-import streamlit as st
-import time
-
-
 def render_sidebar():
     """
     Render premium sidebar with navigation and manual slide controls.
