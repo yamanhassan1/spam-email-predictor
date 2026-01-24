@@ -639,10 +639,14 @@ def render_info_cards(cards: Iterable[Dict[str, str]]):
             </div>
             """, unsafe_allow_html=True)
 
+import streamlit as st
+import time
+
+
 def render_sidebar():
     """
-    Render premium sidebar with navigation and auto-rotating slideshow cards.
-    Fully responsive and matching home page design with dynamic content rotation.
+    Render premium sidebar with navigation and manual slide controls.
+    Features left/right navigation buttons for user-controlled slideshow.
     """
     with st.sidebar:
         # Logo and Title
@@ -656,7 +660,7 @@ def render_sidebar():
             </div>
         """, unsafe_allow_html=True)
         
-        # Enhanced sidebar styling with slideshow animations
+        # Enhanced sidebar styling with slider animations
         st.markdown("""
             <style>
             /* Sidebar background with gradient */
@@ -674,54 +678,83 @@ def render_sidebar():
                 50% { transform: translateY(-10px); }
             }
             
-            /* Slideshow fade animations */
-            @keyframes fadeIn {
-                from {
-                    opacity: 0;
-                    transform: translateX(-30px) scale(0.95);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateX(0) scale(1);
-                }
+            /* Slider container */
+            .slider-container {
+                position: relative;
+                overflow: hidden;
+                border-radius: 16px;
+                margin-bottom: 1rem;
             }
             
-            @keyframes fadeOut {
-                from {
-                    opacity: 1;
-                    transform: translateX(0) scale(1);
-                }
-                to {
-                    opacity: 0;
-                    transform: translateX(30px) scale(0.95);
-                }
+            .slider-wrapper {
+                display: flex;
+                transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             }
             
-            @keyframes slideInFromRight {
-                from {
-                    opacity: 0;
-                    transform: translateX(100%);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateX(0);
-                }
+            .slide {
+                min-width: 100%;
+                flex-shrink: 0;
+                padding: 1.25rem;
+                box-sizing: border-box;
             }
             
-            @keyframes slideOutToLeft {
-                from {
-                    opacity: 1;
-                    transform: translateX(0);
-                }
-                to {
-                    opacity: 0;
-                    transform: translateX(-100%);
-                }
+            /* Navigation buttons */
+            .slider-nav {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 1rem;
+                margin-bottom: 1rem;
             }
             
-            .slideshow-card {
-                animation: slideInFromRight 0.5s ease-out forwards;
-                transition: all 0.5s ease-out;
+            .slider-button {
+                flex: 1;
+                background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.15)) !important;
+                border: 1px solid rgba(59, 130, 246, 0.3) !important;
+                border-radius: 10px !important;
+                padding: 0.6rem 1rem !important;
+                color: #f1f5f9 !important;
+                font-weight: 600 !important;
+                font-size: 0.9rem !important;
+                cursor: pointer !important;
+                transition: all 0.3s ease !important;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+            }
+            
+            .slider-button:hover {
+                background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(139, 92, 246, 0.25)) !important;
+                transform: scale(1.05) !important;
+                box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
+            }
+            
+            .slider-button:active {
+                transform: scale(0.95) !important;
+            }
+            
+            /* Slide indicators (dots) */
+            .slider-dots {
+                display: flex;
+                justify-content: center;
+                gap: 8px;
+                margin-bottom: 1.5rem;
+                padding: 0.5rem;
+            }
+            
+            .slider-dot {
+                width: 8px;
+                height: 8px;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 50%;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            
+            .slider-dot.active {
+                width: 24px;
+                height: 8px;
+                background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+                border-radius: 999px;
+                box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
             }
             
             /* Navigation radio buttons styling */
@@ -762,25 +795,24 @@ def render_sidebar():
                 font-size: 1rem !important;
             }
             
-            /* Progress bar for slideshow */
-            .slideshow-progress {
-                height: 3px;
-                background: rgba(255, 255, 255, 0.1);
-                border-radius: 999px;
-                overflow: hidden;
-                margin-top: 1rem;
+            /* Button styling for slider controls */
+            .stButton > button {
+                background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.15)) !important;
+                border: 1px solid rgba(59, 130, 246, 0.3) !important;
+                border-radius: 10px !important;
+                padding: 0.6rem 1rem !important;
+                color: #f1f5f9 !important;
+                font-weight: 600 !important;
+                font-size: 0.9rem !important;
+                transition: all 0.3s ease !important;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+                width: 100% !important;
             }
             
-            .slideshow-progress-bar {
-                height: 100%;
-                background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-                border-radius: 999px;
-                animation: progress 5s linear infinite;
-            }
-            
-            @keyframes progress {
-                from { width: 0%; }
-                to { width: 100%; }
+            .stButton > button:hover {
+                background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(139, 92, 246, 0.25)) !important;
+                transform: scale(1.02) !important;
+                box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
             }
             
             /* Responsive adjustments */
@@ -835,20 +867,11 @@ def render_sidebar():
         
         st.markdown("<br><br>", unsafe_allow_html=True)
         
-        # Initialize session state for slideshow
+        # Initialize session state for slider
         if 'slide_index' not in st.session_state:
             st.session_state.slide_index = 0
-        if 'last_update' not in st.session_state:
-            st.session_state.last_update = time.time()
         
-        # Check if 5 seconds have passed to rotate slides
-        current_time = time.time()
-        if current_time - st.session_state.last_update >= 5:
-            st.session_state.slide_index = (st.session_state.slide_index + 1) % 4
-            st.session_state.last_update = current_time
-            st.rerun()
-        
-        # Define slideshow cards
+        # Define slides
         slides = [
             {
                 "title": "📊 Quick Stats",
@@ -913,36 +936,46 @@ def render_sidebar():
             }
         ]
         
-        # Get current slide
-        current_slide = slides[st.session_state.slide_index]
+        # Navigation buttons
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("◀ Previous", key="prev_slide", use_container_width=True):
+                st.session_state.slide_index = (st.session_state.slide_index - 1) % len(slides)
+        with col2:
+            if st.button("Next ▶", key="next_slide", use_container_width=True):
+                st.session_state.slide_index = (st.session_state.slide_index + 1) % len(slides)
         
-        # Slideshow container with all slides
-        slideshow_html = '<div style="position: relative; min-height: 250px; overflow: hidden; border-radius: 16px; margin-bottom: 1rem;">'
+        # Calculate transform value for slider
+        transform_value = -100 * st.session_state.slide_index
         
-        for idx, slide in enumerate(slides):
-            display_style = "block" if idx == st.session_state.slide_index else "none"
-            slideshow_html += f"""
-                <div class="slideshow-card" style="display: {display_style}; background: {slide['bg_gradient']}; border: 1px solid {slide['border']}; padding: 1.25rem; border-radius: 16px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);">
+        # Build slider HTML
+        slider_html = f"""
+            <div class="slider-container" style="background: rgba(0, 0, 0, 0.2); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);">
+                <div class="slider-wrapper" style="transform: translateX({transform_value}%);">
+        """
+        
+        for slide in slides:
+            slider_html += f"""
+                <div class="slide" style="background: {slide['bg_gradient']}; border: 1px solid {slide['border']};">
                     <h3 style="color: {slide['color']}; font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
                         {slide['title']}
                     </h3>
                     {slide['content']}
-                    <div class="slideshow-progress">
-                        <div class="slideshow-progress-bar"></div>
-                    </div>
                 </div>
             """
         
-        slideshow_html += '</div>'
-        st.markdown(slideshow_html, unsafe_allow_html=True)
+        slider_html += """
+                </div>
+            </div>
+        """
+        
+        st.markdown(slider_html, unsafe_allow_html=True)
         
         # Slide indicators (dots)
-        dots_html = '<div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 1.5rem;">'
+        dots_html = '<div class="slider-dots">'
         for i in range(len(slides)):
-            if i == st.session_state.slide_index:
-                dots_html += f'<div style="width: 24px; height: 8px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); border-radius: 999px; box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);"></div>'
-            else:
-                dots_html += f'<div style="width: 8px; height: 8px; background: rgba(255, 255, 255, 0.2); border-radius: 50%; cursor: pointer;"></div>'
+            active_class = "active" if i == st.session_state.slide_index else ""
+            dots_html += f'<div class="slider-dot {active_class}"></div>'
         dots_html += '</div>'
         st.markdown(dots_html, unsafe_allow_html=True)
         
