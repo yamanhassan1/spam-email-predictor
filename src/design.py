@@ -1033,13 +1033,17 @@ def render_sidebar():
         # ============================================================================
         
         # Card 1: Quick Stats
-        _render_info_card(
-            title="📊 Quick Stats",
-            color="#60a5fa",
-            gradient="linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(139, 92, 246, 0.05))",
-            border="rgba(59, 130, 246, 0.2)",
-            content="""
-                <div style="color: #cbd5e1; font-size: clamp(0.85rem, 2.2vw, 0.9rem); line-height: 1.8;">
+        st.markdown("""
+            <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(139, 92, 246, 0.05)); 
+                        border: 1px solid rgba(59, 130, 246, 0.2); 
+                        border-radius: 16px; 
+                        padding: 1.25rem; 
+                        margin-bottom: 1rem;
+                        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);">
+                <h3 style="color: #60a5fa; font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem;">
+                    📊 Quick Stats
+                </h3>
+                <div style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.8;">
                     <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
                         <span>Accuracy:</span>
                         <strong style="color: #34d399; font-weight: 700;">97%+</strong>
@@ -1053,50 +1057,60 @@ def render_sidebar():
                         <strong style="color: #a78bfa; font-weight: 700;">100%</strong>
                     </div>
                 </div>
-            """
-        )
+            </div>
+        """, unsafe_allow_html=True)
         
-        # Card 2: Pro Tip
-        _render_info_card(
-            title="💡 Pro Tip",
-            color="#34d399",
-            gradient="linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(5, 150, 105, 0.05))",
-            border="rgba(16, 185, 129, 0.2)",
-            content="""
-                <p style="color: #cbd5e1; font-size: clamp(0.8rem, 2vw, 0.85rem); line-height: 1.6; margin: 0;">
+        st.markdown("""
+            <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(5, 150, 105, 0.05)); 
+                        border: 1px solid rgba(16, 185, 129, 0.2); 
+                        border-radius: 16px; 
+                        padding: 1.25rem; 
+                        margin-bottom: 1rem;
+                        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);">
+                <h3 style="color: #34d399; font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem;">
+                    💡 Pro Tip
+                </h3>
+                <p style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.6; margin: 0;">
                     Always verify unexpected messages from banks, delivery services, or institutions through official channels.
                 </p>
-            """
-        )
+            </div>
+        """, unsafe_allow_html=True)
         
         # Card 3: Security
-        _render_info_card(
-            title="🔒 Security",
-            color="#fecdd3",
-            gradient="linear-gradient(135deg, rgba(239, 68, 68, 0.08), rgba(220, 38, 38, 0.05))",
-            border="rgba(239, 68, 68, 0.2)",
-            content="""
-                <p style="color: #cbd5e1; font-size: clamp(0.8rem, 2vw, 0.85rem); line-height: 1.6; margin: 0;">
+        st.markdown("""
+            <div style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.08), rgba(220, 38, 38, 0.05)); 
+                        border: 1px solid rgba(239, 68, 68, 0.2); 
+                        border-radius: 16px; 
+                        padding: 1.25rem; 
+                        margin-bottom: 1rem;
+                        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);">
+                <h3 style="color: #fecdd3; font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem;">
+                    🔒 Security
+                </h3>
+                <p style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.6; margin: 0;">
                     Your messages are analyzed in real-time and never stored. 100% privacy guaranteed.
                 </p>
-            """
-        )
+            </div>
+        """, unsafe_allow_html=True)
         
         # Card 4: Features
-        _render_info_card(
-            title="⚡ Features",
-            color="#fbbf24",
-            gradient="linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(217, 119, 6, 0.05))",
-            border="rgba(245, 158, 11, 0.2)",
-            content="""
-                <div style="color: #cbd5e1; font-size: clamp(0.8rem, 2vw, 0.85rem); line-height: 1.7;">
+        st.markdown("""
+            <div style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(217, 119, 6, 0.05)); 
+                        border: 1px solid rgba(245, 158, 11, 0.2); 
+                        border-radius: 16px; 
+                        padding: 1.25rem; 
+                        margin-bottom: 1rem;
+                        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);">
+                <h3 style="color: #fbbf24; font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem;">
+                    ⚡ Features
+                </h3>
+                <div style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.7;">
                     <div style="margin-bottom: 0.5rem;">✓ Real-time AI Analysis</div>
                     <div style="margin-bottom: 0.5rem;">✓ Multi-language Support</div>
                     <div>✓ 24/7 Protection</div>
                 </div>
-            """
-        )
-        
+            </div>
+        """, unsafe_allow_html=True)
         # ============================================================================
         # FOOTER SECTION
         # ============================================================================
