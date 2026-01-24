@@ -21,8 +21,9 @@ def main():
     # 2. Render sidebar and get selected page
     page = render_sidebar()
     
-    # 3. Initialize NLP resources and model (only for Home page)
+    # 3. Render content based on selected page
     if page == "🏠 Home":
+        # Initialize NLP resources and model
         setup_nltk()
         stop_words = get_stopwords()
         
@@ -46,12 +47,24 @@ def main():
         render_info_sections()
     
     elif page == "ℹ️ About":
+        render_header(
+            title="About Spam Detector",
+            subtitle="Learn more about our advanced spam detection technology"
+        )
         render_about_page()
     
     elif page == "❓ Help":
+        render_header(
+            title="Help & Support",
+            subtitle="Get assistance with using the Spam Detector"
+        )
         render_help_page()
     
     elif page == "📧 Contact":
+        render_header(
+            title="Contact Us",
+            subtitle="Get in touch with our team"
+        )
         render_contact_page()
 
 # Application entry point
