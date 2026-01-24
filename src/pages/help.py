@@ -2,15 +2,6 @@ import streamlit as st
 
 
 def render_help_page():
-    """Render the Help page with usage instructions."""
-    st.markdown("""
-        <div class="card" style="text-align: center; padding: 3rem 2rem; margin-bottom: 2rem;">
-            <div style="font-size: 4rem; margin-bottom: 1rem;">❓</div>
-            <h1 style="font-size: 2.5rem; font-weight: 900; margin-bottom: 1rem;">Help & Documentation</h1>
-            <p style="color: #cbd5e1; font-size: 1.1rem;">Everything you need to know to use the AI Spam Detector</p>
-        </div>
-    """, unsafe_allow_html=True)
-    
     # Quick Start Guide
     st.markdown("""
         <h3 style='color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin: 2rem 0 1.5rem 0; text-align: center;'>
