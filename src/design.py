@@ -655,7 +655,7 @@ def render_sidebar():
             </div>
         """, unsafe_allow_html=True)
         
-        # Enhanced sidebar styling with visible and enlarged toggle button
+        # Enhanced sidebar styling with improved toggle button
         st.markdown("""
             <style>
             /* Sidebar background with gradient */
@@ -667,63 +667,94 @@ def render_sidebar():
                 background: linear-gradient(180deg, #0a0e27 0%, #0f1433 50%, #0a0e27 100%);
             }
             
-            /* Make sidebar toggle button visible and enlarged */
+            /* Premium Sidebar Toggle Button - Collapsed State */
             [data-testid="collapsedControl"] {
-                display: block !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
                 visibility: visible !important;
                 opacity: 1 !important;
                 position: fixed !important;
-                top: 1rem !important;
-                left: 1rem !important;
+                top: 1.5rem !important;
+                left: 1.5rem !important;
                 z-index: 999999 !important;
-                background: linear-gradient(135deg, rgba(59, 130, 246, 0.9), rgba(139, 92, 246, 0.8)) !important;
-                border: 2px solid rgba(59, 130, 246, 0.6) !important;
-                border-radius: 12px !important;
-                padding: 1rem !important;
-                box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4), 0 0 40px rgba(59, 130, 246, 0.3) !important;
+                width: 70px !important;
+                height: 70px !important;
+                background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%) !important;
+                border: none !important;
+                border-radius: 20px !important;
+                box-shadow: 
+                    0 10px 40px rgba(59, 130, 246, 0.5),
+                    0 0 0 4px rgba(59, 130, 246, 0.1),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
                 backdrop-filter: blur(10px) !important;
-                transition: all 0.3s ease !important;
-                width: 60px !important;
-                height: 60px !important;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+                cursor: pointer !important;
+            }
+            
+            [data-testid="collapsedControl"]::before {
+                content: '' !important;
+                position: absolute !important;
+                inset: -3px !important;
+                background: linear-gradient(135deg, #3b82f6, #8b5cf6) !important;
+                border-radius: 22px !important;
+                opacity: 0 !important;
+                filter: blur(20px) !important;
+                transition: opacity 0.4s ease !important;
+                z-index: -1 !important;
             }
             
             [data-testid="collapsedControl"]:hover {
-                background: linear-gradient(135deg, rgba(59, 130, 246, 1), rgba(139, 92, 246, 0.9)) !important;
-                transform: scale(1.1) !important;
-                box-shadow: 0 12px 32px rgba(59, 130, 246, 0.6), 0 0 60px rgba(59, 130, 246, 0.5) !important;
+                transform: scale(1.1) translateY(-3px) !important;
+                box-shadow: 
+                    0 15px 50px rgba(59, 130, 246, 0.6),
+                    0 0 0 6px rgba(59, 130, 246, 0.15),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+            }
+            
+            [data-testid="collapsedControl"]:hover::before {
+                opacity: 0.8 !important;
+            }
+            
+            [data-testid="collapsedControl"]:active {
+                transform: scale(1.05) translateY(-1px) !important;
             }
             
             [data-testid="collapsedControl"] svg {
-                width: 28px !important;
-                height: 28px !important;
+                width: 32px !important;
+                height: 32px !important;
                 color: #ffffff !important;
                 stroke-width: 2.5 !important;
+                filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3)) !important;
             }
             
-            /* Sidebar toggle button when sidebar is open */
+            /* Sidebar Toggle Button - Open State */
             [data-testid="stSidebar"] button[kind="header"] {
-                display: block !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
                 visibility: visible !important;
                 opacity: 1 !important;
                 background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(139, 92, 246, 0.2)) !important;
-                border: 1px solid rgba(59, 130, 246, 0.4) !important;
-                border-radius: 10px !important;
-                padding: 0.75rem !important;
-                margin: 0.5rem !important;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+                border: 1px solid rgba(59, 130, 246, 0.5) !important;
+                border-radius: 12px !important;
+                padding: 0.875rem !important;
+                margin: 0.75rem !important;
+                width: calc(100% - 1.5rem) !important;
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
                 transition: all 0.3s ease !important;
             }
             
             [data-testid="stSidebar"] button[kind="header"]:hover {
                 background: linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(139, 92, 246, 0.3)) !important;
-                transform: scale(1.05) !important;
-                box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4) !important;
+                transform: scale(1.02) !important;
+                box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4) !important;
             }
             
             [data-testid="stSidebar"] button[kind="header"] svg {
                 color: #60a5fa !important;
-                width: 24px !important;
-                height: 24px !important;
+                width: 26px !important;
+                height: 26px !important;
             }
             
             /* Floating animation */
@@ -732,70 +763,89 @@ def render_sidebar():
                 50% { transform: translateY(-10px); }
             }
             
-            /* Navigation radio buttons styling */
-            .stRadio > div {
+            /* Hide default radio button styling */
+            .stRadio {
+                display: none !important;
+            }
+            
+            /* Custom navigation buttons */
+            .nav-buttons {
+                display: flex;
+                flex-direction: column;
+                gap: 0.75rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .nav-button {
+                background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+                backdrop-filter: blur(20px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 12px;
+                padding: 1rem 1.25rem;
+                color: #f8fafc;
+                font-weight: 600;
+                font-size: 1rem;
+                text-align: left;
+                cursor: pointer;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+                display: flex;
+                align-items: center;
                 gap: 0.75rem;
             }
             
-            .stRadio > div > label {
-                background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)) !important;
-                backdrop-filter: blur(20px) saturate(150%) !important;
-                -webkit-backdrop-filter: blur(20px) saturate(150%) !important;
-                border: 1px solid rgba(255, 255, 255, 0.1) !important;
-                border-radius: 12px !important;
-                padding: 1rem 1.25rem !important;
-                cursor: pointer !important;
-                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-                margin: 0 !important;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+            .nav-button:hover {
+                background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+                border-color: rgba(59, 130, 246, 0.4);
+                transform: translateX(8px) scale(1.02);
+                box-shadow: 0 4px 16px rgba(59, 130, 246, 0.2);
             }
             
-            .stRadio > div > label:hover {
-                background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05)) !important;
-                border-color: rgba(59, 130, 246, 0.4) !important;
-                transform: translateX(8px) scale(1.02) !important;
-                box-shadow: 0 4px 16px rgba(59, 130, 246, 0.2) !important;
+            .nav-button.active {
+                background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.15));
+                border-color: #3b82f6;
+                box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+                transform: translateX(8px);
             }
             
-            .stRadio > div > label[data-checked="true"] {
-                background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.15)) !important;
-                border-color: #3b82f6 !important;
-                box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
-                transform: translateX(8px) !important;
-            }
-            
-            .stRadio > div > label > div {
-                color: #f8fafc !important;
-                font-weight: 600 !important;
-                font-size: 1rem !important;
+            .nav-button .icon {
+                font-size: 1.25rem;
             }
             
             /* Responsive adjustments */
             @media (max-width: 768px) {
-                .stRadio > div > label {
-                    padding: 0.875rem 1rem !important;
-                    font-size: 0.9rem !important;
-                }
-                
-                .stRadio > div > label:hover {
-                    transform: translateX(5px) scale(1.01) !important;
-                }
-                
                 [data-testid="collapsedControl"] {
-                    width: 50px !important;
-                    height: 50px !important;
+                    width: 60px !important;
+                    height: 60px !important;
+                    top: 1rem !important;
+                    left: 1rem !important;
+                }
+                
+                [data-testid="collapsedControl"] svg {
+                    width: 28px !important;
+                    height: 28px !important;
+                }
+                
+                .nav-button {
+                    padding: 0.875rem 1rem;
+                    font-size: 0.9rem;
+                }
+            }
+            
+            @media (max-width: 480px) {
+                [data-testid="collapsedControl"] {
+                    width: 55px !important;
+                    height: 55px !important;
                 }
                 
                 [data-testid="collapsedControl"] svg {
                     width: 24px !important;
                     height: 24px !important;
                 }
-            }
-            
-            @media (max-width: 480px) {
-                .stRadio > div > label {
-                    padding: 0.75rem 0.875rem !important;
-                    font-size: 0.85rem !important;
+                
+                .nav-button {
+                    padding: 0.75rem 0.875rem;
+                    font-size: 0.85rem;
                 }
             }
             
@@ -823,13 +873,32 @@ def render_sidebar():
             </style>
         """, unsafe_allow_html=True)
         
-        # Navigation
-        page = st.radio(
-            "Navigation",
-            ["🏠 Home", "ℹ️ About", "❓ Help", "📧 Contact"],
-            label_visibility="collapsed"
-        )
+        # Initialize session state for navigation
+        if 'current_page' not in st.session_state:
+            st.session_state.current_page = "🏠 Home"
         
+        # Navigation Buttons
+        st.markdown('<div class="nav-buttons">', unsafe_allow_html=True)
+        
+        pages = [
+            {"name": "🏠 Home", "icon": "🏠"},
+            {"name": "ℹ️ About", "icon": "ℹ️"},
+            {"name": "❓ Help", "icon": "❓"},
+            {"name": "📧 Contact", "icon": "📧"}
+        ]
+        
+        for page_info in pages:
+            active_class = "active" if st.session_state.current_page == page_info["name"] else ""
+            if st.button(
+                page_info["name"],
+                key=f"nav_{page_info['name']}",
+                use_container_width=True,
+                type="secondary"
+            ):
+                st.session_state.current_page = page_info["name"]
+                st.rerun()
+        
+        st.markdown('</div>', unsafe_allow_html=True)
         st.markdown("<br>", unsafe_allow_html=True)
         
         # Info Cards - Simple stacked layout
@@ -927,4 +996,4 @@ def render_sidebar():
             </div>
         """, unsafe_allow_html=True)
         
-        return page
+        return st.session_state.current_page
