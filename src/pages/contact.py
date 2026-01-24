@@ -11,15 +11,6 @@ def render_contact_page():
     CONTACT_EMAIL = "yaman.hassan10@yahoo.com"
     COMPANY_NAME = "AI Spam Detector"
     
-    # Header section with improved colors
-    st.markdown("""
-        <div class="card" style="text-align: center; padding: 3rem 2rem; margin-bottom: 2rem;">
-            <div style="font-size: 4rem; margin-bottom: 1rem;">📧</div>
-            <h1 style="font-size: 3rem; font-weight: 900; margin-bottom: 1rem; background: linear-gradient(135deg, #60a5fa, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Get In Touch</h1>
-            <p style="color: #e2e8f0; font-size: 1.2rem; font-weight: 500;">We'd love to hear from you!</p>
-        </div>
-    """, unsafe_allow_html=True)
-    
     # Contact Form Section with improved colors
     st.markdown("""
         <div class="card" style="margin-bottom: 2rem; text-align: center;">
