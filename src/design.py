@@ -2,6 +2,7 @@ import streamlit as st
 import base64
 from pathlib import Path
 from typing import Optional, Iterable, Dict
+import time
 
 
 def setup_page(
@@ -640,7 +641,8 @@ def render_info_cards(cards: Iterable[Dict[str, str]]):
 
 def render_sidebar():
     """
-    Render premium sidebar with navigation - fully responsive and matching home page design.
+    Render premium sidebar with navigation and auto-rotating slideshow cards.
+    Fully responsive and matching home page design with dynamic content rotation.
     """
     with st.sidebar:
         # Logo and Title
@@ -654,7 +656,7 @@ def render_sidebar():
             </div>
         """, unsafe_allow_html=True)
         
-        # Enhanced sidebar styling
+        # Enhanced sidebar styling with slideshow animations
         st.markdown("""
             <style>
             /* Sidebar background with gradient */
@@ -664,6 +666,39 @@ def render_sidebar():
             
             [data-testid="stSidebar"] > div:first-child {
                 background: linear-gradient(180deg, #0a0e27 0%, #0f1433 50%, #0a0e27 100%);
+            }
+            
+            /* Floating animation */
+            @keyframes float {
+                0%, 100% { transform: translateY(0px); }
+                50% { transform: translateY(-10px); }
+            }
+            
+            /* Slideshow fade animations */
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px) scale(0.95);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0) scale(1);
+                }
+            }
+            
+            @keyframes fadeOut {
+                from {
+                    opacity: 1;
+                    transform: translateY(0) scale(1);
+                }
+                to {
+                    opacity: 0;
+                    transform: translateY(-20px) scale(0.95);
+                }
+            }
+            
+            .slideshow-card {
+                animation: fadeIn 0.6s ease-out forwards;
             }
             
             /* Navigation radio buttons styling */
@@ -702,6 +737,27 @@ def render_sidebar():
                 color: #f8fafc !important;
                 font-weight: 600 !important;
                 font-size: 1rem !important;
+            }
+            
+            /* Progress bar for slideshow */
+            .slideshow-progress {
+                height: 3px;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 999px;
+                overflow: hidden;
+                margin-top: 1rem;
+            }
+            
+            .slideshow-progress-bar {
+                height: 100%;
+                background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+                border-radius: 999px;
+                animation: progress 5s linear infinite;
+            }
+            
+            @keyframes progress {
+                from { width: 0%; }
+                to { width: 100%; }
             }
             
             /* Responsive adjustments */
@@ -756,52 +812,109 @@ def render_sidebar():
         
         st.markdown("<br><br>", unsafe_allow_html=True)
         
-        # Quick Stats Card
-        st.markdown("""
-            <div class="card" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(139, 92, 246, 0.05)); border: 1px solid rgba(59, 130, 246, 0.2); margin-bottom: 1.5rem; padding: 1.25rem; border-radius: 16px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);">
-                <h3 style="color: #60a5fa; font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
-                    📊 Quick Stats
+        # Initialize session state for slideshow
+        if 'slide_index' not in st.session_state:
+            st.session_state.slide_index = 0
+        if 'last_update' not in st.session_state:
+            st.session_state.last_update = time.time()
+        
+        # Check if 5 seconds have passed to rotate slides
+        current_time = time.time()
+        if current_time - st.session_state.last_update >= 5:
+            st.session_state.slide_index = (st.session_state.slide_index + 1) % 4
+            st.session_state.last_update = current_time
+            st.rerun()
+        
+        # Define slideshow cards
+        slides = [
+            {
+                "title": "📊 Quick Stats",
+                "icon": "📊",
+                "color": "#60a5fa",
+                "bg_gradient": "linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(139, 92, 246, 0.05))",
+                "border": "rgba(59, 130, 246, 0.2)",
+                "content": """
+                    <div style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.8;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                            <span>Accuracy:</span>
+                            <strong style="color: #34d399; font-weight: 700;">97%+</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                            <span>Speed:</span>
+                            <strong style="color: #60a5fa; font-weight: 700;">Real-time</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>Privacy:</span>
+                            <strong style="color: #a78bfa; font-weight: 700;">100%</strong>
+                        </div>
+                    </div>
+                """
+            },
+            {
+                "title": "💡 Pro Tip",
+                "icon": "💡",
+                "color": "#34d399",
+                "bg_gradient": "linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(5, 150, 105, 0.05))",
+                "border": "rgba(16, 185, 129, 0.2)",
+                "content": """
+                    <p style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.6; margin: 0;">
+                        Always verify unexpected messages from banks, delivery services, or institutions through official channels.
+                    </p>
+                """
+            },
+            {
+                "title": "🔒 Security",
+                "icon": "🔒",
+                "color": "#fecdd3",
+                "bg_gradient": "linear-gradient(135deg, rgba(239, 68, 68, 0.08), rgba(220, 38, 38, 0.05))",
+                "border": "rgba(239, 68, 68, 0.2)",
+                "content": """
+                    <p style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.6; margin: 0;">
+                        Your messages are analyzed in real-time and never stored. 100% privacy guaranteed.
+                    </p>
+                """
+            },
+            {
+                "title": "⚡ Features",
+                "icon": "⚡",
+                "color": "#fbbf24",
+                "bg_gradient": "linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(217, 119, 6, 0.05))",
+                "border": "rgba(245, 158, 11, 0.2)",
+                "content": """
+                    <div style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.7;">
+                        <div style="margin-bottom: 0.5rem;">✓ Real-time AI Analysis</div>
+                        <div style="margin-bottom: 0.5rem;">✓ Multi-language Support</div>
+                        <div>✓ 24/7 Protection</div>
+                    </div>
+                """
+            }
+        ]
+        
+        # Get current slide
+        current_slide = slides[st.session_state.slide_index]
+        
+        # Display current slide with animation
+        st.markdown(f"""
+            <div class="slideshow-card" style="background: {current_slide['bg_gradient']}; border: 1px solid {current_slide['border']}; margin-bottom: 1rem; padding: 1.25rem; border-radius: 16px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);">
+                <h3 style="color: {current_slide['color']}; font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+                    {current_slide['title']}
                 </h3>
-                <div style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.8;">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
-                        <span>Accuracy:</span>
-                        <strong style="color: #34d399; font-weight: 700;">97%+</strong>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
-                        <span>Speed:</span>
-                        <strong style="color: #60a5fa; font-weight: 700;">Real-time</strong>
-                    </div>
-                    <div style="display: flex; justify-content: space-between;">
-                        <span>Privacy:</span>
-                        <strong style="color: #a78bfa; font-weight: 700;">100%</strong>
-                    </div>
+                {current_slide['content']}
+                <div class="slideshow-progress">
+                    <div class="slideshow-progress-bar"></div>
                 </div>
             </div>
         """, unsafe_allow_html=True)
         
-        # Pro Tip Card
-        st.markdown("""
-            <div class="card" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(5, 150, 105, 0.05)); border: 1px solid rgba(16, 185, 129, 0.2); margin-bottom: 1.5rem; padding: 1.25rem; border-radius: 16px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);">
-                <h3 style="color: #34d399; font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
-                    💡 Pro Tip
-                </h3>
-                <p style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.6; margin: 0;">
-                    Always verify unexpected messages from banks, delivery services, or institutions through official channels.
-                </p>
-            </div>
-        """, unsafe_allow_html=True)
-        
-        # Security Tips Card
-        st.markdown("""
-            <div class="card" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.08), rgba(220, 38, 38, 0.05)); border: 1px solid rgba(239, 68, 68, 0.2); margin-bottom: 1.5rem; padding: 1.25rem; border-radius: 16px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);">
-                <h3 style="color: #fecdd3; font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
-                    🔒 Security
-                </h3>
-                <p style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.6; margin: 0;">
-                    Your messages are analyzed in real-time and never stored. 100% privacy guaranteed.
-                </p>
-            </div>
-        """, unsafe_allow_html=True)
+        # Slide indicators (dots)
+        dots_html = '<div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 1.5rem;">'
+        for i in range(len(slides)):
+            if i == st.session_state.slide_index:
+                dots_html += f'<div style="width: 24px; height: 8px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); border-radius: 999px; box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);"></div>'
+            else:
+                dots_html += f'<div style="width: 8px; height: 8px; background: rgba(255, 255, 255, 0.2); border-radius: 50%; cursor: pointer;"></div>'
+        dots_html += '</div>'
+        st.markdown(dots_html, unsafe_allow_html=True)
         
         # Footer
         st.markdown("""
