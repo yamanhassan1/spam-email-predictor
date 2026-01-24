@@ -641,8 +641,7 @@ def render_info_cards(cards: Iterable[Dict[str, str]]):
 
 def render_sidebar():
     """
-    Render premium sidebar with navigation and manual slide controls.
-    Features left/right navigation buttons for user-controlled slideshow.
+    Render premium sidebar with navigation and info cards.
     """
     with st.sidebar:
         # Logo and Title
@@ -656,7 +655,7 @@ def render_sidebar():
             </div>
         """, unsafe_allow_html=True)
         
-        # Enhanced sidebar styling with slider animations
+        # Enhanced sidebar styling with visible and enlarged toggle button
         st.markdown("""
             <style>
             /* Sidebar background with gradient */
@@ -668,89 +667,69 @@ def render_sidebar():
                 background: linear-gradient(180deg, #0a0e27 0%, #0f1433 50%, #0a0e27 100%);
             }
             
+            /* Make sidebar toggle button visible and enlarged */
+            [data-testid="collapsedControl"] {
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                position: fixed !important;
+                top: 1rem !important;
+                left: 1rem !important;
+                z-index: 999999 !important;
+                background: linear-gradient(135deg, rgba(59, 130, 246, 0.9), rgba(139, 92, 246, 0.8)) !important;
+                border: 2px solid rgba(59, 130, 246, 0.6) !important;
+                border-radius: 12px !important;
+                padding: 1rem !important;
+                box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4), 0 0 40px rgba(59, 130, 246, 0.3) !important;
+                backdrop-filter: blur(10px) !important;
+                transition: all 0.3s ease !important;
+                width: 60px !important;
+                height: 60px !important;
+            }
+            
+            [data-testid="collapsedControl"]:hover {
+                background: linear-gradient(135deg, rgba(59, 130, 246, 1), rgba(139, 92, 246, 0.9)) !important;
+                transform: scale(1.1) !important;
+                box-shadow: 0 12px 32px rgba(59, 130, 246, 0.6), 0 0 60px rgba(59, 130, 246, 0.5) !important;
+            }
+            
+            [data-testid="collapsedControl"] svg {
+                width: 28px !important;
+                height: 28px !important;
+                color: #ffffff !important;
+                stroke-width: 2.5 !important;
+            }
+            
+            /* Sidebar toggle button when sidebar is open */
+            [data-testid="stSidebar"] button[kind="header"] {
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(139, 92, 246, 0.2)) !important;
+                border: 1px solid rgba(59, 130, 246, 0.4) !important;
+                border-radius: 10px !important;
+                padding: 0.75rem !important;
+                margin: 0.5rem !important;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+                transition: all 0.3s ease !important;
+            }
+            
+            [data-testid="stSidebar"] button[kind="header"]:hover {
+                background: linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(139, 92, 246, 0.3)) !important;
+                transform: scale(1.05) !important;
+                box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4) !important;
+            }
+            
+            [data-testid="stSidebar"] button[kind="header"] svg {
+                color: #60a5fa !important;
+                width: 24px !important;
+                height: 24px !important;
+            }
+            
             /* Floating animation */
             @keyframes float {
                 0%, 100% { transform: translateY(0px); }
                 50% { transform: translateY(-10px); }
-            }
-            
-            /* Slider container */
-            .slider-container {
-                position: relative;
-                overflow: hidden;
-                border-radius: 16px;
-                margin-bottom: 1rem;
-            }
-            
-            .slider-wrapper {
-                display: flex;
-                transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            }
-            
-            .slide {
-                min-width: 100%;
-                flex-shrink: 0;
-                padding: 1.25rem;
-                box-sizing: border-box;
-            }
-            
-            /* Navigation buttons */
-            .slider-nav {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                gap: 1rem;
-                margin-bottom: 1rem;
-            }
-            
-            .slider-button {
-                flex: 1;
-                background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.15)) !important;
-                border: 1px solid rgba(59, 130, 246, 0.3) !important;
-                border-radius: 10px !important;
-                padding: 0.6rem 1rem !important;
-                color: #f1f5f9 !important;
-                font-weight: 600 !important;
-                font-size: 0.9rem !important;
-                cursor: pointer !important;
-                transition: all 0.3s ease !important;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
-            }
-            
-            .slider-button:hover {
-                background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(139, 92, 246, 0.25)) !important;
-                transform: scale(1.05) !important;
-                box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
-            }
-            
-            .slider-button:active {
-                transform: scale(0.95) !important;
-            }
-            
-            /* Slide indicators (dots) */
-            .slider-dots {
-                display: flex;
-                justify-content: center;
-                gap: 8px;
-                margin-bottom: 1.5rem;
-                padding: 0.5rem;
-            }
-            
-            .slider-dot {
-                width: 8px;
-                height: 8px;
-                background: rgba(255, 255, 255, 0.2);
-                border-radius: 50%;
-                cursor: pointer;
-                transition: all 0.3s ease;
-            }
-            
-            .slider-dot.active {
-                width: 24px;
-                height: 8px;
-                background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-                border-radius: 999px;
-                box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
             }
             
             /* Navigation radio buttons styling */
@@ -791,26 +770,6 @@ def render_sidebar():
                 font-size: 1rem !important;
             }
             
-            /* Button styling for slider controls */
-            .stButton > button {
-                background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.15)) !important;
-                border: 1px solid rgba(59, 130, 246, 0.3) !important;
-                border-radius: 10px !important;
-                padding: 0.6rem 1rem !important;
-                color: #f1f5f9 !important;
-                font-weight: 600 !important;
-                font-size: 0.9rem !important;
-                transition: all 0.3s ease !important;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
-                width: 100% !important;
-            }
-            
-            .stButton > button:hover {
-                background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(139, 92, 246, 0.25)) !important;
-                transform: scale(1.02) !important;
-                box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
-            }
-            
             /* Responsive adjustments */
             @media (max-width: 768px) {
                 .stRadio > div > label {
@@ -820,6 +779,16 @@ def render_sidebar():
                 
                 .stRadio > div > label:hover {
                     transform: translateX(5px) scale(1.01) !important;
+                }
+                
+                [data-testid="collapsedControl"] {
+                    width: 50px !important;
+                    height: 50px !important;
+                }
+                
+                [data-testid="collapsedControl"] svg {
+                    width: 24px !important;
+                    height: 24px !important;
                 }
             }
             
@@ -861,121 +830,90 @@ def render_sidebar():
             label_visibility="collapsed"
         )
         
-        st.markdown("<br><br>", unsafe_allow_html=True)
+        st.markdown("<br>", unsafe_allow_html=True)
         
-        # Initialize session state for slider
-        if 'slide_index' not in st.session_state:
-            st.session_state.slide_index = 0
+        # Info Cards - Simple stacked layout
         
-        # Define slides
-        slides = [
-            {
-                "title": "📊 Quick Stats",
-                "icon": "📊",
-                "color": "#60a5fa",
-                "bg_gradient": "linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(139, 92, 246, 0.05))",
-                "border": "rgba(59, 130, 246, 0.2)",
-                "content": """
-                    <div style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.8;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
-                            <span>Accuracy:</span>
-                            <strong style="color: #34d399; font-weight: 700;">97%+</strong>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
-                            <span>Speed:</span>
-                            <strong style="color: #60a5fa; font-weight: 700;">Real-time</strong>
-                        </div>
-                        <div style="display: flex; justify-content: space-between;">
-                            <span>Privacy:</span>
-                            <strong style="color: #a78bfa; font-weight: 700;">100%</strong>
-                        </div>
+        # Card 1: Quick Stats
+        st.markdown("""
+            <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(139, 92, 246, 0.05)); 
+                        border: 1px solid rgba(59, 130, 246, 0.2); 
+                        border-radius: 16px; 
+                        padding: 1.25rem; 
+                        margin-bottom: 1rem;
+                        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);">
+                <h3 style="color: #60a5fa; font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem;">
+                    📊 Quick Stats
+                </h3>
+                <div style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.8;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                        <span>Accuracy:</span>
+                        <strong style="color: #34d399; font-weight: 700;">97%+</strong>
                     </div>
-                """
-            },
-            {
-                "title": "💡 Pro Tip",
-                "icon": "💡",
-                "color": "#34d399",
-                "bg_gradient": "linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(5, 150, 105, 0.05))",
-                "border": "rgba(16, 185, 129, 0.2)",
-                "content": """
-                    <p style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.6; margin: 0;">
-                        Always verify unexpected messages from banks, delivery services, or institutions through official channels.
-                    </p>
-                """
-            },
-            {
-                "title": "🔒 Security",
-                "icon": "🔒",
-                "color": "#fecdd3",
-                "bg_gradient": "linear-gradient(135deg, rgba(239, 68, 68, 0.08), rgba(220, 38, 38, 0.05))",
-                "border": "rgba(239, 68, 68, 0.2)",
-                "content": """
-                    <p style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.6; margin: 0;">
-                        Your messages are analyzed in real-time and never stored. 100% privacy guaranteed.
-                    </p>
-                """
-            },
-            {
-                "title": "⚡ Features",
-                "icon": "⚡",
-                "color": "#fbbf24",
-                "bg_gradient": "linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(217, 119, 6, 0.05))",
-                "border": "rgba(245, 158, 11, 0.2)",
-                "content": """
-                    <div style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.7;">
-                        <div style="margin-bottom: 0.5rem;">✓ Real-time AI Analysis</div>
-                        <div style="margin-bottom: 0.5rem;">✓ Multi-language Support</div>
-                        <div>✓ 24/7 Protection</div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                        <span>Speed:</span>
+                        <strong style="color: #60a5fa; font-weight: 700;">Real-time</strong>
                     </div>
-                """
-            }
-        ]
-        
-        # Navigation buttons
-        col1, col2 = st.columns(2)
-        with col1:
-            if st.button("◀ Previous", key="prev_slide", use_container_width=True):
-                st.session_state.slide_index = (st.session_state.slide_index - 1) % len(slides)
-                st.rerun()
-        with col2:
-            if st.button("Next ▶", key="next_slide", use_container_width=True):
-                st.session_state.slide_index = (st.session_state.slide_index + 1) % len(slides)
-                st.rerun()
-        
-        # Calculate transform value for slider
-        transform_value = -100 * st.session_state.slide_index
-        
-        # Build slider HTML
-        slider_html = f"""
-            <div class="slider-container" style="background: rgba(0, 0, 0, 0.2); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);">
-                <div class="slider-wrapper" style="transform: translateX({transform_value}%);">
-        """
-        
-        for slide in slides:
-            slider_html += f"""
-                <div class="slide" style="background: {slide['bg_gradient']}; border: 1px solid {slide['border']};">
-                    <h3 style="color: {slide['color']}; font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
-                        {slide['title']}
-                    </h3>
-                    {slide['content']}
-                </div>
-            """
-        
-        slider_html += """
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>Privacy:</span>
+                        <strong style="color: #a78bfa; font-weight: 700;">100%</strong>
+                    </div>
                 </div>
             </div>
-        """
+        """, unsafe_allow_html=True)
         
-        st.markdown(slider_html, unsafe_allow_html=True)
+        # Card 2: Pro Tip
+        st.markdown("""
+            <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(5, 150, 105, 0.05)); 
+                        border: 1px solid rgba(16, 185, 129, 0.2); 
+                        border-radius: 16px; 
+                        padding: 1.25rem; 
+                        margin-bottom: 1rem;
+                        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);">
+                <h3 style="color: #34d399; font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem;">
+                    💡 Pro Tip
+                </h3>
+                <p style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.6; margin: 0;">
+                    Always verify unexpected messages from banks, delivery services, or institutions through official channels.
+                </p>
+            </div>
+        """, unsafe_allow_html=True)
         
-        # Slide indicators (dots)
-        dots_html = '<div class="slider-dots">'
-        for i in range(len(slides)):
-            active_class = "active" if i == st.session_state.slide_index else ""
-            dots_html += f'<div class="slider-dot {active_class}"></div>'
-        dots_html += '</div>'
-        st.markdown(dots_html, unsafe_allow_html=True)
+        # Card 3: Security
+        st.markdown("""
+            <div style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.08), rgba(220, 38, 38, 0.05)); 
+                        border: 1px solid rgba(239, 68, 68, 0.2); 
+                        border-radius: 16px; 
+                        padding: 1.25rem; 
+                        margin-bottom: 1rem;
+                        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);">
+                <h3 style="color: #fecdd3; font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem;">
+                    🔒 Security
+                </h3>
+                <p style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.6; margin: 0;">
+                    Your messages are analyzed in real-time and never stored. 100% privacy guaranteed.
+                </p>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        # Card 4: Features
+        st.markdown("""
+            <div style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(217, 119, 6, 0.05)); 
+                        border: 1px solid rgba(245, 158, 11, 0.2); 
+                        border-radius: 16px; 
+                        padding: 1.25rem; 
+                        margin-bottom: 1rem;
+                        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);">
+                <h3 style="color: #fbbf24; font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem;">
+                    ⚡ Features
+                </h3>
+                <div style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.7;">
+                    <div style="margin-bottom: 0.5rem;">✓ Real-time AI Analysis</div>
+                    <div style="margin-bottom: 0.5rem;">✓ Multi-language Support</div>
+                    <div>✓ 24/7 Protection</div>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
         
         # Footer
         st.markdown("""
