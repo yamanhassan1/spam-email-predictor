@@ -1,5 +1,4 @@
 import streamlit as st
-
 # Core modules
 from src.design import setup_page, render_header, render_sidebar
 from src.nlp import setup_nltk, get_stopwords
@@ -11,17 +10,18 @@ from src.pages.about import render_about_page
 from src.pages.help import render_help_page
 from src.pages.contact import render_contact_page
 
-
 def main():
+    # 1. Setup page configuration
     setup_page(
         title="AI Spam Detector - Protect Your Inbox",
         animations=True,
         compact=False
     )
-
+    
+    # 2. Render sidebar and get selected page
     page = render_sidebar()
-
-    # 3. Initialize NLP resources
+    
+    # 3. Initialize NLP resources and model (only for Home page)
     if page == "🏠 Home":
         setup_nltk()
         stop_words = get_stopwords()
@@ -32,9 +32,7 @@ def main():
         # Load word lists for pattern detection
         spam_words_set = SPAM_WORDS
         ham_words_set = HAM_WORDS
-
-    # 4. Render content based on selected page
-    if page == "🏠 Home":
+        
         # Render header
         render_header(
             title="AI-Powered Spam Detector",
