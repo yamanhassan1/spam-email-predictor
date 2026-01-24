@@ -639,10 +639,6 @@ def render_info_cards(cards: Iterable[Dict[str, str]]):
             </div>
             """, unsafe_allow_html=True)
 
-import streamlit as st
-import time
-
-
 def render_sidebar():
     """
     Render premium sidebar with navigation and auto-rotating slideshow cards.
@@ -963,52 +959,3 @@ def render_sidebar():
         """, unsafe_allow_html=True)
         
         return page
-
-
-# Example usage
-if __name__ == "__main__":
-    st.set_page_config(
-        page_title="Spam Detector - Slideshow Sidebar",
-        page_icon="🛡️",
-        layout="wide",
-        initial_sidebar_state="expanded"
-    )
-    
-    # Main page styling
-    st.markdown("""
-        <style>
-        .stApp {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-        }
-        .card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 2rem;
-        }
-        </style>
-    """, unsafe_allow_html=True)
-    
-    # Render sidebar and get selected page
-    page = render_sidebar()
-    
-    # Main content based on selected page
-    st.title(f"You selected: {page}")
-    st.markdown("""
-        <div class="card">
-            <h2 style="color: #f8fafc; margin-bottom: 1rem;">Sidebar Slideshow Demo</h2>
-            <p style="color: #cbd5e1; line-height: 1.8;">
-                The sidebar now features an auto-rotating slideshow that cycles through different information cards every 5 seconds.
-                Watch the sidebar to see the smooth transitions between:
-            </p>
-            <ul style="color: #cbd5e1; line-height: 2;">
-                <li>📊 Quick Stats - System performance metrics</li>
-                <li>💡 Pro Tip - Security best practices</li>
-                <li>🔒 Security - Privacy information</li>
-                <li>⚡ Features - Key capabilities</li>
-            </ul>
-            <p style="color: #60a5fa; margin-top: 1.5rem; font-weight: 600;">
-                ✨ The progress bar at the bottom of each card shows the time until the next slide!
-            </p>
-        </div>
-    """, unsafe_allow_html=True)
