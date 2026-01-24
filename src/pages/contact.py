@@ -2,7 +2,10 @@ import streamlit as st
 
 
 def render_contact_page():
-    """Render the Contact page with design matching home page."""
+    """
+    Render the Contact page with design matching home page.
+    Cross-platform compatible for Windows, Mac, Linux, and all browsers.
+    """
     
     # Header section
     st.markdown("""
@@ -26,9 +29,10 @@ def render_contact_page():
         </div>
     """, unsafe_allow_html=True)
     
-    # Custom styled form
+    # Cross-platform compatible CSS styling
     st.markdown("""
         <style>
+        /* ===== INPUT FIELDS STYLING - CROSS-PLATFORM ===== */
         .stTextInput input, .stTextArea textarea, .stSelectbox select {
             background: rgba(255, 255, 255, 0.03) !important;
             border: 1px solid rgba(255, 255, 255, 0.08) !important;
@@ -36,11 +40,210 @@ def render_contact_page():
             color: #f8fafc !important;
             font-size: 1rem !important;
             padding: 1rem !important;
+            line-height: 1.6 !important;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
             transition: all 0.3s ease !important;
+            -webkit-transition: all 0.3s ease !important;
+            -moz-transition: all 0.3s ease !important;
         }
+        
+        /* Focus states - cross-browser */
         .stTextInput input:focus, .stTextArea textarea:focus, .stSelectbox select:focus {
             border-color: rgba(59, 130, 246, 0.5) !important;
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+            -webkit-box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+            -moz-box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+            outline: none !important;
+        }
+        
+        /* Placeholder styling - cross-browser */
+        .stTextInput input::placeholder,
+        .stTextArea textarea::placeholder {
+            color: rgba(203, 213, 225, 0.5) !important;
+            opacity: 1 !important;
+        }
+        
+        .stTextInput input::-webkit-input-placeholder,
+        .stTextArea textarea::-webkit-input-placeholder {
+            color: rgba(203, 213, 225, 0.5) !important;
+        }
+        
+        .stTextInput input::-moz-placeholder,
+        .stTextArea textarea::-moz-placeholder {
+            color: rgba(203, 213, 225, 0.5) !important;
+        }
+        
+        .stTextInput input:-ms-input-placeholder,
+        .stTextArea textarea:-ms-input-placeholder {
+            color: rgba(203, 213, 225, 0.5) !important;
+        }
+        
+        /* ===== SELECT BOX STYLING - CROSS-PLATFORM ===== */
+        .stSelectbox > div > div {
+            background: rgba(255, 255, 255, 0.03) !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            border-radius: 12px !important;
+        }
+        
+        .stSelectbox [data-baseweb="select"] {
+            background: rgba(255, 255, 255, 0.03) !important;
+        }
+        
+        /* ===== SCROLLBAR STYLING - WEBKIT (Chrome, Safari, Edge) ===== */
+        .stTextArea textarea::-webkit-scrollbar {
+            width: 8px !important;
+        }
+        
+        .stTextArea textarea::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05) !important;
+            border-radius: 10px !important;
+        }
+        
+        .stTextArea textarea::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2) !important;
+            border-radius: 10px !important;
+        }
+        
+        .stTextArea textarea::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3) !important;
+        }
+        
+        /* Firefox scrollbar */
+        .stTextArea textarea {
+            scrollbar-width: thin !important;
+            scrollbar-color: rgba(255, 255, 255, 0.2) rgba(255, 255, 255, 0.05) !important;
+        }
+        
+        /* ===== FORM SUBMIT BUTTON - CROSS-PLATFORM ===== */
+        .stButton > button, 
+        .stFormSubmitButton > button {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6) !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 12px !important;
+            padding: 0.75rem 2rem !important;
+            font-weight: 700 !important;
+            font-size: 1rem !important;
+            letter-spacing: 0.02em !important;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+            -webkit-transition: all 0.3s ease !important;
+            -moz-transition: all 0.3s ease !important;
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3) !important;
+            -webkit-box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3) !important;
+            -moz-box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3) !important;
+            -webkit-user-select: none !important;
+            -moz-user-select: none !important;
+            -ms-user-select: none !important;
+            user-select: none !important;
+        }
+        
+        .stButton > button:hover,
+        .stFormSubmitButton > button:hover {
+            transform: translateY(-2px) !important;
+            -webkit-transform: translateY(-2px) !important;
+            -moz-transform: translateY(-2px) !important;
+            box-shadow: 0 12px 32px rgba(59, 130, 246, 0.4) !important;
+            -webkit-box-shadow: 0 12px 32px rgba(59, 130, 246, 0.4) !important;
+            -moz-box-shadow: 0 12px 32px rgba(59, 130, 246, 0.4) !important;
+        }
+        
+        .stButton > button:active,
+        .stFormSubmitButton > button:active {
+            transform: translateY(0) !important;
+            -webkit-transform: translateY(0) !important;
+            -moz-transform: translateY(0) !important;
+        }
+        
+        /* ===== MAILTO BUTTON STYLING ===== */
+        .mailto-button {
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6) !important;
+            color: #fff !important;
+            border: none !important;
+            border-radius: 12px !important;
+            padding: 0.75rem 2.5rem !important;
+            font-size: 1.08rem !important;
+            font-weight: 700 !important;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15) !important;
+            -webkit-box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15) !important;
+            -moz-box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15) !important;
+            cursor: pointer !important;
+            margin-top: 1rem !important;
+            transition: all 0.3s ease !important;
+            -webkit-transition: all 0.3s ease !important;
+            -moz-transition: all 0.3s ease !important;
+            display: inline-block !important;
+        }
+        
+        .mailto-button:hover {
+            transform: translateY(-2px) !important;
+            -webkit-transform: translateY(-2px) !important;
+            -moz-transform: translateY(-2px) !important;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25) !important;
+            -webkit-box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25) !important;
+            -moz-box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25) !important;
+        }
+        
+        /* ===== LINK HOVER EFFECTS - CROSS-BROWSER ===== */
+        a {
+            transition: color 0.3s ease !important;
+            -webkit-transition: color 0.3s ease !important;
+            -moz-transition: color 0.3s ease !important;
+        }
+        
+        a:hover {
+            color: #93c5fd !important;
+        }
+        
+        /* ===== SOCIAL MEDIA ICONS HOVER - CROSS-PLATFORM ===== */
+        .social-icon-wrapper {
+            transition: transform 0.3s ease !important;
+            -webkit-transition: transform 0.3s ease !important;
+            -moz-transition: transform 0.3s ease !important;
+        }
+        
+        .social-icon-wrapper:hover {
+            transform: translateY(-5px) !important;
+            -webkit-transform: translateY(-5px) !important;
+            -moz-transform: translateY(-5px) !important;
+        }
+        
+        /* ===== ACCESSIBILITY - HIGH CONTRAST MODE (Windows) ===== */
+        @media (prefers-contrast: high) {
+            .stTextInput input, 
+            .stTextArea textarea, 
+            .stSelectbox select {
+                border: 2px solid rgba(255, 255, 255, 0.3) !important;
+            }
+        }
+        
+        /* ===== REDUCED MOTION SUPPORT ===== */
+        @media (prefers-reduced-motion: reduce) {
+            .stTextInput input,
+            .stTextArea textarea,
+            .stSelectbox select,
+            .stButton > button,
+            .stFormSubmitButton > button,
+            .mailto-button,
+            a,
+            .social-icon-wrapper {
+                transition: none !important;
+                -webkit-transition: none !important;
+                -moz-transition: none !important;
+            }
+        }
+        
+        /* ===== LIGHT MODE SUPPORT ===== */
+        @media (prefers-color-scheme: light) {
+            .stTextInput input,
+            .stTextArea textarea,
+            .stSelectbox select {
+                background: rgba(0, 0, 0, 0.03) !important;
+                color: #1e293b !important;
+                border: 1px solid rgba(0, 0, 0, 0.08) !important;
+            }
         }
         </style>
     """, unsafe_allow_html=True)
@@ -52,26 +255,30 @@ def render_contact_page():
             name = st.text_input(
                 "Your Name",
                 placeholder="John Doe",
-                max_chars=80
+                max_chars=80,
+                key="contact_name"
             )
         
         with col2:
             email = st.text_input(
                 "Your Email",
                 placeholder="john@example.com",
-                max_chars=120
+                max_chars=120,
+                key="contact_email"
             )
         
         subject = st.selectbox(
             "Subject",
-            ["General Inquiry", "Technical Support", "Feature Request", "Bug Report", "Partnership", "Other"]
+            ["General Inquiry", "Technical Support", "Feature Request", "Bug Report", "Partnership", "Other"],
+            key="contact_subject"
         )
         
         message = st.text_area(
             "Message",
             placeholder="Type your message here...",
             height=150,
-            max_chars=1000
+            max_chars=1000,
+            key="contact_message"
         )
         
         # Generate mailto link if all fields are filled
@@ -86,19 +293,8 @@ def render_contact_page():
         if name and email and message:
             st.markdown(
                 f"""
-                <a href="{mailto_link}" target="_blank" style="display:inline-block; text-decoration:none;">
-                    <button style="
-                        background: linear-gradient(90deg,#3b82f6,#8b5cf6);
-                        color: #fff;
-                        border: none;
-                        border-radius: 12px;
-                        padding: 0.75rem 2.5rem;
-                        font-size: 1.08rem;
-                        font-weight: 700;
-                        box-shadow: 0 2px 8px rgba(59,130,246,0.15);
-                        cursor: pointer;
-                        margin-top: 1rem;
-                    ">📧 Send via Email Client</button>
+                <a href="{mailto_link}" target="_blank" style="text-decoration: none;">
+                    <button class="mailto-button">📧 Send via Email Client</button>
                 </a>
                 """,
                 unsafe_allow_html=True
@@ -220,16 +416,16 @@ def render_contact_page():
     st.markdown("""
         <div class="card">
             <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; padding: 1rem;">
-                <a href="https://instagram.com/SpamDetectorAI" target="_blank" style="display: flex; flex-direction: column; align-items: center; text-decoration: none; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
-                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #1DA1F2, #0d8bd9); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; box-shadow: 0 8px 24px rgba(29, 161, 242, 0.3);">🐦</div>
+                <a href="https://instagram.com/SpamDetectorAI" target="_blank" class="social-icon-wrapper" style="display: flex; flex-direction: column; align-items: center; text-decoration: none;">
+                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #1DA1F2, #0d8bd9); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; box-shadow: 0 8px 24px rgba(29, 161, 242, 0.3); -webkit-box-shadow: 0 8px 24px rgba(29, 161, 242, 0.3); -moz-box-shadow: 0 8px 24px rgba(29, 161, 242, 0.3);">🐦</div>
                     <span style="color: #cbd5e1; margin-top: 0.5rem; font-size: 0.9rem;">Twitter</span>
                 </a>
-                <a href="https://linkedin.com/company/spamdetectorai" target="_blank" style="display: flex; flex-direction: column; align-items: center; text-decoration: none; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
-                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #0077B5, #005582); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; box-shadow: 0 8px 24px rgba(0, 119, 181, 0.3);">💼</div>
+                <a href="https://linkedin.com/company/spamdetectorai" target="_blank" class="social-icon-wrapper" style="display: flex; flex-direction: column; align-items: center; text-decoration: none;">
+                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #0077B5, #005582); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; box-shadow: 0 8px 24px rgba(0, 119, 181, 0.3); -webkit-box-shadow: 0 8px 24px rgba(0, 119, 181, 0.3); -moz-box-shadow: 0 8px 24px rgba(0, 119, 181, 0.3);">💼</div>
                     <span style="color: #cbd5e1; margin-top: 0.5rem; font-size: 0.9rem;">LinkedIn</span>
                 </a>
-                <a href="https://github.com/SpamDetectorAI" target="_blank" style="display: flex; flex-direction: column; align-items: center; text-decoration: none; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
-                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #333, #000); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);">🐙</div>
+                <a href="https://github.com/SpamDetectorAI" target="_blank" class="social-icon-wrapper" style="display: flex; flex-direction: column; align-items: center; text-decoration: none;">
+                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #333, #000); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4); -webkit-box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4); -moz-box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);">🐙</div>
                     <span style="color: #cbd5e1; margin-top: 0.5rem; font-size: 0.9rem;">GitHub</span>
                 </a>
             </div>
