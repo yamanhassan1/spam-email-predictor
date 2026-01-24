@@ -763,53 +763,36 @@ def render_sidebar():
                 50% { transform: translateY(-10px); }
             }
             
-            /* Hide default radio button styling */
-            .stRadio {
-                display: none !important;
+            /* Style Streamlit buttons for navigation */
+            .stButton > button {
+                background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)) !important;
+                backdrop-filter: blur(20px) !important;
+                border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                border-radius: 12px !important;
+                padding: 1rem 1.25rem !important;
+                color: #f8fafc !important;
+                font-weight: 600 !important;
+                font-size: 1rem !important;
+                text-align: left !important;
+                cursor: pointer !important;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+                width: 100% !important;
             }
             
-            /* Custom navigation buttons */
-            .nav-buttons {
-                display: flex;
-                flex-direction: column;
-                gap: 0.75rem;
-                margin-bottom: 1.5rem;
+            .stButton > button:hover {
+                background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05)) !important;
+                border-color: rgba(59, 130, 246, 0.4) !important;
+                transform: translateX(8px) scale(1.02) !important;
+                box-shadow: 0 4px 16px rgba(59, 130, 246, 0.2) !important;
             }
             
-            .nav-button {
-                background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-                backdrop-filter: blur(20px);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                border-radius: 12px;
-                padding: 1rem 1.25rem;
-                color: #f8fafc;
-                font-weight: 600;
-                font-size: 1rem;
-                text-align: left;
-                cursor: pointer;
-                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-                display: flex;
-                align-items: center;
-                gap: 0.75rem;
-            }
-            
-            .nav-button:hover {
-                background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-                border-color: rgba(59, 130, 246, 0.4);
-                transform: translateX(8px) scale(1.02);
-                box-shadow: 0 4px 16px rgba(59, 130, 246, 0.2);
-            }
-            
-            .nav-button.active {
-                background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.15));
-                border-color: #3b82f6;
-                box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-                transform: translateX(8px);
-            }
-            
-            .nav-button .icon {
-                font-size: 1.25rem;
+            .stButton > button:active,
+            .stButton > button:focus {
+                background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.15)) !important;
+                border-color: #3b82f6 !important;
+                box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+                transform: translateX(8px) !important;
             }
             
             /* Responsive adjustments */
@@ -826,9 +809,9 @@ def render_sidebar():
                     height: 28px !important;
                 }
                 
-                .nav-button {
-                    padding: 0.875rem 1rem;
-                    font-size: 0.9rem;
+                .stButton > button {
+                    padding: 0.875rem 1rem !important;
+                    font-size: 0.9rem !important;
                 }
             }
             
@@ -843,9 +826,9 @@ def render_sidebar():
                     height: 24px !important;
                 }
                 
-                .nav-button {
-                    padding: 0.75rem 0.875rem;
-                    font-size: 0.85rem;
+                .stButton > button {
+                    padding: 0.75rem 0.875rem !important;
+                    font-size: 0.85rem !important;
                 }
             }
             
@@ -878,22 +861,20 @@ def render_sidebar():
             st.session_state.current_page = "🏠 Home"
         
         # Navigation Buttons
-        st.markdown('<div class="nav-buttons">', unsafe_allow_html=True)
+        st.markdown("<div style='margin-bottom: 1.5rem;'>", unsafe_allow_html=True)
         
         pages = [
-            {"name": "🏠 Home", "icon": "🏠"},
-            {"name": "ℹ️ About", "icon": "ℹ️"},
-            {"name": "❓ Help", "icon": "❓"},
-            {"name": "📧 Contact", "icon": "📧"}
+            {"name": "🏠 Home", "label": "🏠 Home"},
+            {"name": "ℹ️ About", "label": "ℹ️ About"},
+            {"name": "❓ Help", "label": "❓ Help"},
+            {"name": "📧 Contact", "label": "📧 Contact"}
         ]
         
         for page_info in pages:
-            active_class = "active" if st.session_state.current_page == page_info["name"] else ""
             if st.button(
-                page_info["name"],
+                page_info["label"],
                 key=f"nav_{page_info['name']}",
-                use_container_width=True,
-                type="secondary"
+                use_container_width=True
             ):
                 st.session_state.current_page = page_info["name"]
                 st.rerun()
