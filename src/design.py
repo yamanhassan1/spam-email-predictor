@@ -648,210 +648,12 @@ def render_sidebar():
         # Logo and Title
         st.markdown("""
             <div style="text-align: center; padding: 2rem 0 1.5rem 0;">
-                <div style="font-size: 3.5rem; margin-bottom: 0.75rem; filter: drop-shadow(0 4px 12px rgba(59, 130, 246, 0.4)); animation: float 4s ease-in-out infinite;">🛡️</div>
+                <div style="font-size: 3.5rem; margin-bottom: 0.75rem; filter: drop-shadow(0 4px 12px rgba(59, 130, 246, 0.4));">🛡️</div>
                 <h2 style="font-size: 1.5rem; font-weight: 900; margin: 0; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
                     Spam Detector
                 </h2>
                 <div style="height: 3px; width: 60px; margin: 0.75rem auto 0; background: linear-gradient(90deg, #3b82f6, #8b5cf6); border-radius: 999px; box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);"></div>
             </div>
-        """, unsafe_allow_html=True)
-        
-        # Enhanced sidebar styling with slider animations
-        st.markdown("""
-            <style>
-            /* Sidebar background with gradient */
-            [data-testid="stSidebar"] {
-                background: linear-gradient(180deg, #0a0e27 0%, #0f1433 50%, #0a0e27 100%);
-            }
-            
-            [data-testid="stSidebar"] > div:first-child {
-                background: linear-gradient(180deg, #0a0e27 0%, #0f1433 50%, #0a0e27 100%);
-            }
-            
-            /* Floating animation */
-            @keyframes float {
-                0%, 100% { transform: translateY(0px); }
-                50% { transform: translateY(-10px); }
-            }
-            
-            /* Slider container */
-            .slider-container {
-                position: relative;
-                overflow: hidden;
-                border-radius: 16px;
-                margin-bottom: 1rem;
-            }
-            
-            .slider-wrapper {
-                display: flex;
-                transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            }
-            
-            .slide {
-                min-width: 100%;
-                flex-shrink: 0;
-                padding: 1.25rem;
-                box-sizing: border-box;
-            }
-            
-            /* Navigation buttons */
-            .slider-nav {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                gap: 1rem;
-                margin-bottom: 1rem;
-            }
-            
-            .slider-button {
-                flex: 1;
-                background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.15)) !important;
-                border: 1px solid rgba(59, 130, 246, 0.3) !important;
-                border-radius: 10px !important;
-                padding: 0.6rem 1rem !important;
-                color: #f1f5f9 !important;
-                font-weight: 600 !important;
-                font-size: 0.9rem !important;
-                cursor: pointer !important;
-                transition: all 0.3s ease !important;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
-            }
-            
-            .slider-button:hover {
-                background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(139, 92, 246, 0.25)) !important;
-                transform: scale(1.05) !important;
-                box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
-            }
-            
-            .slider-button:active {
-                transform: scale(0.95) !important;
-            }
-            
-            /* Slide indicators (dots) */
-            .slider-dots {
-                display: flex;
-                justify-content: center;
-                gap: 8px;
-                margin-bottom: 1.5rem;
-                padding: 0.5rem;
-            }
-            
-            .slider-dot {
-                width: 8px;
-                height: 8px;
-                background: rgba(255, 255, 255, 0.2);
-                border-radius: 50%;
-                cursor: pointer;
-                transition: all 0.3s ease;
-            }
-            
-            .slider-dot.active {
-                width: 24px;
-                height: 8px;
-                background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-                border-radius: 999px;
-                box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
-            }
-            
-            /* Navigation radio buttons styling */
-            .stRadio > div {
-                gap: 0.75rem;
-            }
-            
-            .stRadio > div > label {
-                background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)) !important;
-                backdrop-filter: blur(20px) saturate(150%) !important;
-                -webkit-backdrop-filter: blur(20px) saturate(150%) !important;
-                border: 1px solid rgba(255, 255, 255, 0.1) !important;
-                border-radius: 12px !important;
-                padding: 1rem 1.25rem !important;
-                cursor: pointer !important;
-                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-                margin: 0 !important;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
-            }
-            
-            .stRadio > div > label:hover {
-                background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05)) !important;
-                border-color: rgba(59, 130, 246, 0.4) !important;
-                transform: translateX(8px) scale(1.02) !important;
-                box-shadow: 0 4px 16px rgba(59, 130, 246, 0.2) !important;
-            }
-            
-            .stRadio > div > label[data-checked="true"] {
-                background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.15)) !important;
-                border-color: #3b82f6 !important;
-                box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
-                transform: translateX(8px) !important;
-            }
-            
-            .stRadio > div > label > div {
-                color: #f8fafc !important;
-                font-weight: 600 !important;
-                font-size: 1rem !important;
-            }
-            
-            /* Button styling for slider controls */
-            .stButton > button {
-                background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.15)) !important;
-                border: 1px solid rgba(59, 130, 246, 0.3) !important;
-                border-radius: 10px !important;
-                padding: 0.6rem 1rem !important;
-                color: #f1f5f9 !important;
-                font-weight: 600 !important;
-                font-size: 0.9rem !important;
-                transition: all 0.3s ease !important;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
-                width: 100% !important;
-            }
-            
-            .stButton > button:hover {
-                background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(139, 92, 246, 0.25)) !important;
-                transform: scale(1.02) !important;
-                box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
-            }
-            
-            /* Responsive adjustments */
-            @media (max-width: 768px) {
-                .stRadio > div > label {
-                    padding: 0.875rem 1rem !important;
-                    font-size: 0.9rem !important;
-                }
-                
-                .stRadio > div > label:hover {
-                    transform: translateX(5px) scale(1.01) !important;
-                }
-            }
-            
-            @media (max-width: 480px) {
-                .stRadio > div > label {
-                    padding: 0.75rem 0.875rem !important;
-                    font-size: 0.85rem !important;
-                }
-            }
-            
-            /* Scrollbar styling for sidebar */
-            [data-testid="stSidebar"] ::-webkit-scrollbar {
-                width: 8px;
-            }
-            
-            [data-testid="stSidebar"] ::-webkit-scrollbar-track {
-                background: rgba(255, 255, 255, 0.02);
-                border-radius: 10px;
-            }
-            
-            [data-testid="stSidebar"] ::-webkit-scrollbar-thumb {
-                background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-                border-radius: 10px;
-                border: 2px solid transparent;
-                background-clip: padding-box;
-            }
-            
-            [data-testid="stSidebar"] ::-webkit-scrollbar-thumb:hover {
-                background: linear-gradient(135deg, #60a5fa, #a78bfa);
-                background-clip: padding-box;
-            }
-            </style>
         """, unsafe_allow_html=True)
         
         # Navigation
@@ -861,7 +663,7 @@ def render_sidebar():
             label_visibility="collapsed"
         )
         
-        st.markdown("<br><br>", unsafe_allow_html=True)
+        st.markdown("<br>", unsafe_allow_html=True)
         
         # Initialize session state for slider
         if 'slide_index' not in st.session_state:
@@ -871,10 +673,6 @@ def render_sidebar():
         slides = [
             {
                 "title": "📊 Quick Stats",
-                "icon": "📊",
-                "color": "#60a5fa",
-                "bg_gradient": "linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(139, 92, 246, 0.05))",
-                "border": "rgba(59, 130, 246, 0.2)",
                 "content": """
                     <div style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.8;">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
@@ -894,10 +692,6 @@ def render_sidebar():
             },
             {
                 "title": "💡 Pro Tip",
-                "icon": "💡",
-                "color": "#34d399",
-                "bg_gradient": "linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(5, 150, 105, 0.05))",
-                "border": "rgba(16, 185, 129, 0.2)",
                 "content": """
                     <p style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.6; margin: 0;">
                         Always verify unexpected messages from banks, delivery services, or institutions through official channels.
@@ -906,10 +700,6 @@ def render_sidebar():
             },
             {
                 "title": "🔒 Security",
-                "icon": "🔒",
-                "color": "#fecdd3",
-                "bg_gradient": "linear-gradient(135deg, rgba(239, 68, 68, 0.08), rgba(220, 38, 38, 0.05))",
-                "border": "rgba(239, 68, 68, 0.2)",
                 "content": """
                     <p style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.6; margin: 0;">
                         Your messages are analyzed in real-time and never stored. 100% privacy guaranteed.
@@ -918,10 +708,6 @@ def render_sidebar():
             },
             {
                 "title": "⚡ Features",
-                "icon": "⚡",
-                "color": "#fbbf24",
-                "bg_gradient": "linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(217, 119, 6, 0.05))",
-                "border": "rgba(245, 158, 11, 0.2)",
                 "content": """
                     <div style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.7;">
                         <div style="margin-bottom: 0.5rem;">✓ Real-time AI Analysis</div>
@@ -935,43 +721,38 @@ def render_sidebar():
         # Navigation buttons
         col1, col2 = st.columns(2)
         with col1:
-            if st.button("◀ Previous", key="prev_slide", use_container_width=True):
+            if st.button("◀ Prev", key="prev_slide", use_container_width=True):
                 st.session_state.slide_index = (st.session_state.slide_index - 1) % len(slides)
+                st.rerun()
         with col2:
             if st.button("Next ▶", key="next_slide", use_container_width=True):
                 st.session_state.slide_index = (st.session_state.slide_index + 1) % len(slides)
+                st.rerun()
         
-        # Calculate transform value for slider
-        transform_value = -100 * st.session_state.slide_index
+        # Display current slide
+        current_slide = slides[st.session_state.slide_index]
         
-        # Build slider HTML
-        slider_html = f"""
-            <div class="slider-container" style="background: rgba(0, 0, 0, 0.2); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);">
-                <div class="slider-wrapper" style="transform: translateX({transform_value}%);">
-        """
-        
-        for slide in slides:
-            slider_html += f"""
-                <div class="slide" style="background: {slide['bg_gradient']}; border: 1px solid {slide['border']};">
-                    <h3 style="color: {slide['color']}; font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
-                        {slide['title']}
-                    </h3>
-                    {slide['content']}
-                </div>
-            """
-        
-        slider_html += """
-                </div>
+        st.markdown(f"""
+            <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(139, 92, 246, 0.05)); 
+                        border: 1px solid rgba(59, 130, 246, 0.2); 
+                        border-radius: 16px; 
+                        padding: 1.25rem; 
+                        margin-bottom: 1rem;
+                        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);">
+                <h3 style="color: #60a5fa; font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem;">
+                    {current_slide['title']}
+                </h3>
+                {current_slide['content']}
             </div>
-        """
-        
-        st.markdown(slider_html, unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
         
         # Slide indicators (dots)
-        dots_html = '<div class="slider-dots">'
+        dots_html = '<div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 1.5rem; padding: 0.5rem;">'
         for i in range(len(slides)):
-            active_class = "active" if i == st.session_state.slide_index else ""
-            dots_html += f'<div class="slider-dot {active_class}"></div>'
+            if i == st.session_state.slide_index:
+                dots_html += '<div style="width: 24px; height: 8px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); border-radius: 999px; box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);"></div>'
+            else:
+                dots_html += '<div style="width: 8px; height: 8px; background: rgba(255, 255, 255, 0.2); border-radius: 50%;"></div>'
         dots_html += '</div>'
         st.markdown(dots_html, unsafe_allow_html=True)
         
