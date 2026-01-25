@@ -1,6 +1,5 @@
 import streamlit as st
 
-
 def render_contact_page():
     """
     Render the Contact page with improved text coloring and dynamic email.
