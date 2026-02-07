@@ -701,31 +701,14 @@ def create_metric_card(
     safe_value = html.escape(str(value))
     safe_subtitle = html.escape(str(subtitle)) if subtitle else ""
     safe_icon = html.escape(str(icon))
-    frag = f'''<div style="font-size: 0.9rem; color: #cbd5e1;">{safe_subtitle}</div>''' if safe_subtitle else ""
-    return f'''
-    <div style="
-        background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(139, 92, 246, 0.03));
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 16px;
-        padding: 1.5rem;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-        transition: all 0.3s ease;
-        height: 100%;
-    " onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 12px 48px rgba(0, 0, 0, 0.3)';"
-       onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 32px rgba(0, 0, 0, 0.2)';">
-        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-            <div style="font-size: 2rem;">{safe_icon}</div>
-            <div style="font-size: 0.9rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">
-                {safe_title}
-            </div>
-        </div>
-        <div style="font-size: 2.5rem; font-weight: 900; color: #f8fafc; line-height: 1; margin-bottom: 0.5rem;">
-            {safe_value}
-        </div>
-        {frag}
-    </div>
-    '''
+    frag = f'<div style="font-size: 0.9rem; color: #cbd5e1;">{safe_subtitle}</div>' if safe_subtitle else ""
+    style_attr = (
+        "background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(139, 92, 246, 0.03)); "
+        "backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); "
+        "border-radius: 16px; padding: 1.5rem; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); "
+        "transition: all 0.3s ease; height: 100%;"
+    )
+    return f'''<div class="metric-card" style="{style_attr}" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 12px 48px rgba(0, 0, 0, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 32px rgba(0, 0, 0, 0.2)';"><div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;"><div style="font-size: 2rem;">{safe_icon}</div><div style="font-size: 0.9rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">{safe_title}</div></div><div style="font-size: 2.5rem; font-weight: 900; color: #f8fafc; line-height: 1; margin-bottom: 0.5rem;">{safe_value}</div>{frag}</div>'''
 
 
 def message_complexity_radar(

@@ -134,11 +134,25 @@ def get_css(logo_base64: str, animations: bool = True, compact: bool = False) ->
         padding-right: clamp(1rem, 4vw, 2rem);
         position: relative;
         z-index: 1;
+        width: 100%;
+        box-sizing: border-box;
     }}
 
+    .main {{
+        overflow-x: hidden;
+    }}
+
+    /* Hide Streamlit default header, menu, footer */
     #MainMenu, footer, header {{
-        visibility: hidden;
-        height: 0;
+        visibility: hidden !important;
+        height: 0 !important;
+    }}
+    [data-testid="stHeader"],
+    [data-testid="stToolbar"] {{
+        visibility: hidden !important;
+        height: 0 !important;
+        min-height: 0 !important;
+        overflow: hidden !important;
     }}
 
     @media (prefers-reduced-motion: reduce) {{
@@ -181,7 +195,7 @@ def get_css(logo_base64: str, animations: bool = True, compact: bool = False) ->
         50% {{ transform: translateY(-10px); }}
     }}
 
-    /* Glass card base */
+    /* Glass card base - prevent content overflow */
     .card {{
         background: var(--glass-bg);
         backdrop-filter: blur(20px);
@@ -194,6 +208,8 @@ def get_css(logo_base64: str, animations: bool = True, compact: bool = False) ->
         position: relative;
         overflow: hidden;
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }}
 
     /* Glossy overlay */
@@ -290,6 +306,8 @@ def get_css(logo_base64: str, animations: bool = True, compact: bool = False) ->
         border: 1px solid var(--glass-border);
         box-shadow: var(--shadow-xl),
                     inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }}
 
     .result-card.soft-gradient {{
@@ -510,6 +528,12 @@ def get_css(logo_base64: str, animations: bool = True, compact: bool = False) ->
         line-height: 1.6;
     }}
 
+    /* Metric cards (from visualization) - prevent overflow */
+    .metric-card {{
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }}
+
     /* Responsive adjustments */
     @media (max-width: 768px) {{
         .result-icon-badge {{
@@ -591,11 +615,11 @@ def render_result_card(
             <div class="result-icon-badge" aria-label="Status icon">
                 {icon}
             </div>
-            <div style="flex: 1; min-width: 200px;">
+            <div style="flex: 1; min-width: 0;">
                 <h2 style="font-weight: 800; font-size: 1.5rem; margin: 0 0 0.5rem 0; letter-spacing: -0.02em;">
                     {title}
                 </h2>
-                <p style="color: var(--text-secondary); margin: 0; line-height: 1.6;">
+                <p style="color: var(--text-secondary); margin: 0; line-height: 1.6; word-wrap: break-word; overflow-wrap: break-word;">
                     {safe_message}
                 </p>
             </div>
@@ -697,7 +721,8 @@ def render_sidebar():
                 box-shadow: 0 4px 16px rgba(59, 130, 246, 0.2) !important;
             }
             
-            .stRadio > div > label[data-checked="true"] {
+            .stRadio > div > label[data-checked="true"],
+            .stRadio label:has(input:checked) {
                 background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.15)) !important;
                 border-color: #3b82f6 !important;
                 box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
