@@ -6,7 +6,7 @@ import streamlit as st
 from src.design import setup_page, render_header, render_sidebar
 from src.nlp import setup_nltk, get_stopwords
 from src.model import load_model
-from src.analysis import SPAM_WORDS, HAM_WORDS
+from src.analysis import load_word_lists
 
 # ============================
 # Page modules - Import directly to avoid circular imports
@@ -16,6 +16,24 @@ from src.pages.info_section import render_info_sections
 from src.pages.about import render_about_page
 from src.pages.help import render_help_page
 from src.pages.contact import render_contact_page
+
+
+@st.cache_data(show_spinner=False)
+def _cached_load_model():
+    """Load model and vectorizer once per session."""
+    return load_model()
+
+
+@st.cache_data(show_spinner=False)
+def _cached_get_stopwords():
+    """Load NLTK stopwords once per session."""
+    return get_stopwords()
+
+
+@st.cache_data(show_spinner=False)
+def _cached_word_lists():
+    """Load spam/ham word lists once per session."""
+    return load_word_lists()
 
 
 def main():
@@ -44,14 +62,9 @@ def main():
     # ----------------------------
     if page == "🏠 Home":
         setup_nltk()
-        stop_words = get_stopwords()
-        
-        # Load ML model and vectorizer
-        tfidf, model = load_model()
-        
-        # Load word lists for pattern detection
-        spam_words_set = SPAM_WORDS
-        ham_words_set = HAM_WORDS
+        stop_words = _cached_get_stopwords()
+        tfidf, model = _cached_load_model()
+        spam_words_set, ham_words_set = _cached_word_lists()
 
     # ----------------------------
     # 4. Render content based on selected page

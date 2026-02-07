@@ -1,5 +1,6 @@
 import streamlit as st
 import base64
+import html
 from pathlib import Path
 from typing import Optional, Iterable, Dict
 
@@ -545,21 +546,21 @@ def get_css(logo_base64: str, animations: bool = True, compact: bool = False) ->
     return css
 
 
-def render_header(
-    title,
-    subtitle
-):
+def render_header(title: str, subtitle: str):
     """
     Render premium header with gradient accents and animations.
+    Escapes title and subtitle to prevent XSS if ever passed from user/config.
     """
+    safe_title = html.escape(title)
+    safe_subtitle = html.escape(subtitle)
     st.markdown(f"""
         <div class="card" style="text-align: center; padding: 2rem; background: linear-gradient(135deg, rgba(59, 130, 246, 0.03), rgba(139, 92, 246, 0.02)); margin-bottom: 3rem;">
             <div style="font-size: 4.5rem; margin-bottom: 1rem;">🛡️</div>
                 <h1 style="color: #f8fafc; font-size: 2.9rem; font-weight: 1200; margin-bottom: 0.75rem; letter-spacing: -0.02em;">
-                    {title}
+                    {safe_title}
                 </h1>
                 <p style="color: #cbd5e1; margin-bottom: 1rem; line-height: 1.6; font-size: 1.1rem;">
-                    {subtitle}
+                    {safe_subtitle}
                 </p>
             </div>
         </div>
@@ -573,16 +574,18 @@ def render_result_card(
 ) -> str:
     """
     Generate premium result card with advanced styling and animations.
+    Escapes short_message to prevent XSS if ever passed from user input.
     """
     tone_class = "result-spam" if is_spam else "result-safe"
     icon = "🚨" if is_spam else "✅"
     title = "SPAM DETECTED" if is_spam else "SAFE MESSAGE"
-    short_message = short_message or (
+    msg = short_message or (
         "This message has been classified as spam. Exercise caution before proceeding." if is_spam
         else "This message appears to be legitimate and safe to read."
     )
-    
-    html = f"""
+    safe_message = html.escape(msg)
+
+    out = f"""
     <div class="result-card soft-gradient card {tone_class} animate" style="margin: 2rem 0;">
         <div style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;">
             <div class="result-icon-badge" aria-label="Status icon">
@@ -593,7 +596,7 @@ def render_result_card(
                     {title}
                 </h2>
                 <p style="color: var(--text-secondary); margin: 0; line-height: 1.6;">
-                    {short_message}
+                    {safe_message}
                 </p>
             </div>
             <div style="text-align: right; padding: 1rem; background: rgba(0, 0, 0, 0.2); border-radius: var(--radius-md); backdrop-filter: blur(10px);">
@@ -607,7 +610,7 @@ def render_result_card(
         </div>
     </div>
     """
-    return html
+    return out
 
 
 def render_info_cards(cards: Iterable[Dict[str, str]]):
@@ -621,18 +624,21 @@ def render_info_cards(cards: Iterable[Dict[str, str]]):
     cols = st.columns(len(cards_list))
     for idx, (card_data, col) in enumerate(zip(cards_list, cols)):
         with col:
+            safe_icon = html.escape(str(card_data.get("icon", "")))
+            safe_title = html.escape(str(card_data.get("title", "")))
+            safe_desc = html.escape(str(card_data.get("desc", "")))
             st.markdown(f"""
             <div class="info-card card animate" style="text-align: center; height: 100%;">
                 <div class="accent-strip" aria-hidden="true"></div>
                 <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem; padding: 0.5rem;">
                     <div style="font-size: 2.5rem; line-height: 1;">
-                        {card_data.get('icon', '')}
+                        {safe_icon}
                     </div>
                     <h3 style="font-weight: 700; font-size: 1.1rem; margin: 0; color: var(--text-primary);">
-                        {card_data.get('title', '')}
+                        {safe_title}
                     </h3>
                     <p style="color: var(--text-muted); margin: 0; font-size: 0.95rem; line-height: 1.5;">
-                        {card_data.get('desc', '')}
+                        {safe_desc}
                     </p>
                 </div>
             </div>

@@ -1,14 +1,26 @@
 import re
 import pandas as pd
+from pathlib import Path
 from collections import Counter
 
+
+def _data_dir() -> Path:
+    """Resolve data directory relative to project root."""
+    return Path(__file__).resolve().parent.parent / "Data" / "preprocessed"
+
+
 def load_word_lists():
+    """Load spam/ham word sets from CSV. Use with st.cache_data in app."""
+    base = _data_dir()
+    spam_path = base / "top_30_most_used_spam_words.csv"
+    ham_path = base / "top_30_most_used_ham_words.csv"
     try:
-        spam_df = pd.read_csv("Data/preprocessed/top_30_most_used_spam_words.csv")
-        ham_df = pd.read_csv("Data/preprocessed/top_30_most_used_ham_words.csv")
+        spam_df = pd.read_csv(spam_path)
+        ham_df = pd.read_csv(ham_path)
         return set(spam_df.word.str.lower()), set(ham_df.word.str.lower())
-    except Exception:
+    except (FileNotFoundError, KeyError, pd.errors.EmptyDataError):
         return set(), set()
+
 
 SPAM_WORDS, HAM_WORDS = load_word_lists()
 

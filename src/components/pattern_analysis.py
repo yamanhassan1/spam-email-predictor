@@ -1,4 +1,5 @@
 import streamlit as st
+import html
 import re
 from src.visualization import annotated_message_html
 
@@ -111,13 +112,13 @@ def render_spam_indicators(data):
     if spam_patterns_found:
         st.markdown("<div style='color: #fecdd3; font-weight: 600; margin-bottom: 0.5rem;'>Detected Patterns:</div>", unsafe_allow_html=True)
         for pattern in spam_patterns_found:
-            st.markdown(f"<div style='color: #fde2e4; margin-left: 1rem; margin-bottom: 0.25rem;'>• {pattern}</div>", unsafe_allow_html=True)
+            st.markdown(f"<div style='color: #fde2e4; margin-left: 1rem; margin-bottom: 0.25rem;'>• {html.escape(pattern)}</div>", unsafe_allow_html=True)
     else:
         st.markdown("<div style='color: #cbd5e1; margin-left: 1rem;'>✓ No common spam patterns detected</div>", unsafe_allow_html=True)
     
     if data['found_spam_words']:
         st.markdown(f"<div style='color: #fecdd3; font-weight: 600; margin: 1rem 0 0.5rem 0;'>Spam Words Found ({len(data['found_spam_words'])}):</div>", unsafe_allow_html=True)
-        spam_words_display = ", ".join(data['found_spam_words'][:10])
+        spam_words_display = html.escape(", ".join(data['found_spam_words'][:10]))
         st.markdown(f"<div style='color: #fde2e4; margin-left: 1rem;'>• {spam_words_display}</div>", unsafe_allow_html=True)
         if len(data['found_spam_words']) > 10:
             st.markdown(f"<div style='color: #fde2e4; margin-left: 1rem;'>• ... and {len(data['found_spam_words']) - 10} more</div>", unsafe_allow_html=True)
@@ -157,13 +158,13 @@ def render_ham_indicators(data):
     if ham_patterns_found:
         st.markdown("<div style='color: #d1fae5; font-weight: 600; margin-bottom: 0.5rem;'>Detected Patterns:</div>", unsafe_allow_html=True)
         for pattern in ham_patterns_found:
-            st.markdown(f"<div style='color: #ecfdf5; margin-left: 1rem; margin-bottom: 0.25rem;'>• {pattern}</div>", unsafe_allow_html=True)
+            st.markdown(f"<div style='color: #ecfdf5; margin-left: 1rem; margin-bottom: 0.25rem;'>• {html.escape(pattern)}</div>", unsafe_allow_html=True)
     else:
         st.markdown("<div style='color: #cbd5e1; margin-left: 1rem;'>⚠ No common safe patterns detected</div>", unsafe_allow_html=True)
     
     if data['found_ham_words']:
         st.markdown(f"<div style='color: #d1fae5; font-weight: 600; margin: 1rem 0 0.5rem 0;'>Safe Words Found ({len(data['found_ham_words'])}):</div>", unsafe_allow_html=True)
-        ham_words_display = ", ".join(data['found_ham_words'][:10])
+        ham_words_display = html.escape(", ".join(data['found_ham_words'][:10]))
         st.markdown(f"<div style='color: #ecfdf5; margin-left: 1rem;'>• {ham_words_display}</div>", unsafe_allow_html=True)
         if len(data['found_ham_words']) > 10:
             st.markdown(f"<div style='color: #ecfdf5; margin-left: 1rem;'>• ... and {len(data['found_ham_words']) - 10} more</div>", unsafe_allow_html=True)
@@ -223,7 +224,7 @@ def render_spam_summary(confidence, spam_prob, ham_prob, data):
     
     spam_patterns_found = [k for k, v in data['spam_patterns'].items() if v]
     if spam_patterns_found:
-        st.markdown(f"<li>Spam patterns found: <strong>{', '.join(spam_patterns_found)}</strong></li>", unsafe_allow_html=True)
+        st.markdown(f"<li>Spam patterns found: <strong>{html.escape(', '.join(spam_patterns_found))}</strong></li>", unsafe_allow_html=True)
     if data['found_spam_words']:
         st.markdown(f"<li>Contains <strong>{len(data['found_spam_words'])} words</strong> commonly found in spam messages</li>", unsafe_allow_html=True)
     if data['url_count'] > 0:

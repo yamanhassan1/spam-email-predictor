@@ -21,6 +21,9 @@ def render_home_page(tfidf, model, spam_words_set, ham_words_set, stop_words):
     with col2:
         predict_button = st.button("🔍 Analyze Message Now", use_container_width=True)
     
+    # Max input length to prevent DoS from very large inputs
+    MAX_INPUT_CHARS = 50_000
+
     # Handle prediction
     if predict_button:
         if not input_sms.strip():
@@ -35,10 +38,22 @@ def render_home_page(tfidf, model, spam_words_set, ham_words_set, stop_words):
                     </div>
                 </div>
             """, unsafe_allow_html=True)
+        elif len(input_sms) > MAX_INPUT_CHARS:
+            st.markdown(f"""
+                <div class="card" style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444; margin: 1rem 0;">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="font-size: 2rem;">⚠️</div>
+                        <div>
+                            <div style="font-weight: 700; margin-bottom: 0.25rem;">Message Too Long</div>
+                            <div style="color: #cbd5e1; font-size: 0.9rem;">Please enter up to {MAX_INPUT_CHARS:,} characters.</div>
+                        </div>
+                    </div>
+                </div>
+            """, unsafe_allow_html=True)
         else:
             with st.spinner("🔎 Analyzing message with AI..."):
-                # Preprocess
-                transformed_sms = transformed_text(input_sms)
+                # Preprocess (pass cached stop_words for performance)
+                transformed_sms = transformed_text(input_sms, stop_words=stop_words)
                 
                 # Vectorize + Predict
                 vector_input = tfidf.transform([transformed_sms])
