@@ -40,15 +40,21 @@ def render_analysis_section(
         words, spam_words_set, ham_words_set
     )
 
+    # Advanced feature analysis (text, formatting, URL, behavioral, etc.)
+    from src.components.feature_analysis import render_advanced_feature_analysis
+    render_advanced_feature_analysis(
+        raw_text=input_sms,
+        processed_words=words,
+        spam_words_set=spam_words_set,
+        ham_words_set=ham_words_set,
+    )
+
 
 def render_statistics_section(word_count, char_count, sentence_count, words):
     """Render message statistics cards."""
+    from src.design import section_heading_html
     st.markdown("<br>", unsafe_allow_html=True)
-    st.markdown("""
-        <h3 style='color: #f8fafc; margin: 2rem 0 1.5rem 0; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em;'>
-            📊 Message Analysis & Statistics
-        </h3>
-    """, unsafe_allow_html=True)
+    st.markdown(section_heading_html("📊", "Message Analysis & Statistics"), unsafe_allow_html=True)
     
     col1, col2, col3, col4 = st.columns(4)
     with col1:
@@ -73,7 +79,7 @@ def render_visualization_section(
     with col1:
         st.markdown("""
             <div style='margin-bottom: 0.75rem;'>
-                <h4 style='color: #f8fafc; font-size: 1.1rem; font-weight: 700; margin: 0;'>
+                <h4 style='color: var(--text-primary); font-size: 1.1rem; font-weight: 700; margin: 0;'>
                     🎯 Prediction Confidence
                 </h4>
             </div>
@@ -84,7 +90,7 @@ def render_visualization_section(
     with col2:
         st.markdown("""
             <div style='margin-bottom: 0.75rem;'>
-                <h4 style='color: #f8fafc; font-size: 1.1rem; font-weight: 700; margin: 0;'>
+                <h4 style='color: var(--text-primary); font-size: 1.1rem; font-weight: 700; margin: 0;'>
                     📈 Classification Probabilities
                 </h4>
             </div>
@@ -104,7 +110,7 @@ def render_word_analysis(words_list, freq_list, word_freq, spam_words_set):
     """Render word frequency analysis section."""
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown("""
-        <h4 style='color: #f8fafc; font-size: 1.25rem; font-weight: 700; margin: 1.5rem 0 1rem 0; letter-spacing: -0.02em;'>
+        <h4 style='color: var(--text-primary); font-size: 1.25rem; font-weight: 700; margin: 1.5rem 0 1rem 0; letter-spacing: -0.02em;'>
             🔤 Word Frequency Analysis
         </h4>
     """, unsafe_allow_html=True)
@@ -113,7 +119,7 @@ def render_word_analysis(words_list, freq_list, word_freq, spam_words_set):
     with col1:
         st.markdown("""
             <div style='margin-bottom: 0.5rem;'>
-                <h5 style='color: #cbd5e1; font-size: 0.95rem; font-weight: 600; margin: 0; text-align: center;'>
+                <h5 style='color: var(--text-secondary); font-size: 0.95rem; font-weight: 600; margin: 0; text-align: center;'>
                     Top Words Frequency
                 </h5>
             </div>
@@ -124,7 +130,7 @@ def render_word_analysis(words_list, freq_list, word_freq, spam_words_set):
     with col2:
         st.markdown("""
             <div style='margin-bottom: 0.5rem;'>
-                <h5 style='color: #cbd5e1; font-size: 0.95rem; font-weight: 600; margin: 0; text-align: center;'>
+                <h5 style='color: var(--text-secondary); font-size: 0.95rem; font-weight: 600; margin: 0; text-align: center;'>
                     Word Cloud Visualization
                 </h5>
             </div>
@@ -137,7 +143,7 @@ def render_message_characteristics(char_count_no_spaces, char_count, words, word
     """Render message characteristics charts."""
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown("""
-        <h4 style='color: #f8fafc; font-size: 1.25rem; font-weight: 700; margin: 1.5rem 0 1rem 0; letter-spacing: -0.02em;'>
+        <h4 style='color: var(--text-primary); font-size: 1.25rem; font-weight: 700; margin: 1.5rem 0 1rem 0; letter-spacing: -0.02em;'>
             📊 Message Characteristics
         </h4>
     """, unsafe_allow_html=True)
@@ -162,7 +168,7 @@ def render_message_characteristics(char_count_no_spaces, char_count, words, word
             st.markdown("""
                 <div class="card" style="text-align: center; padding: 2rem;">
                     <div style="font-size: 2rem; margin-bottom: 1rem;">📊</div>
-                    <div style="color: #cbd5e1;">No word data available</div>
+                    <div style="color: var(--text-secondary);">No word data available</div>
                 </div>
             """, unsafe_allow_html=True)
     

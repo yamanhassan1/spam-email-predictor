@@ -1,4 +1,6 @@
 import streamlit as st
+from src.design import section_heading_html
+
 
 def render_contact_page():
     """
@@ -10,14 +12,14 @@ def render_contact_page():
     CONTACT_EMAIL = "yaman.hassan10@yahoo.com"
     COMPANY_NAME = "AI Spam Detector"
     
-    # Contact Form Section with improved colors
+    # Contact Form Section - consistent with app design tokens
     st.markdown("""
-        <div class="card" style="margin-bottom: 2rem; text-align: center;">
-            <div style="font-size: 3rem; margin-bottom: 1rem;">📬</div>
-            <h3 style='background: linear-gradient(135deg, #60a5fa, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.75rem; font-size: 1.3rem; font-weight: 800;'>
+        <div class="card animate" style="margin-bottom: 2rem; text-align: center;">
+            <div style="font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 1rem;">📬</div>
+            <h3 style="color: var(--text-primary); margin-bottom: 0.75rem; font-size: clamp(1.1rem, 3vw, 1.3rem); font-weight: 800; letter-spacing: -0.02em;">
                 Send Us a Message
             </h3>
-            <p style='color: #e2e8f0; margin-bottom: 0; line-height: 1.6; font-size: 1.05rem;'>
+            <p style="color: var(--text-secondary); margin-bottom: 0; line-height: 1.6; font-size: 1.05rem;">
                 Fill out the form below and we'll get back to you within 24 hours.
             </p>
         </div>
@@ -348,7 +350,7 @@ def render_contact_page():
                     <a href="{mailto_link}" target="_blank" style="text-decoration: none;">
                         <button class="mailto-button">📧 Open in Email Client</button>
                     </a>
-                    <p style="color: #94a3b8; font-size: 0.85rem; margin-top: 0.5rem;">
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.5rem;">
                         Click to compose in your default email app
                     </p>
                 </div>
@@ -369,31 +371,27 @@ def render_contact_page():
     st.markdown("<br>", unsafe_allow_html=True)
     
     # Contact Information Cards
-    st.markdown("""
-        <h3 style='background: linear-gradient(135deg, #60a5fa, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 1.8rem; font-weight: 800; margin: 2rem 0 1.5rem 0; text-align: center;'>
-            📞 Contact Information
-        </h3>
-    """, unsafe_allow_html=True)
+    st.markdown(section_heading_html("📞", "Contact Information"), unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns(3)
     
     with col1:
         st.markdown(f"""
-            <div class="card" style="text-align: center; height: 100%;">
-                <div style="font-size: 3rem; margin-bottom: 1rem;">📧</div>
-                <h4 style="color: #f1f5f9; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.75rem;">Email</h4>
-                <p style="color: #e2e8f0; line-height: 1.6; margin: 0;">
-                    <a href="mailto:{CONTACT_EMAIL}" style="color: #60a5fa; text-decoration: none; font-weight: 500;">{CONTACT_EMAIL}</a>
+            <div class="card animate" style="text-align: center; height: 100%;">
+                <div style="font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 1rem;">📧</div>
+                <h4 style="color: var(--text-primary); font-size: 1.15rem; font-weight: 700; margin-bottom: 0.75rem;">Email</h4>
+                <p style="color: var(--text-secondary); line-height: 1.6; margin: 0;">
+                    <a href="mailto:{CONTACT_EMAIL}" style="color: var(--primary-blue); text-decoration: none; font-weight: 500;">{CONTACT_EMAIL}</a>
                 </p>
             </div>
         """, unsafe_allow_html=True)
     
     with col2:
         st.markdown("""
-            <div class="card" style="text-align: center; height: 100%;">
-                <div style="font-size: 3rem; margin-bottom: 1rem;">💬</div>
-                <h4 style="color: #f1f5f9; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.75rem;">Live Chat</h4>
-                <p style="color: #e2e8f0; line-height: 1.6; margin: 0; font-weight: 500;">
+            <div class="card animate" style="text-align: center; height: 100%;">
+                <div style="font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 1rem;">💬</div>
+                <h4 style="color: var(--text-primary); font-size: 1.15rem; font-weight: 700; margin-bottom: 0.75rem;">Live Chat</h4>
+                <p style="color: var(--text-secondary); line-height: 1.6; margin: 0; font-weight: 500;">
                     Mon-Fri, 9AM-5PM EST
                 </p>
             </div>
@@ -401,10 +399,10 @@ def render_contact_page():
     
     with col3:
         st.markdown("""
-            <div class="card" style="text-align: center; height: 100%;">
-                <div style="font-size: 3rem; margin-bottom: 1rem;">🌐</div>
-                <h4 style="color: #f1f5f9; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.75rem;">Social Media</h4>
-                <p style="color: #e2e8f0; line-height: 1.6; margin: 0; font-weight: 500;">
+            <div class="card animate" style="text-align: center; height: 100%;">
+                <div style="font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 1rem;">🌐</div>
+                <h4 style="color: var(--text-primary); font-size: 1.15rem; font-weight: 700; margin-bottom: 0.75rem;">Social Media</h4>
+                <p style="color: var(--text-secondary); line-height: 1.6; margin: 0; font-weight: 500;">
                     @SpamDetectorAI
                 </p>
             </div>
@@ -413,20 +411,16 @@ def render_contact_page():
     st.markdown("<br><br>", unsafe_allow_html=True)
     
     # Office Hours & Response Time
-    st.markdown("""
-        <h3 style='background: linear-gradient(135deg, #60a5fa, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 1.8rem; font-weight: 800; margin: 2rem 0 1.5rem 0; text-align: center;'>
-            ⏰ Office Hours & Response Time
-        </h3>
-    """, unsafe_allow_html=True)
+    st.markdown(section_heading_html("⏰", "Office Hours & Response Time"), unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns(3)
     
     with col1:
         st.markdown("""
-            <div class="card" style="height: 100%; text-align: center;">
+            <div class="card animate" style="height: 100%; text-align: center;">
                 <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">🕐</div>
-                <h4 style="color: #f1f5f9; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.75rem;">Business Hours</h4>
-                <p style="color: #e2e8f0; font-size: 0.98rem; margin: 0; line-height: 1.8; font-weight: 500;">
+                <h4 style="color: var(--text-primary); font-size: 1.15rem; font-weight: 700; margin-bottom: 0.75rem;">Business Hours</h4>
+                <p style="color: var(--text-secondary); font-size: 0.98rem; margin: 0; line-height: 1.8; font-weight: 500;">
                     Monday - Friday: 9:00 AM - 6:00 PM EST<br>
                     Saturday: 10:00 AM - 4:00 PM EST<br>
                     Sunday: Closed
@@ -436,10 +430,10 @@ def render_contact_page():
     
     with col2:
         st.markdown("""
-            <div class="card" style="height: 100%; text-align: center;">
+            <div class="card animate" style="height: 100%; text-align: center;">
                 <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">⚡</div>
-                <h4 style="color: #f1f5f9; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.75rem;">Response Time</h4>
-                <p style="color: #e2e8f0; font-size: 0.98rem; margin: 0; line-height: 1.8; font-weight: 500;">
+                <h4 style="color: var(--text-primary); font-size: 1.15rem; font-weight: 700; margin-bottom: 0.75rem;">Response Time</h4>
+                <p style="color: var(--text-secondary); font-size: 0.98rem; margin: 0; line-height: 1.8; font-weight: 500;">
                     General Inquiries: Within 24 hours<br>
                     Technical Support: Within 12 hours<br>
                     Urgent Issues: Within 4 hours
@@ -449,10 +443,10 @@ def render_contact_page():
     
     with col3:
         st.markdown("""
-            <div class="card" style="height: 100%; text-align: center;">
+            <div class="card animate" style="height: 100%; text-align: center;">
                 <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">🌍</div>
-                <h4 style="color: #f1f5f9; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.75rem;">Global Support</h4>
-                <p style="color: #e2e8f0; font-size: 0.98rem; margin: 0; line-height: 1.8; font-weight: 500;">
+                <h4 style="color: var(--text-primary); font-size: 1.15rem; font-weight: 700; margin-bottom: 0.75rem;">Global Support</h4>
+                <p style="color: var(--text-secondary); font-size: 0.98rem; margin: 0; line-height: 1.8; font-weight: 500;">
                     24/7 automated support<br>
                     Multi-language assistance<br>
                     Worldwide coverage
@@ -463,26 +457,22 @@ def render_contact_page():
     st.markdown("<br>", unsafe_allow_html=True)
     
     # Social Media Links
-    st.markdown("""
-        <h3 style='background: linear-gradient(135deg, #60a5fa, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 1.8rem; font-weight: 800; margin: 2rem 0 1.5rem 0; text-align: center;'>
-            🤝 Connect With Us
-        </h3>
-    """, unsafe_allow_html=True)
+    st.markdown(section_heading_html("🤝", "Connect With Us"), unsafe_allow_html=True)
     
     st.markdown("""
-        <div class="card">
+        <div class="card animate">
             <div style="display: flex; justify-content: center; gap: 2.5rem; flex-wrap: wrap; padding: 1.5rem;">
                 <a href="https://instagram.com/SpamDetectorAI" target="_blank" class="social-icon-wrapper" style="display: flex; flex-direction: column; align-items: center; text-decoration: none;">
-                    <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #1DA1F2, #0d8bd9); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 8px 24px rgba(29, 161, 242, 0.4); -webkit-box-shadow: 0 8px 24px rgba(29, 161, 242, 0.4); -moz-box-shadow: 0 8px 24px rgba(29, 161, 242, 0.4);">🐦</div>
-                    <span style="color: #e2e8f0; margin-top: 0.75rem; font-size: 0.95rem; font-weight: 600;">Twitter</span>
+                    <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #1DA1F2, #0d8bd9); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 8px 24px rgba(29, 161, 242, 0.4);">🐦</div>
+                    <span style="color: var(--text-secondary); margin-top: 0.75rem; font-size: 0.95rem; font-weight: 600;">Twitter</span>
                 </a>
                 <a href="https://linkedin.com/company/spamdetectorai" target="_blank" class="social-icon-wrapper" style="display: flex; flex-direction: column; align-items: center; text-decoration: none;">
-                    <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #0077B5, #005582); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 8px 24px rgba(0, 119, 181, 0.4); -webkit-box-shadow: 0 8px 24px rgba(0, 119, 181, 0.4); -moz-box-shadow: 0 8px 24px rgba(0, 119, 181, 0.4);">💼</div>
-                    <span style="color: #e2e8f0; margin-top: 0.75rem; font-size: 0.95rem; font-weight: 600;">LinkedIn</span>
+                    <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #0077B5, #005582); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 8px 24px rgba(0, 119, 181, 0.4);">💼</div>
+                    <span style="color: var(--text-secondary); margin-top: 0.75rem; font-size: 0.95rem; font-weight: 600;">LinkedIn</span>
                 </a>
                 <a href="https://github.com/SpamDetectorAI" target="_blank" class="social-icon-wrapper" style="display: flex; flex-direction: column; align-items: center; text-decoration: none;">
-                    <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #333, #000); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5); -webkit-box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5); -moz-box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);">🐙</div>
-                    <span style="color: #e2e8f0; margin-top: 0.75rem; font-size: 0.95rem; font-weight: 600;">GitHub</span>
+                    <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #333, #000); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);">🐙</div>
+                    <span style="color: var(--text-secondary); margin-top: 0.75rem; font-size: 0.95rem; font-weight: 600;">GitHub</span>
                 </a>
             </div>
         </div>
@@ -491,26 +481,22 @@ def render_contact_page():
     st.markdown("<br>", unsafe_allow_html=True)
     
     # Office Location
-    st.markdown("""
-        <h3 style='background: linear-gradient(135deg, #60a5fa, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 1.8rem; font-weight: 800; margin: 2rem 0 1.5rem 0; text-align: center;'>
-            📍 Office Location
-        </h3>
-    """, unsafe_allow_html=True)
+    st.markdown(section_heading_html("📍", "Office Location"), unsafe_allow_html=True)
     
     st.markdown(f"""
-        <div class="card">
+        <div class="card animate">
             <div style="text-align: center; padding: 2rem;">
-                <div style="font-size: 3.5rem; margin-bottom: 1rem;">🏢</div>
-                <p style="color: #e2e8f0; font-size: 1.15rem; line-height: 1.9; margin: 0;">
-                    <strong style="color: #f1f5f9; font-size: 1.25rem; font-weight: 700;">{COMPANY_NAME} Headquarters</strong><br>
-                    <span style="color: #cbd5e1;">221B Secure Lane, Suite 400</span><br>
-                    <span style="color: #cbd5e1;">Cyber City, AI State 45678</span><br>
-                    <span style="color: #cbd5e1;">United States</span>
+                <div style="font-size: clamp(2.5rem, 6vw, 3.5rem); margin-bottom: 1rem;">🏢</div>
+                <p style="color: var(--text-secondary); font-size: 1.15rem; line-height: 1.9; margin: 0;">
+                    <strong style="color: var(--text-primary); font-size: 1.25rem; font-weight: 700;">{COMPANY_NAME} Headquarters</strong><br>
+                    <span style="color: var(--text-secondary);">221B Secure Lane, Suite 400</span><br>
+                    <span style="color: var(--text-secondary);">Cyber City, AI State 45678</span><br>
+                    <span style="color: var(--text-secondary);">United States</span>
                 </p>
-                <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(96, 165, 250, 0.2);">
-                    <p style="color: #94a3b8; font-size: 0.95rem; margin: 0;">
+                <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--glass-border);">
+                    <p style="color: var(--text-muted); font-size: 0.95rem; margin: 0;">
                         For urgent matters, please email us directly at<br>
-                        <a href="mailto:{CONTACT_EMAIL}" style="color: #60a5fa; text-decoration: none; font-weight: 600;">{CONTACT_EMAIL}</a>
+                        <a href="mailto:{CONTACT_EMAIL}" style="color: var(--primary-blue); text-decoration: none; font-weight: 600;">{CONTACT_EMAIL}</a>
                     </p>
                 </div>
             </div>

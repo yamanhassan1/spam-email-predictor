@@ -1,5 +1,5 @@
 import streamlit as st
-from src.design import render_info_cards
+from src.design import render_info_cards, section_heading_html
 
 
 def render_info_sections():
@@ -34,11 +34,7 @@ def render_info_sections():
 
 def render_how_it_works():
     """Render How It Works section."""
-    st.markdown("""
-        <h3 style='color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin: 2rem 0 1.5rem 0; text-align: center; letter-spacing: -0.02em;'>
-            ℹ️ How It Works
-        </h3>
-    """, unsafe_allow_html=True)
+    st.markdown(section_heading_html("ℹ️", "How It Works"), unsafe_allow_html=True)
     
     cards = [
         {
@@ -63,19 +59,15 @@ def render_how_it_works():
 def render_key_features():
     """Render Key Features section."""
     st.markdown("<br><br>", unsafe_allow_html=True)
-    st.markdown("""
-        <h3 style='color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin: 2rem 0 1.5rem 0; text-align: center; letter-spacing: -0.02em;'>
-            🎯 Key Features
-        </h3>
-    """, unsafe_allow_html=True)
+    st.markdown(section_heading_html("🎯", "Key Features"), unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns(3)
     with col1:
         st.markdown("""
         <div class="card animate" style="text-align: center; height: 100%;">
             <div style="font-size: 3rem; margin-bottom: 1rem;">🔒</div>
-            <h4 style="color: #f8fafc; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem;">Privacy First</h4>
-            <p style="color: #cbd5e1; line-height: 1.6; margin: 0;">
+            <h4 style="color: var(--text-primary); font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem;">Privacy First</h4>
+            <p style="color: var(--text-secondary); line-height: 1.6; margin: 0;">
                 Your messages are processed securely in real-time and never stored or shared. Complete privacy guaranteed.
             </p>
         </div>
@@ -85,8 +77,8 @@ def render_key_features():
         st.markdown("""
         <div class="card animate" style="text-align: center; height: 100%;">
             <div style="font-size: 3rem; margin-bottom: 1rem;">📊</div>
-            <h4 style="color: #f8fafc; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem;">High Accuracy</h4>
-            <p style="color: #cbd5e1; line-height: 1.6; margin: 0;">
+            <h4 style="color: var(--text-primary); font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem;">High Accuracy</h4>
+            <p style="color: var(--text-secondary); line-height: 1.6; margin: 0;">
                 Trained on millions of real-world messages with advanced ML algorithms achieving 97%+ detection accuracy.
             </p>
         </div>
@@ -96,8 +88,8 @@ def render_key_features():
         st.markdown("""
         <div class="card animate" style="text-align: center; height: 100%;">
             <div style="font-size: 3rem; margin-bottom: 1rem;">🎨</div>
-            <h4 style="color: #f8fafc; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem;">Visual Insights</h4>
-            <p style="color: #cbd5e1; line-height: 1.6; margin: 0;">
+            <h4 style="color: var(--text-primary); font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem;">Visual Insights</h4>
+            <p style="color: var(--text-secondary); line-height: 1.6; margin: 0;">
                 Interactive charts and detailed breakdowns help you understand exactly why a message is flagged.
             </p>
         </div>
@@ -107,11 +99,7 @@ def render_key_features():
 def render_what_makes_special():
     """Render What Makes Our Detector Special section."""
     st.markdown("<br><br>", unsafe_allow_html=True)
-    st.markdown("""
-        <h3 style='color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin: 2rem 0 1.5rem 0; text-align: center;'>
-            💡 What Makes Our Detector Special
-        </h3>
-    """, unsafe_allow_html=True)
+    st.markdown(section_heading_html("💡", "What Makes Our Detector Special"), unsafe_allow_html=True)
     
     col1, col2 = st.columns(2)
     
@@ -119,13 +107,13 @@ def render_what_makes_special():
         st.markdown("""
         <div class="card" style="height: 100%;">
             <div style="font-size: 3rem; margin-bottom: 1rem; text-align: center;">🧠</div>
-            <h4 style="color: #f8fafc; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem; text-align: center;">
+            <h4 style="color: var(--text-primary); font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem; text-align: center;">
                 Multi-Layer Analysis
             </h4>
-            <p style="color: #cbd5e1; line-height: 1.6; margin-bottom: 1rem; text-align: center; font-size: 0.95rem;">
+            <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem; text-align: center; font-size: 0.95rem;">
                 Our detector uses comprehensive analysis techniques to identify spam with precision
             </p>
-            <ul style="color: #cbd5e1; line-height: 1.7; margin: 0; padding-left: 0; list-style: none; font-size: 0.95rem;">
+            <ul style="color: var(--text-secondary); line-height: 1.7; margin: 0; padding-left: 0; list-style: none; font-size: 0.95rem;">
                 <li style="margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative;">
                     <span style="position: absolute; left: 0; color: #60a5fa;">•</span>
                     Pattern recognition for common spam phrases
@@ -154,13 +142,13 @@ def render_what_makes_special():
         st.markdown("""
         <div class="card" style="height: 100%;">
             <div style="font-size: 3rem; margin-bottom: 1rem; text-align: center;">📈</div>
-            <h4 style="color: #f8fafc; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem; text-align: center;">
+            <h4 style="color: var(--text-primary); font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem; text-align: center;">
                 Comprehensive Reporting
             </h4>
-            <p style="color: #cbd5e1; line-height: 1.6; margin-bottom: 1rem; text-align: center; font-size: 0.95rem;">
+            <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem; text-align: center; font-size: 0.95rem;">
                 Get detailed insights and visual analytics to understand detection results clearly
             </p>
-            <ul style="color: #cbd5e1; line-height: 1.7; margin: 0; padding-left: 0; list-style: none; font-size: 0.95rem;">
+            <ul style="color: var(--text-secondary); line-height: 1.7; margin: 0; padding-left: 0; list-style: none; font-size: 0.95rem;">
                 <li style="margin-bottom: 0.6rem; padding-left: 1.5rem; position: relative;">
                     <span style="position: absolute; left: 0; color: #a78bfa;">•</span>
                     Confidence scores with probability breakdowns
@@ -188,11 +176,7 @@ def render_what_makes_special():
 def render_safety_tips():
     """Render Safety Tips section."""
     st.markdown("<br><br>", unsafe_allow_html=True)
-    st.markdown("""
-        <h3 style='color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin: 2rem 0 1.5rem 0; text-align: center; letter-spacing: -0.02em;'>
-            🛡️ Safety Tips
-        </h3>
-    """, unsafe_allow_html=True)
+    st.markdown(section_heading_html("🛡️", "Safety Tips"), unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns(3)
     
@@ -200,8 +184,8 @@ def render_safety_tips():
         st.markdown("""
         <div class="info-card card" style="height: 100%;">
             <div style="font-size: 2rem; text-align: center; margin-bottom: 0.75rem;">⚠️</div>
-            <h4 style="color: #f8fafc; font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; text-align: center;">Watch for Red Flags</h4>
-            <p style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; margin: 0;">
+            <h4 style="color: var(--text-primary); font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; text-align: center;">Watch for Red Flags</h4>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; margin: 0;">
                 Be cautious of messages with urgent language, requests for personal information, or promises of prizes and rewards.
             </p>
         </div>
@@ -211,8 +195,8 @@ def render_safety_tips():
         st.markdown("""
         <div class="info-card card" style="height: 100%;">
             <div style="font-size: 2rem; text-align: center; margin-bottom: 0.75rem;">🔗</div>
-            <h4 style="color: #f8fafc; font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; text-align: center;">Verify Links</h4>
-            <p style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; margin: 0;">
+            <h4 style="color: var(--text-primary); font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; text-align: center;">Verify Links</h4>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; margin: 0;">
                 Never click suspicious links. Hover over URLs to verify destination before clicking, and check for legitimate domains.
             </p>
         </div>
@@ -222,8 +206,8 @@ def render_safety_tips():
         st.markdown("""
         <div class="info-card card" style="height: 100%;">
             <div style="font-size: 2rem; text-align: center; margin-bottom: 0.75rem;">🤔</div>
-            <h4 style="color: #f8fafc; font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; text-align: center;">When in Doubt</h4>
-            <p style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; margin: 0;">
+            <h4 style="color: var(--text-primary); font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; text-align: center;">When in Doubt</h4>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; margin: 0;">
                 If a message seems suspicious, verify through official channels. Contact the company directly using known contact information.
             </p>
         </div>
@@ -235,33 +219,33 @@ def render_spam_indicators():
     st.markdown("<br><br>", unsafe_allow_html=True)
     st.markdown("""
         <div class="card" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(139, 92, 246, 0.03));">
-            <h4 style="color: #f8fafc; font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; text-align: center;">
+            <h4 style="color: var(--text-primary); font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; text-align: center;">
                 🎓 Common Spam Indicators to Watch For
             </h4>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
                 <div style="background: rgba(255, 255, 255, 0.02); padding: 1rem; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.05);">
                     <div style="color: #fecdd3; font-weight: 600; margin-bottom: 0.5rem;">🎁 Too Good to Be True</div>
-                    <div style="color: #cbd5e1; font-size: 0.9rem;">Promises of free money, prizes, or unrealistic rewards</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Promises of free money, prizes, or unrealistic rewards</div>
                 </div>
                 <div style="background: rgba(255, 255, 255, 0.02); padding: 1rem; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.05);">
                     <div style="color: #fecdd3; font-weight: 600; margin-bottom: 0.5rem;">⏰ Urgency & Pressure</div>
-                    <div style="color: #cbd5e1; font-size: 0.9rem;">"Act now", "Limited time", "Urgent action required"</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">"Act now", "Limited time", "Urgent action required"</div>
                 </div>
                 <div style="background: rgba(255, 255, 255, 0.02); padding: 1rem; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.05);">
                     <div style="color: #fecdd3; font-weight: 600; margin-bottom: 0.5rem;">🔤 Poor Grammar</div>
-                    <div style="color: #cbd5e1; font-size: 0.9rem;">Spelling mistakes, awkward phrasing, or unusual formatting</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Spelling mistakes, awkward phrasing, or unusual formatting</div>
                 </div>
                 <div style="background: rgba(255, 255, 255, 0.02); padding: 1rem; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.05);">
                     <div style="color: #fecdd3; font-weight: 600; margin-bottom: 0.5rem;">🔗 Suspicious Links</div>
-                    <div style="color: #cbd5e1; font-size: 0.9rem;">Shortened URLs, misspelled domains, or unexpected redirects</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Shortened URLs, misspelled domains, or unexpected redirects</div>
                 </div>
                 <div style="background: rgba(255, 255, 255, 0.02); padding: 1rem; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.05);">
                     <div style="color: #fecdd3; font-weight: 600; margin-bottom: 0.5rem;">🔐 Info Requests</div>
-                    <div style="color: #cbd5e1; font-size: 0.9rem;">Asking for passwords, SSN, credit card numbers, or login credentials</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Asking for passwords, SSN, credit card numbers, or login credentials</div>
                 </div>
                 <div style="background: rgba(255, 255, 255, 0.02); padding: 1rem; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.05);">
                     <div style="color: #fecdd3; font-weight: 600; margin-bottom: 0.5rem;">📧 Generic Greetings</div>
-                    <div style="color: #cbd5e1; font-size: 0.9rem;">"Dear Customer" instead of your name, impersonal messages</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">"Dear Customer" instead of your name, impersonal messages</div>
                 </div>
             </div>
         </div>
@@ -275,47 +259,43 @@ def render_technology_stack():
         <div style="height: 2px; background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.3), transparent); margin: 3rem 0;"></div>
     """, unsafe_allow_html=True)
     
-    st.markdown("""
-        <h3 style='color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin: 2rem 0 1.5rem 0; text-align: center; letter-spacing: -0.02em;'>
-            🔧 Technology Stack
-        </h3>
-    """, unsafe_allow_html=True)
+    st.markdown(section_heading_html("🔧", "Technology Stack"), unsafe_allow_html=True)
     
     col1, col2, col3, col4 = st.columns(4)
     
     with col1:
         st.markdown("""
-        <div class="card" style="text-align: center; padding: 1.5rem;">
+        <div class="card animate" style="text-align: center; padding: 1.5rem;">
             <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">🐍</div>
-            <h5 style="color: #f8fafc; font-weight: 700; margin-bottom: 0.5rem;">Python</h5>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin: 0;">Core Language</p>
+            <h5 style="color: var(--text-primary); font-weight: 700; margin-bottom: 0.5rem;">Python</h5>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0;">Core Language</p>
         </div>
         """, unsafe_allow_html=True)
     
     with col2:
         st.markdown("""
-        <div class="card" style="text-align: center; padding: 1.5rem;">
+        <div class="card animate" style="text-align: center; padding: 1.5rem;">
             <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">🤖</div>
-            <h5 style="color: #f8fafc; font-weight: 700; margin-bottom: 0.5rem;">Scikit-learn</h5>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin: 0;">ML Framework</p>
+            <h5 style="color: var(--text-primary); font-weight: 700; margin-bottom: 0.5rem;">Scikit-learn</h5>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0;">ML Framework</p>
         </div>
         """, unsafe_allow_html=True)
     
     with col3:
         st.markdown("""
-        <div class="card" style="text-align: center; padding: 1.5rem;">
+        <div class="card animate" style="text-align: center; padding: 1.5rem;">
             <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">📝</div>
-            <h5 style="color: #f8fafc; font-weight: 700; margin-bottom: 0.5rem;">NLTK</h5>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin: 0;">NLP Processing</p>
+            <h5 style="color: var(--text-primary); font-weight: 700; margin-bottom: 0.5rem;">NLTK</h5>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0;">NLP Processing</p>
         </div>
         """, unsafe_allow_html=True)
     
     with col4:
         st.markdown("""
-        <div class="card" style="text-align: center; padding: 1.5rem;">
+        <div class="card animate" style="text-align: center; padding: 1.5rem;">
             <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">📊</div>
-            <h5 style="color: #f8fafc; font-weight: 700; margin-bottom: 0.5rem;">Plotly</h5>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin: 0;">Visualizations</p>
+            <h5 style="color: var(--text-primary); font-weight: 700; margin-bottom: 0.5rem;">Plotly</h5>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0;">Visualizations</p>
         </div>
         """, unsafe_allow_html=True)
 
@@ -324,19 +304,19 @@ def render_footer():
     """Render footer section."""
     st.markdown("<br><br>", unsafe_allow_html=True)
     st.markdown("""
-        <div class="card" style="text-align: center; padding: 2rem; background: linear-gradient(135deg, rgba(59, 130, 246, 0.03), rgba(139, 92, 246, 0.02)); margin-top: 3rem;">
+        <div class="card animate" style="text-align: center; padding: 2rem; background: linear-gradient(135deg, rgba(59, 130, 246, 0.03), rgba(139, 92, 246, 0.02)); margin-top: 3rem;">
             <div style="font-size: 2.5rem; margin-bottom: 1rem;">🛡️</div>
-            <h3 style="color: #f8fafc; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.75rem; letter-spacing: -0.02em;">
+            <h3 style="color: var(--text-primary); font-size: 1.3rem; font-weight: 700; margin-bottom: 0.75rem; letter-spacing: -0.02em;">
                 AI-Powered Spam Detector
             </h3>
-            <p style="color: #cbd5e1; margin-bottom: 1rem; line-height: 1.6;">
+            <p style="color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.6;">
                 Protecting your inbox with advanced machine learning technology
             </p>
-            <div style="color: #94a3b8; font-size: 0.9rem;">
+            <div style="color: var(--text-muted); font-size: 0.9rem;">
                 Built with ❤️ using Streamlit • Advanced NLP • Machine Learning • Real-time Analysis
             </div>
             <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.08);">
-                <p style="color: #94a3b8; font-size: 0.85rem; margin: 0;">
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0;">
                     © 2026 AI Spam Detector • All rights reserved • Your privacy is our priority
                 </p>
             </div>

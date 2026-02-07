@@ -670,11 +670,27 @@ def get_css(logo_base64: str, animations: bool = True, compact: bool = False) ->
             min-width: 44px;
         }}
     }}
+
+    /* Consistent section headings across app */
+    .section-heading {{
+        color: var(--text-primary) !important;
+        font-size: clamp(1.25rem, 4vw, 1.5rem) !important;
+        font-weight: 700 !important;
+        margin: 2rem 0 1.5rem 0 !important;
+        text-align: center !important;
+        letter-spacing: -0.02em !important;
+    }}
     </style>
     """
     if logo_base64:
         css += f'<link rel="icon" type="image/png" href="data:image/png;base64,{logo_base64}">'
     return css
+
+
+def section_heading_html(icon: str, title: str) -> str:
+    """Return consistent section heading HTML. Use with st.markdown(..., unsafe_allow_html=True)."""
+    safe_title = html.escape(title)
+    return f'<h3 class="section-heading">{icon} {safe_title}</h3>'
 
 
 def render_header(title: str, subtitle: str):

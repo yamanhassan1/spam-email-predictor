@@ -2,16 +2,13 @@ import streamlit as st
 import html
 import re
 from src.visualization import annotated_message_html
+from src.design import section_heading_html
 
 
 def render_pattern_analysis(input_sms, result, confidence, spam_prob, ham_prob, words, spam_words_set, ham_words_set):
     """Render detailed pattern analysis section."""
     st.markdown("<br><br>", unsafe_allow_html=True)
-    st.markdown("""
-        <h3 style='color: #f8fafc; font-size: 1.5rem; font-weight: 700; margin: 2rem 0 1.5rem 0; letter-spacing: -0.02em;'>
-            🔍 Detailed Pattern Analysis
-        </h3>
-    """, unsafe_allow_html=True)
+    st.markdown(section_heading_html("🔍", "Detailed Pattern Analysis"), unsafe_allow_html=True)
     
     # Extract patterns
     patterns_data = extract_patterns(input_sms, words, spam_words_set, ham_words_set)
