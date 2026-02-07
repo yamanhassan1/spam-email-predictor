@@ -3,6 +3,7 @@ import base64
 import html
 from pathlib import Path
 from typing import Optional, Iterable, Dict
+import time
 
 
 def setup_page(
@@ -47,6 +48,7 @@ def setup_page(
 def get_css(logo_base64: str, animations: bool = True, compact: bool = False) -> str:
     """
     Premium CSS with glassmorphism, advanced gradients, and sophisticated animations.
+    Fully responsive for all device types.
     """
     anim_enabled = animations
     css = f"""
@@ -128,8 +130,8 @@ def get_css(logo_base64: str, animations: bool = True, compact: bool = False) ->
 
     .main .block-container {{
         max-width: var(--max-width);
-        padding-top: {'2rem' if compact else '3rem'};
-        padding-bottom: {'2rem' if compact else '3rem'};
+        padding-top: {'2rem' if compact else 'clamp(2rem, 5vw, 3rem)'};
+        padding-bottom: {'2rem' if compact else 'clamp(2rem, 5vw, 3rem)'};
         padding-left: clamp(1rem, 4vw, 2rem);
         padding-right: clamp(1rem, 4vw, 2rem);
         position: relative;
@@ -202,7 +204,7 @@ def get_css(logo_base64: str, animations: bool = True, compact: bool = False) ->
         -webkit-backdrop-filter: blur(20px);
         border: 1px solid var(--glass-border);
         border-radius: var(--radius-lg);
-        padding: 1.5rem;
+        padding: clamp(1rem, 3vw, 1.5rem);
         box-shadow: var(--shadow-lg),
                     inset 0 1px 0 rgba(255, 255, 255, 0.1);
         position: relative;
@@ -295,7 +297,7 @@ def get_css(logo_base64: str, animations: bool = True, compact: bool = False) ->
     /* Result card with advanced styling */
     .result-card {{
         border-radius: var(--radius-xl);
-        padding: 2rem;
+        padding: clamp(1.25rem, 4vw, 2rem);
         position: relative;
         overflow: visible;
         background: linear-gradient(135deg, 
@@ -364,8 +366,8 @@ def get_css(logo_base64: str, animations: bool = True, compact: bool = False) ->
 
     /* Premium icon badge */
     .result-icon-badge {{
-        width: 80px;
-        height: 80px;
+        width: clamp(56px, 15vw, 80px);
+        height: clamp(56px, 15vw, 80px);
         border-radius: var(--radius-md);
         display: inline-flex;
         align-items: center;
@@ -377,7 +379,7 @@ def get_css(logo_base64: str, animations: bool = True, compact: bool = False) ->
         backdrop-filter: blur(10px);
         box-shadow: var(--shadow-md),
                     inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        font-size: 2.5rem;
+        font-size: clamp(1.75rem, 5vw, 2.5rem);
         position: relative;
         flex-shrink: 0;
         {"animation: float 3s ease-in-out infinite;" if anim_enabled else ""}
@@ -401,7 +403,7 @@ def get_css(logo_base64: str, animations: bool = True, compact: bool = False) ->
     /* Info card with accent */
     .info-card {{
         border-radius: var(--radius-md);
-        padding: 1.5rem;
+        padding: clamp(1rem, 3vw, 1.5rem);
         background: var(--glass-bg);
         backdrop-filter: blur(16px);
         border: 1px solid var(--glass-border);
@@ -470,12 +472,12 @@ def get_css(logo_base64: str, animations: bool = True, compact: bool = False) ->
             rgba(251, 113, 133, 0.1)
         );
         color: #fecdd3;
-        padding: 8px 16px;
+        padding: clamp(6px, 2vw, 8px) clamp(12px, 3vw, 16px);
         border-radius: 999px;
-        margin: 0 6px;
+        margin: 0 clamp(4px, 1.5vw, 6px);
         display: inline-block;
         font-weight: 600;
-        font-size: 0.9rem;
+        font-size: clamp(0.8rem, 2vw, 0.9rem);
         border: 1px solid rgba(239, 68, 68, 0.3);
         box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
         transition: all 0.3s;
@@ -492,12 +494,12 @@ def get_css(logo_base64: str, animations: bool = True, compact: bool = False) ->
             rgba(52, 211, 153, 0.1)
         );
         color: #d1fae5;
-        padding: 8px 16px;
+        padding: clamp(6px, 2vw, 8px) clamp(12px, 3vw, 16px);
         border-radius: 999px;
-        margin: 0 6px;
+        margin: 0 clamp(4px, 1.5vw, 6px);
         display: inline-block;
         font-weight: 600;
-        font-size: 0.9rem;
+        font-size: clamp(0.8rem, 2vw, 0.9rem);
         border: 1px solid rgba(16, 185, 129, 0.3);
         box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
         transition: all 0.3s;
@@ -534,6 +536,13 @@ def get_css(logo_base64: str, animations: bool = True, compact: bool = False) ->
         overflow-wrap: break-word;
     }}
 
+    /* Tablet Landscape (1024px - 1280px) */
+    @media (min-width: 1024px) and (max-width: 1280px) {{
+        .main .block-container {{
+            max-width: 960px;
+        }}
+    }}
+
     /* Responsive adjustments */
     @media (max-width: 768px) {{
         .result-icon-badge {{
@@ -541,26 +550,124 @@ def get_css(logo_base64: str, animations: bool = True, compact: bool = False) ->
             height: 64px;
             font-size: 2rem;
         }}
-        
-        .card {{
-            padding: 1.25rem;
-            border-radius: var(--radius-md);
+    }}
+
+    /* Tablet Portrait (768px - 1023px) */
+    @media (min-width: 768px) and (max-width: 1023px) {{
+        .main .block-container {{
+            max-width: 720px;
+            padding-top: 2rem;
+            padding-bottom: 2rem;
         }}
         
         .result-card {{
             padding: 1.5rem;
         }}
+        
+        h1 {{
+            font-size: clamp(1.75rem, 5vw, 2.25rem) !important;
+        }}
+        
+        h2 {{
+            font-size: clamp(1.25rem, 4vw, 1.5rem) !important;
+        }}
     }}
 
-    @media (max-width: 480px) {{
+    /* Mobile Landscape (480px - 767px) */
+    @media (min-width: 480px) and (max-width: 767px) {{
+        .main .block-container {{
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }}
+        
+        .card {{
+            padding: 1rem;
+            border-radius: var(--radius-md);
+        }}
+        
+        .result-card {{
+            padding: 1.25rem;
+        }}
+        
+        h1 {{
+            font-size: 1.75rem !important;
+        }}
+        
+        h2 {{
+            font-size: 1.25rem !important;
+        }}
+    }}
+
+    /* Mobile Portrait (320px - 479px) */
+    @media (max-width: 479px) {{
+        .main .block-container {{
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            padding-left: 0.75rem;
+            padding-right: 0.75rem;
+        }}
+        
+        .card {{
+            padding: 0.875rem;
+            border-radius: var(--radius-sm);
+        }}
+        
+        .result-card {{
+            padding: 1rem;
+        }}
+        
+        h1 {{
+            font-size: 1.5rem !important;
+        }}
+        
+        h2 {{
+            font-size: 1.1rem !important;
+        }}
+        
         .result-icon-badge {{
             width: 56px;
             height: 56px;
             font-size: 1.75rem;
         }}
+    }}
+
+    /* Extra Small Mobile (< 320px) */
+    @media (max-width: 319px) {{
+        .main .block-container {{
+            padding: 0.75rem;
+        }}
         
         .card {{
-            padding: 1rem;
+            padding: 0.75rem;
+        }}
+        
+        .result-card {{
+            padding: 0.875rem;
+        }}
+    }}
+
+    /* High Resolution Displays */
+    @media (min-width: 1920px) {{
+        .main .block-container {{
+            max-width: 1400px;
+        }}
+    }}
+
+    /* Touch Device Optimizations */
+    @media (hover: none) and (pointer: coarse) {{
+        .card:hover {{
+            transform: none;
+        }}
+        
+        .info-card:hover {{
+            transform: none;
+        }}
+        
+        button, .nav-button {{
+            min-height: 44px;
+            min-width: 44px;
         }}
     }}
     </style>
@@ -573,17 +680,17 @@ def get_css(logo_base64: str, animations: bool = True, compact: bool = False) ->
 def render_header(title: str, subtitle: str):
     """
     Render premium header with gradient accents and animations.
-    Escapes title and subtitle to prevent XSS if ever passed from user/config.
+    Escapes title and subtitle to prevent XSS. Fully responsive.
     """
     safe_title = html.escape(title)
     safe_subtitle = html.escape(subtitle)
     st.markdown(f"""
-        <div class="card" style="text-align: center; padding: 2rem; background: linear-gradient(135deg, rgba(59, 130, 246, 0.03), rgba(139, 92, 246, 0.02)); margin-bottom: 3rem;">
-            <div style="font-size: 4.5rem; margin-bottom: 1rem;">🛡️</div>
-                <h1 style="color: #f8fafc; font-size: 2.9rem; font-weight: 1200; margin-bottom: 0.75rem; letter-spacing: -0.02em;">
+        <div class="card" style="text-align: center; padding: clamp(1.5rem, 4vw, 2rem); background: linear-gradient(135deg, rgba(59, 130, 246, 0.03), rgba(139, 92, 246, 0.02)); margin-bottom: clamp(2rem, 5vw, 3rem);">
+            <div style="font-size: clamp(3rem, 10vw, 4.5rem); margin-bottom: 1rem;">🛡️</div>
+                <h1 style="color: #f8fafc; font-size: clamp(1.75rem, 6vw, 2.9rem); font-weight: 800; margin-bottom: 0.75rem; letter-spacing: -0.02em;">
                     {safe_title}
                 </h1>
-                <p style="color: #cbd5e1; margin-bottom: 1rem; line-height: 1.6; font-size: 1.1rem;">
+                <p style="color: #cbd5e1; margin-bottom: 1rem; line-height: 1.6; font-size: clamp(0.95rem, 3vw, 1.1rem);">
                     {safe_subtitle}
                 </p>
             </div>
@@ -598,7 +705,7 @@ def render_result_card(
 ) -> str:
     """
     Generate premium result card with advanced styling and animations.
-    Escapes short_message to prevent XSS if ever passed from user input.
+    Escapes short_message to prevent XSS. Fully responsive.
     """
     tone_class = "result-spam" if is_spam else "result-safe"
     icon = "🚨" if is_spam else "✅"
@@ -610,24 +717,24 @@ def render_result_card(
     safe_message = html.escape(msg)
 
     out = f"""
-    <div class="result-card soft-gradient card {tone_class} animate" style="margin: 2rem 0;">
-        <div style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;">
+    <div class="result-card soft-gradient card {tone_class} animate" style="margin: clamp(1.5rem, 4vw, 2rem) 0;">
+        <div style="display: flex; gap: clamp(1rem, 3vw, 1.5rem); align-items: center; flex-wrap: wrap; justify-content: center;">
             <div class="result-icon-badge" aria-label="Status icon">
                 {icon}
             </div>
-            <div style="flex: 1; min-width: 0;">
-                <h2 style="font-weight: 800; font-size: 1.5rem; margin: 0 0 0.5rem 0; letter-spacing: -0.02em;">
+            <div style="flex: 1; min-width: min(200px, 100%);">
+                <h2 style="font-weight: 800; font-size: clamp(1.25rem, 4vw, 1.5rem); margin: 0 0 0.5rem 0; letter-spacing: -0.02em;">
                     {title}
                 </h2>
-                <p style="color: var(--text-secondary); margin: 0; line-height: 1.6; word-wrap: break-word; overflow-wrap: break-word;">
+                <p style="color: var(--text-secondary); margin: 0; line-height: 1.6; font-size: clamp(0.9rem, 2.5vw, 1rem); word-wrap: break-word; overflow-wrap: break-word;">
                     {safe_message}
                 </p>
             </div>
-            <div style="text-align: right; padding: 1rem; background: rgba(0, 0, 0, 0.2); border-radius: var(--radius-md); backdrop-filter: blur(10px);">
-                <div style="font-weight: 900; font-size: 2rem; color: var(--text-primary); line-height: 1;">
+            <div style="text-align: center; padding: clamp(0.75rem, 2vw, 1rem); background: rgba(0, 0, 0, 0.2); border-radius: var(--radius-md); backdrop-filter: blur(10px); min-width: min(120px, 100%);">
+                <div style="font-weight: 900; font-size: clamp(1.5rem, 5vw, 2rem); color: var(--text-primary); line-height: 1;">
                     {confidence_pct:.1f}%
                 </div>
-                <div style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                <div style="color: var(--text-muted); font-size: clamp(0.8rem, 2vw, 0.9rem); margin-top: 0.25rem; text-transform: uppercase; letter-spacing: 0.05em;">
                     Confidence
                 </div>
             </div>
@@ -640,6 +747,7 @@ def render_result_card(
 def render_info_cards(cards: Iterable[Dict[str, str]]):
     """
     Render premium info cards with gradient accents and hover effects.
+    Fully responsive.
     """
     cards_list = list(cards)
     if not cards_list:
@@ -654,14 +762,14 @@ def render_info_cards(cards: Iterable[Dict[str, str]]):
             st.markdown(f"""
             <div class="info-card card animate" style="text-align: center; height: 100%;">
                 <div class="accent-strip" aria-hidden="true"></div>
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem; padding: 0.5rem;">
-                    <div style="font-size: 2.5rem; line-height: 1;">
+                <div style="display: flex; flex-direction: column; align-items: center; gap: clamp(0.75rem, 2vw, 1rem); padding: 0.5rem;">
+                    <div style="font-size: clamp(2rem, 5vw, 2.5rem); line-height: 1;">
                         {safe_icon}
                     </div>
-                    <h3 style="font-weight: 700; font-size: 1.1rem; margin: 0; color: var(--text-primary);">
+                    <h3 style="font-weight: 700; font-size: clamp(1rem, 2.5vw, 1.1rem); margin: 0; color: var(--text-primary);">
                         {safe_title}
                     </h3>
-                    <p style="color: var(--text-muted); margin: 0; font-size: 0.95rem; line-height: 1.5;">
+                    <p style="color: var(--text-muted); margin: 0; font-size: clamp(0.85rem, 2vw, 0.95rem); line-height: 1.5;">
                         {safe_desc}
                     </p>
                 </div>
@@ -670,24 +778,46 @@ def render_info_cards(cards: Iterable[Dict[str, str]]):
 
 def render_sidebar():
     """
-    Render premium sidebar with navigation - fully responsive and matching home page design.
+    Render premium sidebar with navigation and info cards.
+    Fully responsive and optimized for all devices.
     """
     with st.sidebar:
-        # Logo and Title
+        # ============================================================================
+        # LOGO AND BRANDING
+        # ============================================================================
         st.markdown("""
-            <div style="text-align: center; padding: 2rem 0 1.5rem 0;">
-                <div style="font-size: 3.5rem; margin-bottom: 0.75rem; filter: drop-shadow(0 4px 12px rgba(59, 130, 246, 0.4)); animation: float 4s ease-in-out infinite;">🛡️</div>
-                <h2 style="font-size: 1.5rem; font-weight: 900; margin: 0; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+            <div style="text-align: center; padding: clamp(1.5rem, 4vw, 2rem) 0 clamp(1rem, 3vw, 1.5rem) 0;">
+                <div style="font-size: clamp(2.5rem, 8vw, 3.5rem); 
+                            margin-bottom: 0.75rem; 
+                            filter: drop-shadow(0 4px 12px rgba(59, 130, 246, 0.4)); 
+                            animation: float 4s ease-in-out infinite;">
+                    🛡️
+                </div>
+                <h2 style="font-size: clamp(1.25rem, 4vw, 1.5rem); 
+                           font-weight: 900; 
+                           margin: 0; 
+                           background: linear-gradient(135deg, #667eea, #764ba2); 
+                           -webkit-background-clip: text; 
+                           -webkit-text-fill-color: transparent; 
+                           background-clip: text;">
                     Spam Detector
                 </h2>
-                <div style="height: 3px; width: 60px; margin: 0.75rem auto 0; background: linear-gradient(90deg, #3b82f6, #8b5cf6); border-radius: 999px; box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);"></div>
+                <div style="height: 3px; 
+                            width: clamp(40px, 15vw, 60px); 
+                            margin: 0.75rem auto 0; 
+                            background: linear-gradient(90deg, #3b82f6, #8b5cf6); 
+                            border-radius: 999px; 
+                            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);">
+                </div>
             </div>
         """, unsafe_allow_html=True)
         
-        # Enhanced sidebar styling
+        # ============================================================================
+        # SIDEBAR STYLING
+        # ============================================================================
         st.markdown("""
             <style>
-            /* Sidebar background with gradient */
+            /* ========== Sidebar Base Styles ========== */
             [data-testid="stSidebar"] {
                 background: linear-gradient(180deg, #0a0e27 0%, #0f1433 50%, #0a0e27 100%);
             }
@@ -696,25 +826,130 @@ def render_sidebar():
                 background: linear-gradient(180deg, #0a0e27 0%, #0f1433 50%, #0a0e27 100%);
             }
             
-            /* Navigation radio buttons styling */
-            .stRadio > div {
-                gap: 0.75rem;
+            /* ========== Floating Animation ========== */
+            @keyframes float {
+                0%, 100% { transform: translateY(0px); }
+                50% { transform: translateY(-10px); }
             }
             
-            .stRadio > div > label {
+            /* ========== Premium Toggle Button - Collapsed State ========== */
+            [data-testid="collapsedControl"] {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                position: fixed !important;
+                top: clamp(1rem, 3vw, 1.5rem) !important;
+                left: clamp(1rem, 3vw, 1.5rem) !important;
+                z-index: 999999 !important;
+                width: clamp(55px, 15vw, 70px) !important;
+                height: clamp(55px, 15vw, 70px) !important;
+                background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%) !important;
+                border: none !important;
+                border-radius: clamp(16px, 4vw, 20px) !important;
+                box-shadow: 
+                    0 10px 40px rgba(59, 130, 246, 0.5),
+                    0 0 0 4px rgba(59, 130, 246, 0.1),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+                backdrop-filter: blur(10px) !important;
+                -webkit-backdrop-filter: blur(10px) !important;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+                cursor: pointer !important;
+            }
+            
+            /* Toggle Button Glow Effect */
+            [data-testid="collapsedControl"]::before {
+                content: '' !important;
+                position: absolute !important;
+                inset: -3px !important;
+                background: linear-gradient(135deg, #3b82f6, #8b5cf6) !important;
+                border-radius: clamp(18px, 4.5vw, 22px) !important;
+                opacity: 0 !important;
+                filter: blur(20px) !important;
+                transition: opacity 0.4s ease !important;
+                z-index: -1 !important;
+            }
+            
+            /* Toggle Button Hover State */
+            [data-testid="collapsedControl"]:hover {
+                transform: scale(1.1) translateY(-3px) !important;
+                box-shadow: 
+                    0 15px 50px rgba(59, 130, 246, 0.6),
+                    0 0 0 6px rgba(59, 130, 246, 0.15),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+            }
+            
+            [data-testid="collapsedControl"]:hover::before {
+                opacity: 0.8 !important;
+            }
+            
+            /* Toggle Button Active State */
+            [data-testid="collapsedControl"]:active {
+                transform: scale(1.05) translateY(-1px) !important;
+            }
+            
+            /* Toggle Button Icon */
+            [data-testid="collapsedControl"] svg {
+                width: clamp(24px, 6vw, 32px) !important;
+                height: clamp(24px, 6vw, 32px) !important;
+                color: #ffffff !important;
+                stroke-width: 2.5 !important;
+                filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3)) !important;
+            }
+            
+            /* ========== Toggle Button - Open State ========== */
+            [data-testid="stSidebar"] button[kind="header"] {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(139, 92, 246, 0.2)) !important;
+                border: 1px solid rgba(59, 130, 246, 0.5) !important;
+                border-radius: 12px !important;
+                padding: clamp(0.75rem, 2vw, 0.875rem) !important;
+                margin: 0.75rem !important;
+                width: calc(100% - 1.5rem) !important;
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+                transition: all 0.3s ease !important;
+            }
+            
+            [data-testid="stSidebar"] button[kind="header"]:hover {
+                background: linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(139, 92, 246, 0.3)) !important;
+                transform: scale(1.02) !important;
+                box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4) !important;
+            }
+            
+            [data-testid="stSidebar"] button[kind="header"] svg {
+                color: #60a5fa !important;
+                width: clamp(22px, 5vw, 26px) !important;
+                height: clamp(22px, 5vw, 26px) !important;
+            }
+            
+            /* ========== Navigation Buttons Styling ========== */
+            .stButton > button {
                 background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)) !important;
-                backdrop-filter: blur(20px) saturate(150%) !important;
-                -webkit-backdrop-filter: blur(20px) saturate(150%) !important;
+                backdrop-filter: blur(20px) !important;
+                -webkit-backdrop-filter: blur(20px) !important;
                 border: 1px solid rgba(255, 255, 255, 0.1) !important;
                 border-radius: 12px !important;
-                padding: 1rem 1.25rem !important;
+                padding: clamp(0.875rem, 2.5vw, 1rem) clamp(1rem, 3vw, 1.25rem) !important;
+                color: #f8fafc !important;
+                font-weight: 600 !important;
+                font-size: clamp(0.9rem, 2.5vw, 1rem) !important;
+                text-align: left !important;
                 cursor: pointer !important;
                 transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-                margin: 0 !important;
                 box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+                width: 100% !important;
+                min-height: 44px !important;
+                position: relative !important;
+                overflow: hidden !important;
             }
             
-            .stRadio > div > label:hover {
+            /* Navigation Button Hover Effect */
+            .stButton > button:hover {
                 background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05)) !important;
                 border-color: rgba(59, 130, 246, 0.4) !important;
                 transform: translateX(8px) scale(1.02) !important;
@@ -729,32 +964,32 @@ def render_sidebar():
                 transform: translateX(8px) !important;
             }
             
-            .stRadio > div > label > div {
-                color: #f8fafc !important;
-                font-weight: 600 !important;
-                font-size: 1rem !important;
+            /* Navigation Button Active/Focus State */
+            .stButton > button:active,
+            .stButton > button:focus {
+                background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.15)) !important;
+                border-color: #3b82f6 !important;
+                box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+                transform: translateX(8px) !important;
             }
             
-            /* Responsive adjustments */
-            @media (max-width: 768px) {
-                .stRadio > div > label {
-                    padding: 0.875rem 1rem !important;
-                    font-size: 0.9rem !important;
-                }
-                
-                .stRadio > div > label:hover {
-                    transform: translateX(5px) scale(1.01) !important;
-                }
+            /* Shimmer Effect on Navigation Buttons */
+            .stButton > button::before {
+                content: '' !important;
+                position: absolute !important;
+                top: 0 !important;
+                left: -100% !important;
+                width: 100% !important;
+                height: 100% !important;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent) !important;
+                transition: left 0.5s !important;
             }
             
-            @media (max-width: 480px) {
-                .stRadio > div > label {
-                    padding: 0.75rem 0.875rem !important;
-                    font-size: 0.85rem !important;
-                }
+            .stButton > button:hover::before {
+                left: 100% !important;
             }
             
-            /* Scrollbar styling for sidebar */
+            /* ========== Custom Scrollbar ========== */
             [data-testid="stSidebar"] ::-webkit-scrollbar {
                 width: 8px;
             }
@@ -775,22 +1010,82 @@ def render_sidebar():
                 background: linear-gradient(135deg, #60a5fa, #a78bfa);
                 background-clip: padding-box;
             }
+            
+            /* ========== Touch Device Optimizations ========== */
+            @media (hover: none) and (pointer: coarse) {
+                .stButton > button:hover {
+                    transform: none !important;
+                }
+                
+                [data-testid="collapsedControl"]:hover {
+                    transform: none !important;
+                }
+            }
+            
+            /* ========== Mobile Responsive Adjustments ========== */
+            @media (max-width: 768px) {
+                .stButton > button {
+                    padding: 0.875rem 1rem !important;
+                    font-size: 0.95rem !important;
+                }
+            }
+            
+            @media (max-width: 480px) {
+                .stButton > button {
+                    padding: 0.75rem 0.875rem !important;
+                    font-size: 0.9rem !important;
+                }
+            }
             </style>
         """, unsafe_allow_html=True)
         
-        # Navigation
-        page = st.radio(
-            "Navigation",
-            ["🏠 Home", "ℹ️ About", "❓ Help", "📧 Contact"],
-            label_visibility="collapsed"
-        )
+        # ============================================================================
+        # NAVIGATION SECTION
+        # ============================================================================
         
-        st.markdown("<br><br>", unsafe_allow_html=True)
+        # Initialize session state
+        if 'current_page' not in st.session_state:
+            st.session_state.current_page = "🏠 Home"
         
-        # Quick Stats Card
+        # Navigation container
+        st.markdown("<div style='margin-bottom: clamp(1rem, 3vw, 1.5rem);'>", unsafe_allow_html=True)
+        
+        # Define navigation pages
+        navigation_pages = [
+            {"name": "🏠 Home", "label": "🏠 Home"},
+            {"name": "ℹ️ About", "label": "ℹ️ About"},
+            {"name": "❓ Help", "label": "❓ Help"},
+            {"name": "📧 Contact", "label": "📧 Contact"}
+        ]
+        
+        # Render navigation buttons
+        for page in navigation_pages:
+            if st.button(
+                page["label"],
+                key=f"nav_{page['name']}",
+                use_container_width=True
+            ):
+                st.session_state.current_page = page["name"]
+                st.rerun()
+        
+        st.markdown('</div>', unsafe_allow_html=True)
+        
+        # Spacer
+        st.markdown("<br>", unsafe_allow_html=True)
+        
+        # ============================================================================
+        # INFO CARDS SECTION
+        # ============================================================================
+        
+        # Card 1: Quick Stats
         st.markdown("""
-            <div class="card" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(139, 92, 246, 0.05)); border: 1px solid rgba(59, 130, 246, 0.2); margin-bottom: 1.5rem; padding: 1.25rem; border-radius: 16px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);">
-                <h3 style="color: #60a5fa; font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+            <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(139, 92, 246, 0.05)); 
+                        border: 1px solid rgba(59, 130, 246, 0.2); 
+                        border-radius: 16px; 
+                        padding: 1.25rem; 
+                        margin-bottom: 1rem;
+                        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);">
+                <h3 style="color: #60a5fa; font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem;">
                     📊 Quick Stats
                 </h3>
                 <div style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.8;">
@@ -810,10 +1105,14 @@ def render_sidebar():
             </div>
         """, unsafe_allow_html=True)
         
-        # Pro Tip Card
         st.markdown("""
-            <div class="card" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(5, 150, 105, 0.05)); border: 1px solid rgba(16, 185, 129, 0.2); margin-bottom: 1.5rem; padding: 1.25rem; border-radius: 16px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);">
-                <h3 style="color: #34d399; font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+            <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(5, 150, 105, 0.05)); 
+                        border: 1px solid rgba(16, 185, 129, 0.2); 
+                        border-radius: 16px; 
+                        padding: 1.25rem; 
+                        margin-bottom: 1rem;
+                        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);">
+                <h3 style="color: #34d399; font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem;">
                     💡 Pro Tip
                 </h3>
                 <p style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.6; margin: 0;">
@@ -822,10 +1121,15 @@ def render_sidebar():
             </div>
         """, unsafe_allow_html=True)
         
-        # Security Tips Card
+        # Card 3: Security
         st.markdown("""
-            <div class="card" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.08), rgba(220, 38, 38, 0.05)); border: 1px solid rgba(239, 68, 68, 0.2); margin-bottom: 1.5rem; padding: 1.25rem; border-radius: 16px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);">
-                <h3 style="color: #fecdd3; font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+            <div style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.08), rgba(220, 38, 38, 0.05)); 
+                        border: 1px solid rgba(239, 68, 68, 0.2); 
+                        border-radius: 16px; 
+                        padding: 1.25rem; 
+                        margin-bottom: 1rem;
+                        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);">
+                <h3 style="color: #fecdd3; font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem;">
                     🔒 Security
                 </h3>
                 <p style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.6; margin: 0;">
@@ -834,16 +1138,78 @@ def render_sidebar():
             </div>
         """, unsafe_allow_html=True)
         
-        # Footer
+        # Card 4: Features
         st.markdown("""
-            <div style="text-align: center; padding: 1.5rem 0; border-top: 1px solid rgba(255, 255, 255, 0.08); margin-top: 2rem;">
-                <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🛡️</div>
-                <p style="color: #94a3b8; font-size: 0.8rem; margin: 0; line-height: 1.6;">
+            <div style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(217, 119, 6, 0.05)); 
+                        border: 1px solid rgba(245, 158, 11, 0.2); 
+                        border-radius: 16px; 
+                        padding: 1.25rem; 
+                        margin-bottom: 1rem;
+                        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);">
+                <h3 style="color: #fbbf24; font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem;">
+                    ⚡ Features
+                </h3>
+                <div style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.7;">
+                    <div style="margin-bottom: 0.5rem;">✓ Real-time AI Analysis</div>
+                    <div style="margin-bottom: 0.5rem;">✓ Multi-language Support</div>
+                    <div>✓ 24/7 Protection</div>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+        # ============================================================================
+        # FOOTER SECTION
+        # ============================================================================
+        st.markdown("""
+            <div style="text-align: center; 
+                        padding: clamp(1.25rem, 3vw, 1.5rem) 0; 
+                        border-top: 1px solid rgba(255, 255, 255, 0.08); 
+                        margin-top: 2rem;">
+                <div style="font-size: clamp(1.25rem, 4vw, 1.5rem); 
+                            margin-bottom: 0.5rem;">
+                    🛡️
+                </div>
+                <p style="color: #94a3b8; 
+                          font-size: clamp(0.75rem, 2vw, 0.8rem); 
+                          margin: 0; 
+                          line-height: 1.6;">
                     © 2026 Spam Detector<br>
                     <strong style="color: #60a5fa;">Built with ❤️</strong><br>
-                    <span style="font-size: 0.75rem;">Powered by AI & ML</span>
+                    <span style="font-size: clamp(0.7rem, 1.8vw, 0.75rem);">Powered by AI & ML</span>
                 </p>
             </div>
         """, unsafe_allow_html=True)
         
-        return page
+        return st.session_state.current_page
+
+
+# ============================================================================
+# HELPER FUNCTION FOR INFO CARDS
+# ============================================================================
+def _render_info_card(title: str, color: str, gradient: str, border: str, content: str):
+    """
+    Helper function to render individual info cards in the sidebar.
+    
+    Args:
+        title: Card title with emoji
+        color: Title color
+        gradient: Background gradient
+        border: Border color
+        content: HTML content for the card body
+    """
+    st.markdown(f"""
+        <div style="background: {gradient}; 
+                    border: 1px solid {border}; 
+                    border-radius: clamp(12px, 3vw, 16px); 
+                    padding: clamp(1rem, 3vw, 1.25rem); 
+                    margin-bottom: 1rem;
+                    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+                    transition: all 0.3s ease;">
+            <h3 style="color: {color}; 
+                       font-size: clamp(0.95rem, 2.5vw, 1rem); 
+                       font-weight: 700; 
+                       margin-bottom: 0.75rem;">
+                {title}
+            </h3>
+            {content}
+        </div>
+    """, unsafe_allow_html=True)
