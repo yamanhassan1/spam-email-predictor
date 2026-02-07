@@ -1,7 +1,15 @@
-streamlit==1.30.0
-nltk==3.9.1
-pandas>=2.2.0
-scikit-learn
-pillow>=10.0.0
-matplotlib>=3.7.0
+# Core Dependencies
+streamlit>=1.28.0
+pandas>=2.0.0
+numpy>=1.24.0
+scikit-learn>=1.3.0
+nltk>=3.8.0
+
+# Visualization
 plotly>=5.17.0
+
+# File Processing
+python-magic-bin>=0.4.14  # For file type detection (Windows compatible)
+
+# Optional but recommended
+Pillow>=10.0.0  # For image handling

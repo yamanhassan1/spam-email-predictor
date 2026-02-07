@@ -1229,3 +1229,4 @@ def _render_info_card(title: str, color: str, gradient: str, border: str, conten
             {content}
         </div>
     """, unsafe_allow_html=True)
+    
