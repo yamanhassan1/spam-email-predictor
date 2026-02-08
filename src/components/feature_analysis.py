@@ -3,6 +3,7 @@ Advanced feature analysis UI: displays extracted text, formatting, URL, and beha
 """
 import streamlit as st
 import html
+import gradio as gr
 from typing import Set, List, Optional
 from src.features import extract_all_features
 from src.design import section_heading_html
@@ -105,7 +106,7 @@ def render_advanced_feature_analysis(
     )
 
     # 5. Sender (N/A)
-    na = '<span style="color: var(--text-muted);">N/A</span>'
+    na = gr.HTML('<span style="color: var(--text-muted);">N/A</span>')
     c5 = _feature_card(
         "Sender & headers",
         "📧",
