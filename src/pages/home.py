@@ -6,10 +6,9 @@ from src.nlp import transformed_text
 from src.components.pattern_analysis import render_pattern_analysis
 from src.components.feature_analysis import render_advanced_feature_analysis
 from src.visualization import (
-    probability_gauge_chart,
-    word_frequency_chart,
-    character_distribution_chart,
-    message_stats_chart
+    probability_bar,
+    top_words_bar,
+    characters_pie
 )
 
 
@@ -164,9 +163,9 @@ def _render_analysis_section(input_sms, transformed_sms, result, confidence, spa
                              spam_words_set, ham_words_set):
     """Render all analysis visualizations and insights."""
 
-    # Probability gauge
+    # Probability bar (ham_prob first, spam_prob second)
     st.markdown("<br>", unsafe_allow_html=True)
-    fig = probability_gauge_chart(spam_prob, ham_prob)
+    fig = probability_bar(ham_prob, spam_prob)
     st.plotly_chart(fig, use_container_width=True)
 
     # Stats cards
@@ -210,13 +209,24 @@ def _render_analysis_section(input_sms, transformed_sms, result, confidence, spa
 
     with col1:
         if words_list and freq_list:
-            fig = word_frequency_chart(words_list, freq_list)
+            fig = top_words_bar(words_list, freq_list, spam_words_set)
             st.plotly_chart(fig, use_container_width=True)
 
     with col2:
         if input_sms:
-            fig = character_distribution_chart(input_sms)
-            st.plotly_chart(fig, use_container_width=True)
+            # Calculate character distribution
+            char_types = {
+                'Letters': sum(1 for c in input_sms if c.isalpha()),
+                'Numbers': sum(1 for c in input_sms if c.isdigit()),
+                'Spaces': sum(1 for c in input_sms if c.isspace()),
+                'Special': sum(1 for c in input_sms if not c.isalnum() and not c.isspace())
+            }
+            labels = list(char_types.keys())
+            values = list(char_types.values())
+
+            if sum(values) > 0:  # Only show if there's data
+                fig = characters_pie(labels, values)
+                st.plotly_chart(fig, use_container_width=True)
 
     # Pattern analysis
     render_pattern_analysis(
