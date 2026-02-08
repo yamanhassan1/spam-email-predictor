@@ -19,28 +19,41 @@ A machine learning-based web application that classifies emails and SMS messages
 ```
 Email Spam Detector/
 │
-├── app.py                          # Streamlit web application
-├── requirements                    # Python dependencies
-├── README.md                       # Project documentation
-│
-├── Data/
-│   ├── raw/
-│   │   └── spam.csv               # Raw dataset
-│   ├── clean/
-│   │   └── clean_and_described_data.csv  # Cleaned dataset
-│   └── preprocessed/
-│       ├── transform_data.csv     # Preprocessed data
-│       ├── top_30_most_used_ham_words.csv
-│       └── top_30_most_used_spam_words.csv
+your-project/
+├── app.py
 │
 ├── Models/
 │   ├── model.pkl                  # Trained Naive Bayes model
 │   └── vectorizer.pkl             # TF-IDF vectorizer
 │
 └── Notebooks/
-    ├── EDA_and_Experiments.ipynb  # Exploratory Data Analysis
-    ├── preprocessing.ipynb        # Data preprocessing pipeline
-    └── Model_Building.ipynb       # Model training and evaluation
+│    ├── EDA_and_Experiments.ipynb  # Exploratory Data Analysis
+│    ├── preprocessing.ipynb        # Data preprocessing pipeline
+│    └── Model_Building.ipynb       # Model training and evaluation
+├── Data/
+│   └── preprocessed/
+│       ├── top_30_most_used_spam_words.csv
+│       └── top_30_most_used_ham_words.csv
+└── src/
+    ├── __init__.py
+    ├── design.py
+    ├── model.py
+    ├── nlp.py
+    ├── analysis.py
+    ├── features.py
+    ├── visualization.py          ✅ Uses: probability_bar, top_words_bar, characters_pie
+    ├── components/
+    │   ├── __init__.py
+    │   ├── input_section.py      ✅ UPDATED - File upload + tabs
+    │   ├── pattern_analysis.py   ✅ Required
+    │   └── feature_analysis.py   ✅ Required
+    └── pages/
+        ├── __init__.py
+        ├── home.py                ✅ UPDATED - Batch processing + correct imports
+        ├── about.py
+        ├── help.py
+        ├── contact.py
+        └── info_section.py
 ```
 
 ## 🛠️ Installation
