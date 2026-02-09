@@ -1,6 +1,9 @@
 import streamlit as st
 import nltk
 from collections import Counter
+from email import policy
+from email.parser import BytesParser
+
 from src.design import render_result_card
 from src.nlp import transformed_text
 from src.components.pattern_analysis import render_pattern_analysis
@@ -10,6 +13,146 @@ from src.visualization import (
     top_words_bar,
     characters_pie
 )
+from src.model import list_available_models, explain_prediction, load_model
+
+
+@st.cache_resource(show_spinner=False)
+def _load_model_cached(name: str):
+    return load_model(name)
+
+
+def _extract_eml_text_and_headers(data: bytes):
+    """Extract plain text and key headers from an .eml payload."""
+    try:
+        msg = BytesParser(policy=policy.default).parsebytes(data)
+    except Exception:
+        return "", {}
+
+    headers = {
+        'From': msg.get('From', ''),
+        'To': msg.get('To', ''),
+        'Subject': msg.get('Subject', ''),
+        'Authentication-Results': msg.get('Authentication-Results', '')
+    }
+
+    # Parse SPF/DKIM/DMARC summary if present
+    try:
+        import re
+        auth = headers['Authentication-Results'] or ''
+
+        def _status(key: str) -> str:
+            m = re.search(rf"{key}\\s*=\\s*(pass|fail|softfail|neutral|temperror|permerror)", auth, re.I)
+            return (m.group(1).lower() if m else 'unknown')
+
+        headers['SPF'] = _status('spf')
+        headers['DKIM'] = _status('dkim')
+        headers['DMARC'] = _status('dmarc')
+    except Exception:
+        headers['SPF'] = headers['DKIM'] = headers['DMARC'] = 'unknown'
+
+    # Extract a plain text body best-effort
+    text = ''
+    try:
+        if msg.is_multipart():
+            for part in msg.walk():
+                ctype = part.get_content_type()
+                if ctype == 'text/plain':
+                    try:
+                        text += part.get_content() or ''
+                    except Exception:
+                        payload = part.get_payload(decode=True) or b''
+                        text += payload.decode(part.get_content_charset() or 'utf-8', errors='ignore')
+        else:
+            if msg.get_content_type() == 'text/plain':
+                try:
+                    text = msg.get_content() or ''
+                except Exception:
+                    payload = msg.get_payload(decode=True) or b''
+                    text = payload.decode(msg.get_content_charset() or 'utf-8', errors='ignore')
+            else:
+                payload = msg.get_payload(decode=True) or b''
+                text = payload.decode(msg.get_content_charset() or 'utf-8', errors='ignore')
+    except Exception:
+        pass
+
+    return text, headers
+
+
+def _render_headers_card(headers: dict):
+    from_ = headers.get('From', '')
+    to_ = headers.get('To', '')
+    subject = headers.get('Subject', '')
+    spf = headers.get('SPF', 'unknown')
+    dkim = headers.get('DKIM', 'unknown')
+    dmarc = headers.get('DMARC', 'unknown')
+
+    def _chip(label: str, status: str) -> str:
+        status_l = (status or 'unknown').lower()
+        color = '#10b981' if status_l == 'pass' else ('#ef4444' if status_l == 'fail' else '#94a3b8')
+        bg = 'rgba(16,185,129,0.08)' if status_l == 'pass' else ('rgba(239,68,68,0.08)' if status_l == 'fail' else 'rgba(148,163,184,0.12)')
+        return (
+            f"<span title='{label}: {status_l.upper()}' style=\"display:inline-block;padding:4px 10px;border-radius:999px;"
+            f"border:1px solid rgba(255,255,255,0.12);margin-right:8px;color:{color};font-weight:700;"
+            f"font-size:0.78rem;background:{bg}\">{label}: {status_l.upper()}</span>"
+        )
+
+    def _row(label: str, value: str) -> str:
+        safe = (value or '').replace('<', '&lt;').replace('>', '&gt;')
+        truncated = (safe if len(safe) <= 140 else safe[:137] + '...')
+        return (
+            f"<div style='display:flex;gap:12px;margin:4px 0;align-items:flex-start;'>"
+            f"<div style='min-width:90px;color:var(--text-muted);font-weight:600'>{label}</div>"
+            f"<div title='{safe}' style='flex:1;color:var(--text-secondary);word-break:break-word'>{truncated}</div>"
+            f"</div>"
+        )
+
+    auth_html = (
+        f"<div style='margin-top:6px'>{_chip('SPF', spf)}{_chip('DKIM', dkim)}{_chip('DMARC', dmarc)}</div>"
+    )
+
+    st.markdown(
+        """
+        <div class="card" style="margin: 0.5rem 0;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+                <div style="font-weight:800;color:var(--text-primary);letter-spacing:-0.01em">Email Metadata</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr;gap:6px;">
+                {from_row}
+                {to_row}
+                {subject_row}
+                <div>{auth_html}</div>
+            </div>
+        </div>
+        """.format(
+            from_row=_row('From', from_),
+            to_row=_row('To', to_),
+            subject_row=_row('Subject', subject)
+        ),
+        unsafe_allow_html=True
+    )
+
+
+def _render_explanation(exp: dict):
+    pos = exp.get('positive', [])
+    neg = exp.get('negative', [])
+    st.markdown("<h3 class='section-heading'>🧠 Why this result?</h3>", unsafe_allow_html=True)
+    col1, col2 = st.columns(2)
+    with col1:
+        body = ", ".join([f"<code>{w}</code> ({c:.2f})" for w, c in pos]) if pos else "<span style='color:var(--text-muted)'>No strong spam indicators found.</span>"
+        st.markdown(f"""
+            <div class="card" style="min-height:120px">
+                <div style="font-weight:700;margin-bottom:0.5rem;color:#fecdd3">Top Spam Indicators</div>
+                <div>{body}</div>
+            </div>
+        """, unsafe_allow_html=True)
+    with col2:
+        body = ", ".join([f"<code>{w}</code> ({c:.2f})" for w, c in neg]) if neg else "<span style='color:var(--text-muted)'>No strong ham indicators found.</span>"
+        st.markdown(f"""
+            <div class="card" style="min-height:120px">
+                <div style="font-weight:700;margin-bottom:0.5rem;color:#d1fae5">Top Ham Indicators</div>
+                <div>{body}</div>
+            </div>
+        """, unsafe_allow_html=True)
 
 
 def render_home_page(tfidf, model, spam_words_set, ham_words_set, stop_words):
@@ -19,7 +162,21 @@ def render_home_page(tfidf, model, spam_words_set, ham_words_set, stop_words):
     # Import here to avoid circular imports
     from src.components.input_section import render_input_section
 
-    # Render input section - now returns both text and files
+    # Model selection (discover available models dynamically)
+    try:
+        available_models = list_available_models()
+    except Exception:
+        available_models = ["default"]
+    default_idx = available_models.index("default") if "default" in available_models else 0
+    selected_model = st.selectbox("Model", available_models, index=default_idx, help="Choose the classifier to use")
+
+    # Load selected model (cached). Fallback to provided model on error.
+    try:
+        tfidf, model = _load_model_cached(selected_model)
+    except Exception:
+        pass  # keep passed-in tfidf/model
+
+    # Render input section - returns both text and files
     input_sms, uploaded_files = render_input_section()
 
     # Prediction button
@@ -39,21 +196,20 @@ def render_home_page(tfidf, model, spam_words_set, ham_words_set, stop_words):
         if uploaded_files:
             for uploaded_file in uploaded_files:
                 try:
-                    # Read file content
-                    content = uploaded_file.read().decode('utf-8', errors='ignore')
-                    if content.strip():
-                        messages_to_analyze.append({
-                            'text': content,
-                            'source': uploaded_file.name
-                        })
+                    raw = uploaded_file.read()
+                    if uploaded_file.name.lower().endswith('.eml'):
+                        text, headers = _extract_eml_text_and_headers(raw)
+                        if text.strip():
+                            messages_to_analyze.append({'text': text, 'source': uploaded_file.name, 'headers': headers})
+                    else:
+                        content = raw.decode('utf-8', errors='ignore')
+                        if content.strip():
+                            messages_to_analyze.append({'text': content, 'source': uploaded_file.name})
                 except Exception as e:
                     st.error(f"Error reading {uploaded_file.name}: {str(e)}")
         # Check if text was entered
         elif input_sms.strip():
-            messages_to_analyze.append({
-                'text': input_sms,
-                'source': 'Manual Input'
-            })
+            messages_to_analyze.append({'text': input_sms, 'source': 'Manual Input'})
 
         # Validate input
         if not messages_to_analyze:
@@ -90,6 +246,9 @@ def render_home_page(tfidf, model, spam_words_set, ham_words_set, stop_words):
         if len(messages_to_analyze) == 1:
             # Single message analysis
             msg_data = messages_to_analyze[0]
+            # If available, render email headers/metadata
+            if isinstance(msg_data, dict) and msg_data.get('headers'):
+                _render_headers_card(msg_data['headers'])
             with st.spinner("🔎 Analyzing message with AI..."):
                 _analyze_single_message(
                     msg_data['text'], msg_data['source'],
@@ -110,8 +269,21 @@ def _analyze_single_message(input_sms, source, tfidf, model, spam_words_set, ham
 
     # Vectorize + Predict
     vector_input = tfidf.transform([transformed_sms])
-    result = model.predict(vector_input)[0]
-    prediction_proba = model.predict_proba(vector_input)[0]
+    # Prefer predict_proba when available
+    if hasattr(model, 'predict_proba'):
+        result = model.predict(vector_input)[0]
+        prediction_proba = model.predict_proba(vector_input)[0]
+    else:
+        # Fallback for models without predict_proba
+        result = model.predict(vector_input)[0]
+        try:
+            score = float(model.decision_function(vector_input)[0])
+        except Exception:
+            score = 0.0
+        import numpy as np
+        spam_prob_val = 1 / (1 + np.exp(-score))
+        prediction_proba = [1 - spam_prob_val, spam_prob_val]
+
     confidence = max(prediction_proba) * 100
     spam_prob = prediction_proba[1] * 100
     ham_prob = prediction_proba[0] * 100
@@ -120,7 +292,10 @@ def _analyze_single_message(input_sms, source, tfidf, model, spam_words_set, ham
     word_count = len(input_sms.split())
     char_count = len(input_sms)
     char_count_no_spaces = len(input_sms.replace(" ", ""))
-    sentence_count = len(nltk.sent_tokenize(input_sms))
+    try:
+        sentence_count = len(nltk.sent_tokenize(input_sms))
+    except LookupError:
+        sentence_count = max(1, input_sms.count('.') + input_sms.count('!') + input_sms.count('?'))
 
     # Word frequency
     words = transformed_sms.split()
@@ -135,6 +310,13 @@ def _analyze_single_message(input_sms, source, tfidf, model, spam_words_set, ham
 
     # Display result
     st.markdown(render_result_card(result == 1, confidence), unsafe_allow_html=True)
+
+    # Explanation (word impact)
+    try:
+        exp = explain_prediction(transformed_sms, tfidf, model, top_k=8)
+        _render_explanation(exp)
+    except Exception:
+        pass
 
     # Render detailed analysis sections
     _render_analysis_section(
@@ -264,8 +446,18 @@ def _analyze_batch_messages(messages, tfidf, model, spam_words_set, ham_words_se
         # Process message
         transformed_sms = transformed_text(msg_data['text'], stop_words=stop_words)
         vector_input = tfidf.transform([transformed_sms])
-        result = model.predict(vector_input)[0]
-        prediction_proba = model.predict_proba(vector_input)[0]
+        if hasattr(model, 'predict_proba'):
+            result = model.predict(vector_input)[0]
+            prediction_proba = model.predict_proba(vector_input)[0]
+        else:
+            result = model.predict(vector_input)[0]
+            try:
+                score = float(model.decision_function(vector_input)[0])
+            except Exception:
+                score = 0.0
+            import numpy as np
+            spam_prob_val = 1 / (1 + np.exp(-score))
+            prediction_proba = [1 - spam_prob_val, spam_prob_val]
         confidence = max(prediction_proba) * 100
 
         results.append({
