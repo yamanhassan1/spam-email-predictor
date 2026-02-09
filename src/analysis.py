@@ -22,9 +22,23 @@ def load_word_lists():
         return set(), set()
 
 
-SPAM_WORDS, HAM_WORDS = load_word_lists()
-
-def analyze_message(raw_text, processed_words):
+def analyze_message(raw_text, processed_words, spam_words_set=None, ham_words_set=None):
+    """Analyze message for spam indicators.
+    
+    Args:
+        raw_text: Original message text
+        processed_words: Tokenized/stemmed words from NLP processing
+        spam_words_set: Set of known spam words (optional, defaults to empty set)
+        ham_words_set: Set of known ham words (optional, defaults to empty set)
+    
+    Returns:
+        Dictionary with analysis results
+    """
+    if spam_words_set is None:
+        spam_words_set = set()
+    if ham_words_set is None:
+        ham_words_set = set()
+    
     urls = re.findall(r'http[s]?://\S+', raw_text)
     numbers = re.findall(r'\d+', raw_text)
 
@@ -35,8 +49,8 @@ def analyze_message(raw_text, processed_words):
         'Click': bool(re.search(r'\bclick\b', raw_text, re.I)),
     }
 
-    found_spam = [w for w in processed_words if w in SPAM_WORDS]
-    found_ham = [w for w in processed_words if w in HAM_WORDS]
+    found_spam = [w for w in processed_words if w in spam_words_set]
+    found_ham = [w for w in processed_words if w in ham_words_set]
 
     return {
         "urls": len(urls),

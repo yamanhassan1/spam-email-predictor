@@ -1,4 +1,14 @@
 import streamlit as st
+import logging
+
+# ============================
+# Logging configuration
+# ============================
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
 # ============================
 # Core modules
@@ -21,19 +31,34 @@ from src.pages.contact import render_contact_page
 @st.cache_data(show_spinner=False)
 def _cached_load_model():
     """Load model and vectorizer once per session."""
-    return load_model()
+    try:
+        return load_model()
+    except FileNotFoundError as e:
+        logger.error(f"Model files not found: {e}")
+        raise
+    except Exception as e:
+        logger.error(f"Error loading model: {e}")
+        raise
 
 
 @st.cache_data(show_spinner=False)
 def _cached_get_stopwords():
     """Load NLTK stopwords once per session."""
-    return get_stopwords()
+    try:
+        return get_stopwords()
+    except Exception as e:
+        logger.warning(f"Error loading stopwords: {e}")
+        return set()
 
 
 @st.cache_data(show_spinner=False)
 def _cached_word_lists():
     """Load spam/ham word lists once per session."""
-    return load_word_lists()
+    try:
+        return load_word_lists()
+    except Exception as e:
+        logger.warning(f"Error loading word lists: {e}")
+        return set(), set()
 
 
 def main():
