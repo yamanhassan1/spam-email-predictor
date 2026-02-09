@@ -7,9 +7,18 @@ ps = PorterStemmer()
 
 
 def setup_nltk():
-    nltk.download("stopwords")
-    nltk.download("punkt")
-    nltk.download("punkt_tab")
+    """Ensure required NLTK resources are available. Download only if missing."""
+    # stopwords
+    try:
+        stopwords.words("english")
+    except LookupError:
+        nltk.download("stopwords", quiet=True)
+
+    # punkt tokenizer
+    try:
+        nltk.data.find("tokenizers/punkt")
+    except LookupError:
+        nltk.download("punkt", quiet=True)
 
 
 def get_stopwords() -> Set[str]:
@@ -17,7 +26,7 @@ def get_stopwords() -> Set[str]:
     try:
         return set(stopwords.words("english"))
     except LookupError:
-        nltk.download("stopwords")
+        nltk.download("stopwords", quiet=True)
         return set(stopwords.words("english"))
 
 
