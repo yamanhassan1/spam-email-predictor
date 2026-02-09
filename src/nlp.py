@@ -20,6 +20,15 @@ def setup_nltk():
     except LookupError:
         nltk.download("punkt", quiet=True)
 
+    # punkt_tab (required by newer NLTK versions for sentence tokenization)
+    try:
+        nltk.data.find("tokenizers/punkt_tab")
+    except LookupError:
+        try:
+            nltk.download("punkt_tab", quiet=True)
+        except Exception:
+            pass
+
 
 def get_stopwords() -> Set[str]:
     """Return English stopwords set. Call after setup_nltk(); use st.cache_data in app."""
