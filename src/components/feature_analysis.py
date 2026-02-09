@@ -3,8 +3,7 @@ Advanced feature analysis UI: displays extracted text, formatting, URL, and beha
 """
 import streamlit as st
 import html
-import gradio as gr
-from typing import Set, List, Optional
+from typing import Set, List
 from src.features import extract_all_features
 from src.design import section_heading_html
 
@@ -13,7 +12,12 @@ def _row(label: str, value: str, tooltip: str = "") -> str:
     safe_label = html.escape(label)
     safe_value = html.escape(str(value))
     tt = f' title="{html.escape(tooltip)}"' if tooltip else ""
-    return f'<tr><td style="color: var(--text-secondary); padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--glass-border);">{safe_label}</td><td style="color: var(--text-primary); font-weight: 600; padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--glass-border);"{tt}>{safe_value}</td></tr>'
+    return (
+        f'<tr>'
+        f'<td style="color: var(--text-secondary); padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--glass-border);">{safe_label}</td>'
+        f'<td style="color: var(--text-primary); font-weight: 600; padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--glass-border);"{tt}>{safe_value}</td>'
+        f'</tr>'
+    )
 
 
 def _feature_card(title: str, icon: str, rows: List[str]) -> str:
@@ -47,12 +51,15 @@ def render_advanced_feature_analysis(
 
     st.markdown("<br><br>", unsafe_allow_html=True)
     st.markdown(section_heading_html("📐", "Advanced Feature Analysis"), unsafe_allow_html=True)
-    st.markdown("""
+    st.markdown(
+        """
         <p style="color: var(--text-secondary); text-align: center; margin: 0 0 1.5rem 0; font-size: 0.95rem; max-width: 640px; margin-left: auto; margin-right: auto;">
             Detection signals derived from text content, formatting, URLs, and language. 
             Sender/header features (SPF, DKIM, domain) require full email headers.
         </p>
-    """, unsafe_allow_html=True)
+        """,
+        unsafe_allow_html=True,
+    )
 
     # 1. Text content features
     c1 = _feature_card(
@@ -105,8 +112,8 @@ def render_advanced_feature_analysis(
         ],
     )
 
-    # 5. Sender (N/A)
-    na = gr.HTML('<span style="color: var(--text-muted);">N/A</span>')
+    # 5. Sender (N/A placeholders)
+    na = "N/A"
     c5 = _feature_card(
         "Sender & headers",
         "📧",
