@@ -1,0 +1,33 @@
+# Production dependencies
+streamlit==1.31.1
+pandas==2.2.1
+scikit-learn==1.4.1.post1
+numpy==1.26.4
+nltk==3.9.1
+plotly==5.18.0
+pillow==10.2.0
+
+# Development dependencies
+pytest==7.4.3
+pytest-cov==4.1.0
+black==23.12.1
+flake8==6.1.0
+mypy==1.7.1
+isort==5.13.2
+pre-commit==3.5.0
+
+# Documentation
+sphinx==7.2.6
+sphinx-rtd-theme==2.0.0
+
+# Debugging
+ipython==8.18.1
+ipdb==0.13.13
+
+# Code quality
+pylint==3.0.3
+bandit==1.7.5
+
+# Performance profiling
+memory-profiler==0.61.0
+line-profiler==4.1.1
